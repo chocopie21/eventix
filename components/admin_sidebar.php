@@ -7,13 +7,19 @@
 $user = currentUser();
 $currentFile = basename($_SERVER['SCRIPT_NAME'] ?? '');
 ?>
+<!-- Admin Sidebar Backdrop (Mobile & Tablet) -->
+<div id="admin-sidebar-backdrop" 
+     class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity"
+     aria-hidden="true"></div>
+
 <!-- Sidebar Navigation -->
-<aside class="w-64 bg-slate-950 text-slate-300 flex flex-col shrink-0 min-h-screen border-r border-slate-800">
+<aside id="admin-sidebar" 
+       class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-950 text-slate-300 flex flex-col shrink-0 min-h-screen border-r border-slate-800 transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 ease-in-out shadow-xl lg:shadow-none">
     
     <!-- Admin Header / Brand -->
-    <div class="h-16 px-6 flex items-center justify-between border-b border-slate-800 bg-slate-950">
+    <div class="h-16 px-5 sm:px-6 flex items-center justify-between border-b border-slate-800 bg-slate-950">
         <a href="<?= url('admin/index.php') ?>" class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-md bg-[#FF6082] flex items-center justify-center text-white">
+            <div class="w-8 h-8 rounded-md bg-[#FF6082] flex items-center justify-center text-white shrink-0">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                 </svg>
@@ -25,6 +31,16 @@ $currentFile = basename($_SERVER['SCRIPT_NAME'] ?? '');
                 <span class="text-[11px] text-slate-400 block mt-1 font-medium">Panel Admin</span>
             </div>
         </a>
+
+        <!-- Close Sidebar Button (Mobile/Tablet Only) -->
+        <button type="button" 
+                id="admin-sidebar-close" 
+                class="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none"
+                aria-label="Tutup Menu">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
     </div>
 
     <!-- Logged in Admin Profile Card -->
@@ -101,3 +117,32 @@ $currentFile = basename($_SERVER['SCRIPT_NAME'] ?? '');
     </div>
 
 </aside>
+
+<!-- Admin Mobile Sidebar Controller -->
+<script>
+    (function() {
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('admin-sidebar');
+            const backdrop = document.getElementById('admin-sidebar-backdrop');
+
+            if (e.target.closest('#admin-sidebar-open')) {
+                sidebar?.classList.remove('-translate-x-full');
+                backdrop?.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
+            } else if (e.target.closest('#admin-sidebar-close') || e.target === backdrop) {
+                sidebar?.classList.add('-translate-x-full');
+                backdrop?.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+            }
+        });
+
+        // Close drawer automatically when window resizes to desktop breakpoint
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                document.getElementById('admin-sidebar')?.classList.add('-translate-x-full');
+                document.getElementById('admin-sidebar-backdrop')?.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+            }
+        });
+    })();
+</script>

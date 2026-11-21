@@ -147,24 +147,36 @@ $flashInfo = getFlash('info');
     <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
         
         <!-- Top Navigation Header -->
-        <header class="h-16 bg-white border-b border-slate-200 px-6 sm:px-8 flex items-center justify-between shrink-0 sticky top-0 z-20">
-            <div>
-                <h1 class="text-base font-bold text-slate-900 font-heading">Verifikasi Pembayaran & Pesanan</h1>
-                <p class="text-xs text-slate-500">Tinjau bukti transfer pembayaran, setujui pesanan, atau batalkan pesanan</p>
+        <header class="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <!-- Hamburger Button for Mobile / Tablet -->
+                <button type="button" 
+                        id="admin-sidebar-open" 
+                        class="lg:hidden p-2 -ml-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0" 
+                        aria-label="Buka Menu Admin">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-base font-bold text-slate-900 font-heading truncate">Verifikasi Pembayaran & Pesanan</h1>
+                    <p class="text-[11px] sm:text-xs text-slate-500 truncate hidden sm:block">Tinjau bukti transfer pembayaran, setujui pesanan, atau batalkan pesanan</p>
+                </div>
             </div>
 
             <!-- Quick Action: Filter Antrean Verifikasi -->
-            <div>
+            <div class="shrink-0">
                 <a href="<?= url('admin/orders.php?status=menunggu_verifikasi') ?>" 
-                   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 text-xs font-semibold transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                    <span>Perlu verifikasi: <?= $countVerifikasi ?> pesanan</span>
+                   class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 text-xs font-semibold transition-colors">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 shrink-0"></span>
+                    <span class="hidden sm:inline">Perlu verifikasi: <?= $countVerifikasi ?> pesanan</span>
+                    <span class="sm:hidden">Verifikasi (<?= $countVerifikasi ?>)</span>
                 </a>
             </div>
         </header>
 
         <!-- Body Content -->
-        <main class="p-6 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
+        <main class="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl w-full mx-auto">
             
             <!-- Flash Messages -->
             <?php if ($flashSuccess): ?>
@@ -247,24 +259,24 @@ $flashInfo = getFlash('info');
 
             <!-- TABEL SELURUH PESANAN & VERIFIKASI -->
             <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-                <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <div class="px-4 sm:px-6 py-4 border-b border-slate-200 flex items-center justify-between">
                     <div>
                         <h3 class="text-sm font-bold font-heading text-slate-900">Daftar Transaksi Pesanan Tiket</h3>
                         <p class="text-xs text-slate-500">Total <?= count($orders) ?> transaksi ditemukan</p>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                <div class="w-full overflow-x-auto lg:overflow-hidden">
+                    <table class="w-full min-w-[760px] lg:min-w-0 lg:table-fixed text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
-                                <th class="py-3 px-4">ID & tanggal</th>
-                                <th class="py-3 px-4">Pembeli</th>
-                                <th class="py-3 px-4">Konser & tiket</th>
-                                <th class="py-3 px-4">Total</th>
-                                <th class="py-3 px-4">Bukti transfer</th>
-                                <th class="py-3 px-4">Status</th>
-                                <th class="py-3 px-4 text-center">Aksi verifikasi</th>
+                                <th class="py-3 px-3 w-[12%]">ID & tanggal</th>
+                                <th class="py-3 px-3 w-[18%]">Pembeli</th>
+                                <th class="py-3 px-3 w-[22%]">Konser & tiket</th>
+                                <th class="py-3 px-3 w-[14%]">Total</th>
+                                <th class="py-3 px-3 w-[11%]">Bukti transfer</th>
+                                <th class="py-3 px-3 w-[10%]">Status</th>
+                                <th class="py-3 px-3 w-[13%] text-right">Aksi verifikasi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
@@ -285,28 +297,28 @@ $flashInfo = getFlash('info');
                                     <tr class="hover:bg-slate-50/75 transition-colors <?= ($st === 'menunggu_verifikasi') ? 'bg-blue-50/40' : '' ?>">
                                         
                                         <!-- ID & Tanggal -->
-                                        <td class="py-3 px-4 whitespace-nowrap">
+                                        <td class="py-3 px-3 whitespace-nowrap min-w-0">
                                             <span class="font-mono font-semibold text-slate-900 block">#EVX-<?= $idO ?></span>
                                             <span class="text-xs text-slate-500 block"><?= date('d/m/Y H:i', strtotime($o['tanggal'])) ?></span>
                                         </td>
 
                                         <!-- Pembeli -->
-                                        <td class="py-3 px-4 whitespace-nowrap">
-                                            <span class="font-semibold text-slate-900 block"><?= htmlspecialchars($o['nama_pembeli'], ENT_QUOTES, 'UTF-8') ?></span>
-                                            <span class="text-xs text-slate-500 block"><?= htmlspecialchars($o['email_pembeli'], ENT_QUOTES, 'UTF-8') ?></span>
+                                        <td class="py-3 px-3 min-w-0">
+                                            <span class="font-semibold text-slate-900 block truncate" title="<?= htmlspecialchars($o['nama_pembeli'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($o['nama_pembeli'], ENT_QUOTES, 'UTF-8') ?></span>
+                                            <span class="text-xs text-slate-500 block truncate" title="<?= htmlspecialchars($o['email_pembeli'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($o['email_pembeli'], ENT_QUOTES, 'UTF-8') ?></span>
                                             <?php if (!empty($o['telp_pembeli'])): ?>
-                                                <span class="text-xs text-slate-400 block"><?= htmlspecialchars($o['telp_pembeli'], ENT_QUOTES, 'UTF-8') ?></span>
+                                                <span class="text-xs text-slate-400 block truncate"><?= htmlspecialchars($o['telp_pembeli'], ENT_QUOTES, 'UTF-8') ?></span>
                                             <?php endif; ?>
                                         </td>
 
                                         <!-- Konser & Item Tiket -->
-                                        <td class="py-3 px-4 max-w-xs">
+                                        <td class="py-3 px-3 min-w-0">
                                             <span class="font-semibold text-slate-900 block truncate" title="<?= htmlspecialchars($o['nama_event'] ?? '-', ENT_QUOTES, 'UTF-8') ?>">
                                                 <?= htmlspecialchars($o['nama_event'] ?? 'Konser', ENT_QUOTES, 'UTF-8') ?>
                                             </span>
                                             <div class="text-xs text-slate-500 space-y-0.5 mt-0.5">
                                                 <?php foreach ($items as $it): ?>
-                                                    <div>
+                                                    <div class="truncate">
                                                         <span class="text-slate-700"><?= htmlspecialchars($it['kategori'], ENT_QUOTES, 'UTF-8') ?></span> 
                                                         <span class="text-slate-400 font-mono">(<?= $it['jumlah'] ?>x)</span>
                                                     </div>
@@ -315,22 +327,22 @@ $flashInfo = getFlash('info');
                                         </td>
 
                                         <!-- Total Biaya & Metode -->
-                                        <td class="py-3 px-4 whitespace-nowrap">
+                                        <td class="py-3 px-3 whitespace-nowrap min-w-0">
                                             <span class="font-bold text-slate-900 block text-sm">
                                                 <?= formatRupiah($o['harga']) ?>
                                             </span>
-                                            <span class="text-[11px] text-slate-500 block">
+                                            <span class="text-[11px] text-slate-500 block truncate">
                                                 <?= htmlspecialchars($o['metode_bayar'] ?? 'Manual Transfer', ENT_QUOTES, 'UTF-8') ?>
                                             </span>
                                         </td>
 
                                         <!-- Bukti Bayar Thumbnail -->
-                                        <td class="py-3 px-4 whitespace-nowrap">
+                                        <td class="py-3 px-3 whitespace-nowrap min-w-0">
                                             <?php if ($hasReceipt): ?>
                                                 <button type="button" 
                                                         onclick="openReceiptModal('<?= $idO ?>', '<?= htmlspecialchars($o['nama_pembeli'], ENT_QUOTES, 'UTF-8') ?>', '<?= htmlspecialchars($receiptUrl, ENT_QUOTES, 'UTF-8') ?>', '<?= formatRupiah($o['harga']) ?>', '<?= htmlspecialchars($o['metode_bayar'] ?? 'Transfer', ENT_QUOTES, 'UTF-8') ?>')"
                                                         class="inline-flex items-center gap-1.5 p-1 rounded-lg border border-slate-200 hover:border-slate-400 bg-white group transition-colors">
-                                                    <img src="<?= $receiptUrl ?>" alt="Bukti" class="w-8 h-8 rounded object-cover">
+                                                    <img src="<?= $receiptUrl ?>" alt="Bukti" class="w-7 h-7 rounded object-cover">
                                                     <span class="text-xs font-medium text-blue-600 pr-1 group-hover:underline">Buka bukti</span>
                                                 </button>
                                             <?php else: ?>
@@ -339,7 +351,7 @@ $flashInfo = getFlash('info');
                                         </td>
 
                                         <!-- Status Badge -->
-                                        <td class="py-3 px-4 whitespace-nowrap">
+                                        <td class="py-3 px-3 whitespace-nowrap min-w-0">
                                             <?php if ($st === 'menunggu'): ?>
                                                 <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
                                                     Menunggu bayar
@@ -363,9 +375,9 @@ $flashInfo = getFlash('info');
                                         </td>
 
                                         <!-- Aksi Verifikasi: ACC / Tolak -->
-                                        <td class="py-3 px-4 text-center whitespace-nowrap">
+                                        <td class="py-3 px-3 text-right whitespace-nowrap">
                                             <?php if ($st === 'menunggu_verifikasi' || $st === 'menunggu'): ?>
-                                                <div class="inline-flex items-center gap-1.5">
+                                                <div class="inline-flex items-center justify-end gap-1.5">
                                                     
                                                     <!-- Tombol ACC / Konfirmasi Lunas -->
                                                     <form action="<?= url('actions/admin_payment_verify.php') ?>" 

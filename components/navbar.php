@@ -146,7 +146,19 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
 
     <!-- Mobile Drawer Menu -->
     <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
-        <nav class="flex flex-col space-y-2 text-sm font-medium">
+        <?php if ($isLoggedIn): ?>
+            <div class="p-3 bg-slate-50 rounded-lg flex items-center gap-3 border border-slate-200">
+                <div class="w-9 h-9 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-xs shrink-0">
+                    <?= htmlspecialchars(mb_substr($user['nama'] ?? 'U', 0, 1), ENT_QUOTES, 'UTF-8') ?>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-xs font-bold text-slate-900 truncate"><?= htmlspecialchars($user['nama'] ?? 'Pengguna', ENT_QUOTES, 'UTF-8') ?></p>
+                    <p class="text-[11px] text-slate-500 truncate"><?= htmlspecialchars($user['email'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <nav class="flex flex-col space-y-1 text-sm font-medium">
             <a href="<?= url('index.php') ?>" class="px-3 py-2 rounded-lg hover:bg-slate-50 <?= $currentScript === 'index.php' ? 'bg-slate-100 font-bold text-slate-900' : 'text-slate-600' ?>">Beranda</a>
             <a href="<?= url('index.php#katalog') ?>" class="px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-600">Katalog Konser</a>
             <a href="<?= url('about.php') ?>" class="px-3 py-2 rounded-lg hover:bg-slate-50 <?= $currentScript === 'about.php' ? 'bg-slate-100 font-bold text-slate-900' : 'text-slate-600' ?>">Tentang Kami</a>

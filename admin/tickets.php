@@ -94,24 +94,36 @@ $flashError = getFlash('error');
     <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
         
         <!-- Top Navigation Header -->
-        <header class="h-16 bg-white border-b border-slate-200 px-6 sm:px-8 flex items-center justify-between shrink-0 sticky top-0 z-20">
-            <div>
-                <h1 class="text-base font-bold text-slate-900 font-heading">Manajemen Kategori & Kuota Tiket</h1>
-                <p class="text-xs text-slate-500">Atur harga, kuota tempat, dan fasilitas kategori tiket konser</p>
+        <header class="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <!-- Hamburger Button for Mobile / Tablet -->
+                <button type="button" 
+                        id="admin-sidebar-open" 
+                        class="lg:hidden p-2 -ml-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0" 
+                        aria-label="Buka Menu Admin">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-base font-bold text-slate-900 font-heading truncate">Manajemen Kategori & Kuota Tiket</h1>
+                    <p class="text-[11px] sm:text-xs text-slate-500 truncate hidden sm:block">Atur harga, kuota tempat, dan fasilitas kategori tiket konser</p>
+                </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <a href="#form-tiket" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#FF6082] text-white font-medium text-xs hover:bg-[#e54b6d] transition-colors shadow-xs">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <a href="#form-tiket" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-[#FF6082] text-white font-medium text-xs hover:bg-[#e54b6d] transition-colors shadow-xs">
+                    <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                    <span>Tambah Kategori Baru</span>
+                    <span class="hidden sm:inline">Tambah Kategori Baru</span>
+                    <span class="sm:hidden">Tambah</span>
                 </a>
             </div>
         </header>
 
         <!-- Body Content -->
-        <main class="p-6 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
+        <main class="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl w-full mx-auto">
             
             <!-- Flash Messages -->
             <?php if ($flashSuccess): ?>
@@ -269,22 +281,22 @@ $flashError = getFlash('error');
 
             <!-- TABEL DAFTAR KATEGORI TIKET -->
             <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-                <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                <div class="px-4 sm:px-6 py-4 border-b border-slate-200 flex items-center justify-between">
                     <div>
                         <h3 class="text-sm font-bold font-heading text-slate-900">Kategori Tiket Konser Ini</h3>
                         <p class="text-xs text-slate-500">Total <?= count($tickets) ?> kategori tiket aktif untuk konser yang dipilih</p>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                <div class="w-full overflow-x-auto lg:overflow-hidden">
+                    <table class="w-full min-w-[620px] lg:min-w-0 lg:table-fixed text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
-                                <th class="py-3 px-4">Nama kategori</th>
-                                <th class="py-3 px-4">Fasilitas / Deskripsi</th>
-                                <th class="py-3 px-4">Harga tiket</th>
-                                <th class="py-3 px-4">Sisa kuota</th>
-                                <th class="py-3 px-4 text-center">Aksi</th>
+                                <th class="py-3 px-3 w-[22%]">Nama kategori</th>
+                                <th class="py-3 px-3 w-[38%]">Fasilitas / Deskripsi</th>
+                                <th class="py-3 px-3 w-[16%]">Harga tiket</th>
+                                <th class="py-3 px-3 w-[12%]">Sisa kuota</th>
+                                <th class="py-3 px-3 w-[12%] text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
@@ -300,22 +312,22 @@ $flashError = getFlash('error');
                                     <tr class="hover:bg-slate-50/75 transition-colors">
                                         
                                         <!-- Nama Kategori -->
-                                        <td class="py-3 px-4 font-semibold text-slate-900 text-sm">
+                                        <td class="py-3 px-3 font-semibold text-slate-900 text-sm truncate">
                                             <?= htmlspecialchars($t['kategori'], ENT_QUOTES, 'UTF-8') ?>
                                         </td>
 
                                         <!-- Deskripsi -->
-                                        <td class="py-3 px-4 max-w-sm text-slate-600">
+                                        <td class="py-3 px-3 text-slate-600 truncate" title="<?= htmlspecialchars($t['deskripsi'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
                                             <?= !empty($t['deskripsi']) ? htmlspecialchars($t['deskripsi'], ENT_QUOTES, 'UTF-8') : '-' ?>
                                         </td>
 
                                         <!-- Harga -->
-                                        <td class="py-3 px-4 whitespace-nowrap font-bold text-slate-900 text-sm">
+                                        <td class="py-3 px-3 whitespace-nowrap font-bold text-slate-900 text-sm">
                                             <?= formatRupiah($t['harga']) ?>
                                         </td>
 
                                         <!-- Kuota -->
-                                        <td class="py-3 px-4 whitespace-nowrap">
+                                        <td class="py-3 px-3 whitespace-nowrap">
                                             <?php if ($quota <= 0): ?>
                                                 <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                                                     Habis
@@ -332,8 +344,8 @@ $flashError = getFlash('error');
                                         </td>
 
                                         <!-- Aksi Buttons -->
-                                        <td class="py-3 px-4 text-center whitespace-nowrap">
-                                            <div class="inline-flex items-center gap-1.5">
+                                        <td class="py-3 px-3 text-right whitespace-nowrap">
+                                            <div class="inline-flex items-center justify-end gap-1.5">
                                                 
                                                 <!-- Tombol Edit -->
                                                 <a href="<?= url('admin/tickets.php?id_event=' . $selectedEventId . '&edit=' . $idT . '#form-tiket') ?>" 
