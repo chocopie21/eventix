@@ -1,0 +1,534 @@
+<?php
+/**
+ * EVENTIX - Halaman Konfirmasi Pesanan & Upload Bukti Pembayaran
+ * Human-Crafted Editorial Minimalist
+ */
+
+require_once __DIR__ . '/config/app.php';
+
+// 1. Wajib Login
+requireLogin('login.php');
+
+$user = currentUser();
+$idPengguna = (int)$user['id_pengguna'];
+$idPesanan = filter_input(INPUT_GET, 'id_pesanan', FILTER_VALIDATE_INT);
+
+if (!$idPesanan) {
+    setFlash('error', 'Nomor pesanan tidak valid.');
+    redirect('my_orders.php');
+}
+
+// 2. Ambil data pesanan dan event terkait
+try {
+    $stmtOrder = $pdo->prepare("SELECT 
+                                    p.*, 
+                                    e.id_event,
+                                    e.nama_event,
+                                    e.tanggal_event,
+                                    e.jam_event,
+                                    e.venue,
+                                    e.poster,
+                                    e.pengisi_acara,
+                                    k.genre_musik
+                                FROM pesanan p
+                                INNER JOIN detail_pesanan dp ON p.id_pesanan = dp.id_pesanan
+                                INNER JOIN tiket t ON dp.id_tiket = t.id_tiket
+                                INNER JOIN event e ON t.id_event = e.id_event
+                                INNER JOIN konser k ON e.id_event = k.id_event
+                                WHERE p.id_pesanan = :id_pesanan AND p.id_pengguna = :id_pengguna
+                                LIMIT 1");
+    $stmtOrder->execute([
+        ':id_pesanan'  => $idPesanan,
+        ':id_pengguna' => $idPengguna
+    ]);
+    $order = $stmtOrder->fetch(PDO::FETCH_ASSOC);
+
+    if (!$order) {
+        setFlash('error', 'Pesanan tidak ditemukan atau Anda tidak berhak mengakses halaman ini.');
+        redirect('my_orders.php');
+    }
+
+    // 3. Ambil rincian tiket yang dipesan
+    $stmtDetails = $pdo->prepare("SELECT 
+                                      dp.*, 
+                                      t.kategori, 
+                                      t.deskripsi AS deskripsi_tiket,
+                                      t.harga AS harga_satuan 
+                                  FROM detail_pesanan dp 
+                                  INNER JOIN tiket t ON dp.id_tiket = t.id_tiket 
+                                  WHERE dp.id_pesanan = :id_pesanan");
+    $stmtDetails->execute([':id_pesanan' => $idPesanan]);
+    $orderDetails = $stmtDetails->fetchAll(PDO::FETCH_ASSOC);
+
+    // 4. Ambil data pembayaran jika sudah ada upload sebelumnya
+    $stmtPay = $pdo->prepare("SELECT * FROM pembayaran WHERE id_pesanan = :id_pesanan ORDER BY id_pembayaran DESC LIMIT 1");
+    $stmtPay->execute([':id_pesanan' => $idPesanan]);
+    $payment = $stmtPay->fetch(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    error_log("[Checkout Query Error] " . $e->getMessage());
+    setFlash('error', 'Terjadi kesalahan sistem saat memuat data pesanan.');
+    redirect('my_orders.php');
+}
+
+$flashError = getFlash('error');
+$flashSuccess = getFlash('success');
+?>
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran #EVX-<?= $idPesanan ?> | EVENTIX</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        heading: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <?php include __DIR__ . '/components/navbar.php'; ?>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6">
+            <a href="<?= url('index.php') ?>" class="hover:text-slate-900 transition-colors">Beranda</a>
+            <span>/</span>
+            <a href="<?= url('my_orders.php') ?>" class="hover:text-slate-900 transition-colors">Riwayat Pesanan</a>
+            <span>/</span>
+            <span class="text-slate-900 font-semibold">Konfirmasi & Pembayaran #EVX-<?= $idPesanan ?></span>
+        </nav>
+
+        <!-- Flash Messages -->
+        <?php if ($flashError): ?>
+            <div class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3 text-rose-800 text-xs sm:text-sm">
+                <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?></span>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($flashSuccess): ?>
+            <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 text-emerald-800 text-xs sm:text-sm">
+                <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?></span>
+            </div>
+        <?php endif; ?>
+
+        <!-- Order Status Header Banner -->
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200">
+                        #EVX-<?= $order['id_pesanan'] ?>
+                    </span>
+                    <span class="text-xs text-slate-500">
+                        Dibuat: <?= formatTanggalIndo(date('Y-m-d', strtotime($order['tanggal']))) ?> • <?= date('H:i', strtotime($order['tanggal'])) ?> WIB
+                    </span>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-bold font-heading text-slate-900">
+                    Konfirmasi Pesanan & Pembayaran
+                </h1>
+            </div>
+
+            <!-- Status Badge -->
+            <div>
+                <?php if ($order['status'] === 'menunggu'): ?>
+                    <span class="badge-clean bg-amber-50 text-amber-800 border-amber-300">
+                        Menunggu Pembayaran
+                    </span>
+                <?php elseif ($order['status'] === 'menunggu_verifikasi'): ?>
+                    <span class="badge-clean bg-blue-50 text-blue-800 border-blue-300">
+                        Sedang Diverifikasi Admin
+                    </span>
+                <?php elseif ($order['status'] === 'lunas'): ?>
+                    <span class="badge-clean bg-emerald-50 text-emerald-800 border-emerald-300">
+                        <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Pembayaran Lunas
+                    </span>
+                <?php else: ?>
+                    <span class="badge-clean bg-rose-50 text-rose-800 border-rose-300">
+                        Pembayaran Ditolak
+                    </span>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <?php if ($order['status'] === 'lunas'): ?>
+            <!-- Pesanan Sudah Lunas Notice -->
+            <div class="bg-emerald-50 rounded-xl p-6 border border-emerald-200 text-center space-y-3 mb-6">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-lg font-bold text-emerald-950 font-heading">Pembayaran Telah Terverifikasi</h2>
+                <p class="text-xs sm:text-sm text-emerald-800 max-w-md mx-auto">
+                    E-ticket resmi Anda telah aktif. Tunjukkan kode QR pada menu Riwayat Pesanan saat masuk ke pintu venue konser.
+                </p>
+                <div class="pt-2">
+                    <a href="<?= url('my_orders.php') ?>" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs transition-colors">
+                        <span>Lihat E-Ticket di Riwayat Pesanan</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Two Columns Layout: Summary & Payment Form -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- LEFT COLUMN: Rincian Event & Detail Tiket -->
+            <div class="lg:col-span-6 space-y-6">
+                
+                <!-- Concert Brief Card -->
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-start gap-4">
+                        <img src="<?= asset('uploads/posters/' . ($order['poster'] ?? 'default.jpg')) ?>" 
+                             alt="<?= htmlspecialchars($order['nama_event'], ENT_QUOTES, 'UTF-8') ?>"
+                             class="w-20 h-28 object-cover rounded-lg border border-slate-200 shadow-xs shrink-0"
+                             onerror="this.src='<?= asset('uploads/posters/default.jpg') ?>'">
+                        <div class="space-y-1.5 flex-1 min-w-0">
+                            <span class="badge-clean bg-slate-100 text-slate-800 border-slate-200">
+                                <?= htmlspecialchars($order['genre_musik'], ENT_QUOTES, 'UTF-8') ?>
+                            </span>
+                            <h2 class="text-base font-bold text-slate-900 font-heading line-clamp-2">
+                                <?= htmlspecialchars($order['nama_event'], ENT_QUOTES, 'UTF-8') ?>
+                            </h2>
+                            <p class="text-xs text-slate-500 line-clamp-1">
+                                <?= htmlspecialchars($order['pengisi_acara'], ENT_QUOTES, 'UTF-8') ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span><?= formatTanggalIndo($order['tanggal_event']) ?> • <?= formatJam($order['jam_event']) ?></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="truncate"><?= htmlspecialchars($order['venue'], ENT_QUOTES, 'UTF-8') ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rincian Tiket yang Dipesan -->
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Rincian Tiket Pesanan
+                    </h3>
+
+                    <div class="divide-y divide-slate-100">
+                        <?php foreach ($orderDetails as $item): ?>
+                            <div class="py-3 first:pt-0 last:pb-0 flex items-center justify-between text-xs">
+                                <div>
+                                    <span class="font-bold text-slate-900 block"><?= htmlspecialchars($item['kategori'], ENT_QUOTES, 'UTF-8') ?></span>
+                                    <span class="text-slate-500 text-[11px]"><?= $item['jumlah'] ?> Tiket x <?= formatRupiah($item['harga_satuan']) ?></span>
+                                </div>
+                                <span class="font-bold text-slate-900"><?= formatRupiah($item['sub_total']) ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-200 space-y-2 text-xs">
+                        <div class="flex justify-between text-slate-500">
+                            <span>Biaya Layanan Platform</span>
+                            <span class="text-emerald-700 font-bold">GRATIS</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-100">
+                            <span>Total Pembayaran</span>
+                            <span class="text-base text-slate-950 font-black"><?= formatRupiah($order['harga']) ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Pemesan -->
+                <div class="bg-slate-100 rounded-xl p-4 border border-slate-200 text-xs text-slate-600 space-y-1.5">
+                    <span class="font-bold text-slate-900 block">Informasi Data Pemesan:</span>
+                    <p><span class="text-slate-500">Nama:</span> <strong class="text-slate-900"><?= htmlspecialchars($user['nama'], ENT_QUOTES, 'UTF-8') ?></strong></p>
+                    <p><span class="text-slate-500">Email:</span> <strong class="text-slate-900"><?= htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8') ?></strong></p>
+                    <p><span class="text-slate-500">No. HP:</span> <strong class="text-slate-900"><?= htmlspecialchars($user['no_telepon'] ?? '-', ENT_QUOTES, 'UTF-8') ?></strong></p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Metode Pembayaran & Form Upload Bukti -->
+            <div class="lg:col-span-6 space-y-6">
+
+                <!-- Rekening Bank Tujuan Transfer -->
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                            Pilih Rekening Tujuan Transfer
+                        </h3>
+                        <span class="text-xs text-slate-500">Transfer Manual</span>
+                    </div>
+
+                    <!-- Pilihan Akun Bank -->
+                    <div class="space-y-2 text-xs">
+                        
+                        <!-- Bank BCA -->
+                        <div class="bank-card p-3 rounded-lg border-2 border-slate-900 bg-slate-50 cursor-pointer transition-colors flex items-center justify-between"
+                             onclick="selectBank('BCA', '880123456789', 'PT EVENTIX INDONESIA', this)">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-7 rounded bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
+                                    BCA
+                                </div>
+                                <div>
+                                    <span class="font-bold text-slate-900 block">Bank Central Asia (BCA)</span>
+                                    <span class="font-mono text-slate-600 text-xs">8801 2345 6789</span>
+                                </div>
+                            </div>
+                            <span class="badge-clean bg-slate-900 text-white border-0 text-[10px]">Dipilih</span>
+                        </div>
+
+                        <!-- Bank Mandiri -->
+                        <div class="bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between"
+                             onclick="selectBank('Mandiri', '1370012345678', 'PT EVENTIX INDONESIA', this)">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-7 rounded bg-sky-900 text-amber-400 font-bold text-[10px] flex items-center justify-center">
+                                    MANDIRI
+                                </div>
+                                <div>
+                                    <span class="font-bold text-slate-900 block">Bank Mandiri</span>
+                                    <span class="font-mono text-slate-600 text-xs">137 00 1234567 8</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-slate-400">Pilih</span>
+                        </div>
+
+                        <!-- Bank BNI -->
+                        <div class="bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between"
+                             onclick="selectBank('BNI', '0987654321', 'PT EVENTIX INDONESIA', this)">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-7 rounded bg-orange-600 text-white font-bold text-xs flex items-center justify-center">
+                                    BNI
+                                </div>
+                                <div>
+                                    <span class="font-bold text-slate-900 block">Bank BNI</span>
+                                    <span class="font-mono text-slate-600 text-xs">0987 6543 21</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-slate-400">Pilih</span>
+                        </div>
+
+                        <!-- QRIS -->
+                        <div class="bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between"
+                             onclick="selectBank('QRIS', 'ID1020030040506', 'QRIS EVENTIX (Gopay/OVO/Dana/ShopeePay)', this)">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-7 rounded bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
+                                    QRIS
+                                </div>
+                                <div>
+                                    <span class="font-bold text-slate-900 block">QRIS All E-Wallet</span>
+                                    <span class="text-[11px] text-slate-500">Gopay, OVO, Dana, LinkAja, ShopeePay</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-slate-400">Pilih</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Kotak Salin Rekening Interaktif -->
+                    <div class="p-3.5 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-between gap-3 text-xs">
+                        <div>
+                            <span class="text-[10px] font-semibold text-slate-500 block" id="selected-bank-label">Nomor Rekening BCA</span>
+                            <span id="selected-bank-acc" class="font-mono font-bold text-sm text-slate-950">880123456789</span>
+                            <span id="selected-bank-holder" class="block text-[11px] text-slate-500">a.n. PT EVENTIX INDONESIA</span>
+                        </div>
+                        <button type="button" 
+                                onclick="copyAccountNumber()" 
+                                id="btn-copy-acc"
+                                class="px-3 py-1.5 rounded-md bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs shadow-xs transition-colors flex items-center gap-1 shrink-0">
+                            <span id="copy-text">Salin</span>
+                        </button>
+                    </div>
+
+                    <div class="p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+                        Mohon transfer tepat <strong><?= formatRupiah($order['harga']) ?></strong> agar transaksi dapat diverifikasi cepat oleh admin.
+                    </div>
+                </div>
+
+                <!-- FORM UPLOAD BUKTI TRANSFER -->
+                <?php if ($order['status'] !== 'lunas'): ?>
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <div>
+                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                                Unggah Bukti Transfer
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Format file yang didukung: JPG, JPEG, PNG, WEBP (Maksimal 2 MB)</p>
+                        </div>
+
+                        <?php if ($payment && !empty($payment['bukti_bayar'])): ?>
+                            <div class="p-3.5 rounded-lg bg-slate-100 border border-slate-200 text-xs text-slate-700 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-semibold">Bukti transfer sebelumnya telah diunggah:</span>
+                                    <span class="text-[10px] text-slate-500"><?= date('d/m/Y H:i', strtotime($payment['tanggal'])) ?></span>
+                                </div>
+                                <div class="w-20 h-20 rounded border border-slate-300 bg-white overflow-hidden">
+                                    <img src="<?= asset('uploads/payments/' . $payment['bukti_bayar']) ?>" alt="Bukti Transfer" class="w-full h-full object-cover">
+                                </div>
+                                <p class="text-[11px] text-slate-500">Unggah bukti baru di bawah jika ingin memperbarui file.</p>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="<?= url('actions/payment_upload.php') ?>" 
+                              method="POST" 
+                              enctype="multipart/form-data" 
+                              class="space-y-4">
+                            
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="id_pesanan" value="<?= $idPesanan ?>">
+                            <input type="hidden" name="metode" id="input-metode" value="Transfer Bank BCA">
+
+                            <!-- File Upload Box -->
+                            <div>
+                                <label for="bukti_bayar" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                                    Pilih File Bukti Pembayaran <span class="text-rose-500">*</span>
+                                </label>
+                                
+                                <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg transition-colors bg-slate-50/50 relative cursor-pointer group">
+                                    <div class="space-y-2 text-center">
+                                        
+                                        <!-- Preview Box Container -->
+                                        <div id="preview-container" class="hidden mb-3">
+                                            <img id="image-preview" src="#" alt="Preview Bukti" class="max-h-40 mx-auto rounded border border-slate-300">
+                                            <p id="file-name-text" class="text-xs font-medium text-slate-700 mt-2 truncate"></p>
+                                        </div>
+
+                                        <div id="upload-prompt" class="space-y-1">
+                                            <svg class="mx-auto h-8 w-8 text-slate-400 group-hover:text-slate-600 transition-colors" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <div class="text-xs text-slate-600">
+                                                <span class="font-semibold text-slate-900 group-hover:underline">Klik untuk memilih file</span>
+                                                <span>atau seret ke sini</span>
+                                            </div>
+                                            <p class="text-[10px] text-slate-400">PNG, JPG, JPEG, WEBP hingga 2MB</p>
+                                        </div>
+
+                                        <input id="bukti_bayar" 
+                                               name="bukti_bayar" 
+                                               type="file" 
+                                               accept="image/jpeg,image/png,image/webp" 
+                                               required
+                                               class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                               onchange="handleFilePreview(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tombol Kirim Bukti Transfer -->
+                            <button type="submit" 
+                                    class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-colors focus:outline-none shadow-xs">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                </svg>
+                                <span>Kirim Bukti Pembayaran</span>
+                            </button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <?php include __DIR__ . '/components/footer.php'; ?>
+
+    <!-- Interactive Scripts -->
+    <script>
+        let currentAccountNo = '880123456789';
+
+        function selectBank(name, accNo, holder, element) {
+            currentAccountNo = accNo;
+            document.getElementById('input-metode').value = 'Transfer Bank ' + name;
+            document.getElementById('selected-bank-label').textContent = 'Nomor Rekening ' + name;
+            document.getElementById('selected-bank-acc').textContent = accNo;
+            document.getElementById('selected-bank-holder').textContent = holder;
+
+            // Reset border active state
+            document.querySelectorAll('.bank-card').forEach(card => {
+                card.className = 'bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between';
+                const badge = card.querySelector('span:last-child');
+                if (badge) {
+                    badge.className = 'text-[10px] text-slate-400';
+                    badge.textContent = 'Pilih';
+                }
+            });
+
+            element.className = 'bank-card p-3 rounded-lg border-2 border-[#FF6082] bg-[#fff1f4] cursor-pointer transition-colors flex items-center justify-between';
+            const activeBadge = element.querySelector('span:last-child');
+            if (activeBadge) {
+                activeBadge.className = 'badge-clean bg-[#FF6082] text-white border-0 text-[10px]';
+                activeBadge.textContent = 'Dipilih';
+            }
+        }
+
+        function copyAccountNumber() {
+            navigator.clipboard.writeText(currentAccountNo).then(() => {
+                const copyText = document.getElementById('copy-text');
+                copyText.textContent = 'Disalin';
+                setTimeout(() => {
+                    copyText.textContent = 'Salin';
+                }, 2000);
+            });
+        }
+
+        function handleFilePreview(input) {
+            const previewContainer = document.getElementById('preview-container');
+            const previewImg = document.getElementById('image-preview');
+            const fileNameText = document.getElementById('file-name-text');
+            const uploadPrompt = document.getElementById('upload-prompt');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    fileNameText.textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+                    previewContainer.classList.remove('hidden');
+                    uploadPrompt.classList.add('hidden');
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
