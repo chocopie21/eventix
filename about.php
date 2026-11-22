@@ -1,8 +1,7 @@
 <?php
 /**
  * EVENTIX - Halaman Tentang Kami (About Us)
- * Modern Minimalist Design
- * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
+ * Full Redesign: SF Pro Display & Hallmark Editorial Craft
  */
 require_once __DIR__ . '/config/app.php';
 ?>
@@ -12,7 +11,7 @@ require_once __DIR__ . '/config/app.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Kami | EVENTIX</title>
-    <meta name="description" content="EVENTIX adalah platform resmi pemesanan tiket konser musik Indonesia dengan jaminan keaslian tiket 100% dan teknologi anti-calo.">
+    <meta name="description" content="EVENTIX adalah platform tiket konser musik resmi di Indonesia dengan jaminan keaslian alokasi promotor dan sistem pemesanan transparan.">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,9 +20,8 @@ require_once __DIR__ . '/config/app.php';
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        display: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     }
                 }
             }
@@ -36,116 +34,103 @@ require_once __DIR__ . '/config/app.php';
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+<body class="bg-[#FAFBFD] text-slate-900 antialiased flex flex-col min-h-screen font-sf">
 
     <!-- Navbar -->
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-12">
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
         
-        <!-- Header Hero Minimalist -->
-        <div class="text-center space-y-4 max-w-2xl mx-auto">
-            <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-[#fff1f4] text-[#c5294e] border border-[#fed7e2] inline-block">
-                Tentang EVENTIX
-            </span>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.12] gsap-words-reveal">
-                Membuka Gerbang Panggung Konser Impian Anda
-            </h1>
-            <p class="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-                EVENTIX didirikan untuk merevolusi pengalaman menonton konser musik di Indonesia: adil, transparan, dan bebas dari praktik calo yang merugikan penikmat musik.
+        <!-- Editorial Manifesto Header (No Eyebrow Pill) -->
+        <header class="space-y-6 max-w-3xl">
+            <p class="text-xs font-semibold text-[#FF6082] tracking-normal uppercase">
+                Tentang Platform
             </p>
-        </div>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.08]">
+                Mengembalikan Kemurnian Pengalaman Menonton Konser Live.
+            </h1>
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+                EVENTIX didirikan atas satu prinsip sederhana: tiket pertunjukan musik harus sampai ke tangan penikmat musik sejati secara adil, transparan, dan bebas dari distorsi calo.
+            </p>
+        </header>
 
-        <!-- 3 Pilar Nilai Utama -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3.5">
-                <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                </div>
-                <h3 class="text-base font-bold text-slate-900">Tiket Resmi 100%</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Setiap tiket yang terjual terhubung langsung dengan alokasi resmi dari promotor konser. Tidak ada perantara calo atau tiket palsu.
+        <!-- Editorial Split: Story & Architecture -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-10 pt-4 border-t border-slate-200/90 items-start">
+            <div class="md:col-span-5 space-y-3">
+                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                    Mengapa Sistem Tiket Konser Harus Berubah
+                </h2>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Setiap tahun, ribuan penggemar musik dirugikan oleh tiket duplikat, markup harga tidak wajar, dan antrean yang dimanipulasi bot.
                 </p>
             </div>
-
-            <div class="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3.5">
-                <div class="w-11 h-11 rounded-xl bg-[#fff1f4] text-[#FF6082] flex items-center justify-center font-bold">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                </div>
-                <h3 class="text-base font-bold text-slate-900">Proteksi Rebutan Tiket</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Teknologi database transaksional dengan <em>Pessimistic Row Locking</em> mencegah tiket overselling dan menjamin keadilan alokasi antrean.
-                </p>
-            </div>
-
-            <div class="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3.5">
-                <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                </div>
-                <h3 class="text-base font-bold text-slate-900">Verifikasi Terpercaya</h3>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Setiap pembayaran diverifikasi secara teliti oleh admin, menerbitkan E-Ticket QR Code unik yang siap ditukarkan menjadi wristband di lokasi acara.
-                </p>
-            </div>
-
-        </div>
-
-        <!-- Cerita & Visi Kami -->
-        <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-[0_4px_24px_rgba(15,23,42,0.03)] space-y-6">
-            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                Dedikasi untuk Ekosistem Musik Indonesia
-            </h2>
-            <div class="text-xs sm:text-sm text-slate-600 space-y-4 leading-relaxed font-normal">
+            <div class="md:col-span-7 space-y-6 text-sm text-slate-600 leading-relaxed">
                 <p>
-                    Konser musik bukan sekadar hiburan—itu adalah momen berharga di mana puluhan ribu orang bernyanyi bersama, merayakan karya musisi favorit, dan menciptakan kenangan berharga.
+                    Bagi kami, konser bukan komoditas spekulasi. Itu adalah ruang sakral di mana lagu-lagu yang menemani keseharian Anda dinyanyikan bersama ribuan suara di bawah gemerlap panggung stadion dan festival hall.
                 </p>
                 <p>
-                    EVENTIX hadir menjembatani musisi legendaris tanah air—seperti Sheila on 7, Dewa 19, Hindia, Tulus, Bernadya, dan Perunggu—dengan para penikmat musik melalui sistem digital yang transparan dan dapat diandalkan.
+                    Oleh karena itu, kami membangun infrastruktur reservasi tiket yang terhubung langsung dengan pihak promotor konser resmi di Indonesia—dari pertunjukan arena musisi tanah air hingga tur stadion artis internasional.
                 </p>
             </div>
+        </section>
 
-            <div class="pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-6">
-                <div class="flex items-center gap-6 sm:gap-8 text-xs text-slate-500 font-medium">
-                    <div>
-                        <span class="block text-2xl font-extrabold text-slate-900">100%</span>
-                        <span>Garansi Resmi</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div>
-                        <span class="block text-2xl font-extrabold text-slate-900">24 Jam</span>
-                        <span>Verifikasi Pembayaran</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200"></div>
-                    <div>
-                        <span class="block text-2xl font-extrabold text-slate-900">0 Biaya</span>
-                        <span>Tersembunyi</span>
-                    </div>
-                </div>
-
-                <a href="<?= url('index.php#katalog') ?>" class="px-6 py-3 rounded-xl bg-[#FF6082] hover:bg-[#e54b6d] text-white font-semibold text-xs transition-all shadow-xs hover:shadow-sm">
-                    Jelajahi Konser
-                </a>
+        <!-- 3 Pilar Integritas Sistem (Asymmetric Editorial Cards, No Gimmick Icons) -->
+        <section class="space-y-6">
+            <div class="border-b border-slate-200/90 pb-4">
+                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                    Standar Operasional EVENTIX
+                </h2>
             </div>
-        </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <article class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
+                    <span class="text-xs font-mono font-bold text-slate-400 block">01</span>
+                    <h3 class="text-base font-bold text-slate-900 tracking-tight">Alokasi Resmi Promotor</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed font-normal">
+                        Seluruh kategori tiket dan kuota kursi yang terbit berasal langsung dari kontrak kerja sama promotor penyelenggara acara, tanpa perantara sekunder.
+                    </p>
+                </article>
+
+                <article class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
+                    <span class="text-xs font-mono font-bold text-slate-400 block">02</span>
+                    <h3 class="text-base font-bold text-slate-900 tracking-tight">Pencegahan Overselling</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed font-normal">
+                        Database transaksional kami mengunci kuota secara <em>atomic</em> pada saat checkout dilakukan, menjamin tidak ada perebutan ganda atas satu nomor tiket.
+                    </p>
+                </article>
+
+                <article class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
+                    <span class="text-xs font-mono font-bold text-slate-400 block">03</span>
+                    <h3 class="text-base font-bold text-slate-900 tracking-tight">E-Ticket QR Terverifikasi</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed font-normal">
+                        Begitu pembayaran terkonfirmasi, e-ticket berbarcode QR dinamis langsung terbit di akun Anda, siap dipindai di ticket box lokasi acara untuk penukaran wristband.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Call to Action Banner -->
+        <section class="bg-[#0F172A] text-white rounded-3xl p-8 sm:p-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="space-y-2 max-w-xl">
+                <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-sf">
+                    Siap Mengamankan Tiket Konser Pilihan Anda?
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                    Jelajahi jadwal pertunjukan tur dunia dan konser eksklusif yang sedang membuka alokasi tiket resmi.
+                </p>
+            </div>
+            <a href="<?= url('index.php#katalog') ?>" class="px-6 py-3.5 rounded-xl bg-[#FF6082] hover:bg-[#E0486D] text-white font-semibold text-xs tracking-normal transition-button shadow-sm hover:shadow whitespace-nowrap">
+                Buka Katalog Konser
+            </a>
+        </section>
 
     </main>
 
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
-    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
-    <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

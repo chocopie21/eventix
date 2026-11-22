@@ -62,7 +62,10 @@ function url(string $path = ''): string
  */
 function asset(string $path = ''): string
 {
-    return url('assets/' . ltrim($path, '/'));
+    $cleanPath = ltrim($path, '/');
+    $fileSystemPath = __DIR__ . '/../assets/' . $cleanPath;
+    $version = file_exists($fileSystemPath) ? '?v=' . filemtime($fileSystemPath) : '';
+    return url('assets/' . $cleanPath) . $version;
 }
 
 

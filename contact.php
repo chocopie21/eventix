@@ -1,8 +1,7 @@
 <?php
 /**
  * EVENTIX - Halaman Kontak & Kemitraan Promotor
- * Modern Minimalist Design
- * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
+ * Full Redesign: SF Pro Display & Hallmark Editorial Craft
  */
 require_once __DIR__ . '/config/app.php';
 
@@ -34,9 +33,8 @@ $flashError = getFlash('error');
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        display: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     }
                 }
             }
@@ -49,31 +47,31 @@ $flashError = getFlash('error');
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+<body class="bg-[#FAFBFD] text-slate-900 antialiased flex flex-col min-h-screen font-sf">
 
     <!-- Navbar -->
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-10">
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         
-        <!-- Header Minimalist -->
-        <div class="text-center space-y-3 max-w-xl mx-auto">
-            <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-[#fff1f4] text-[#c5294e] border border-[#fed7e2] inline-block">
-                Layanan & Kemitraan
-            </span>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight gsap-words-reveal">
-                Ada yang Bisa Kami Bantu?
-            </h1>
-            <p class="text-xs sm:text-sm text-slate-600 font-normal">
-                Punya pertanyaan seputar tiket atau ingin mendaftarkan event konser musik Anda di platform EVENTIX? Kami siap berdiskusi.
+        <!-- Header (No Eyebrow Pill) -->
+        <header class="space-y-4 max-w-2xl">
+            <p class="text-xs font-semibold text-[#FF6082] tracking-normal uppercase">
+                Komunikasi & Kemitraan
             </p>
-        </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.08]">
+                Hubungi Tim EVENTIX
+            </h1>
+            <p class="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+                Pertanyaan seputar tiket penonton atau diskusi integrasi tiket resmi untuk promotor konser musik.
+            </p>
+        </header>
 
         <!-- Flash Messages -->
         <?php if ($flashSuccess): ?>
-            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs sm:text-sm max-w-2xl mx-auto">
-                <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 text-emerald-800 text-xs sm:text-sm">
+                <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span><?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?></span>
@@ -81,139 +79,100 @@ $flashError = getFlash('error');
         <?php endif; ?>
 
         <?php if ($flashError): ?>
-            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs sm:text-sm max-w-2xl mx-auto">
-                <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-3 text-rose-800 text-xs sm:text-sm">
+                <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span><?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?></span>
             </div>
         <?php endif; ?>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
             
-            <!-- Left: Kontak Detail Cards (5 Cols) -->
+            <!-- Left: Kontak Detail (5 Cols) -->
             <div class="md:col-span-5 space-y-4">
                 
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2">
-                    <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-slate-900">Email Resmi</h3>
-                    <p class="text-xs text-slate-500 font-normal">Pertanyaan umum, penawaran promotor, atau kendala transaksi.</p>
-                    <p class="text-xs font-semibold text-slate-900 font-mono">support@eventix.id</p>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
+                    <span class="text-xs uppercase font-bold tracking-wider text-slate-400 block">Surat Elektronik</span>
+                    <h3 class="text-base font-bold text-slate-900">support@eventix.id</h3>
+                    <p class="text-xs text-slate-500 font-normal leading-relaxed">
+                        Pertanyaan penonton, kendala e-ticket, dan korespondensi promotor.
+                    </p>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-slate-900">WhatsApp CS (Chat Only)</h3>
-                    <p class="text-xs text-slate-500 font-normal">Layanan pesan cepat untuk verifikasi mendesak.</p>
-                    <p class="text-xs font-semibold text-slate-900 font-mono">+62 812-9876-5432</p>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
+                    <span class="text-xs uppercase font-bold tracking-wider text-slate-400 block">Layanan Cepat</span>
+                    <h3 class="text-base font-bold text-slate-900">+62 812-9876-5432</h3>
+                    <p class="text-xs text-slate-500 font-normal leading-relaxed">
+                        WhatsApp Helpdesk aktif setiap hari pada jam operasional 09:00 – 21:00 WIB.
+                    </p>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs space-y-2">
-                    <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center font-bold">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-sm font-bold text-slate-900">Kantor Operasional</h3>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
+                    <span class="text-xs uppercase font-bold tracking-wider text-slate-400 block">Alamat Kantor</span>
+                    <h3 class="text-sm font-bold text-slate-900">Gedung Cyber 2 Lantai 15</h3>
                     <p class="text-xs text-slate-600 leading-relaxed font-normal">
-                        Gedung Cyber 2 Lantai 15, Jl. H.R. Rasuna Said, Jakarta Selatan 12950, Indonesia.
+                        Jl. H.R. Rasuna Said Blok X-5 No. 13, Kuningan Timur, Setiabudi, Jakarta Selatan 12950.
                     </p>
                 </div>
 
             </div>
 
             <!-- Right: Formulir Pesan & Kemitraan (7 Cols) -->
-            <div class="md:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-2xs space-y-5">
+            <div class="md:col-span-7 bg-white p-8 rounded-3xl border border-slate-200/90 shadow-xs space-y-6">
                 <div>
-                    <h2 class="text-base font-bold text-slate-900">Kirim Pesan / Kemitraan Promotor</h2>
-                    <p class="text-xs text-slate-500 mt-1 font-normal">Kami akan menghubungi Anda kembali dalam kurun waktu 1x24 jam kerja.</p>
+                    <h2 class="text-lg font-bold text-slate-900 tracking-tight">Kirim Pesan / Pengajuan Promotor</h2>
+                    <p class="text-xs text-slate-500 mt-1 font-normal">Tuliskan kebutuhan Anda secara ringkas. Tim kami akan merespons dalam 1x24 jam.</p>
                 </div>
 
-                <form action="<?= url('contact.php') ?>" method="POST" class="space-y-4">
+                <form action="contact.php" method="POST" class="space-y-4">
                     <?= csrf_field() ?>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="contact-name" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                                Nama lengkap <span class="text-rose-600">*</span>
-                            </label>
-                            <input type="text" 
-                                   id="contact-name" 
-                                   name="nama" 
-                                   required 
-                                   placeholder="Nama Anda"
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
-                        </div>
-
-                        <div>
-                            <label for="contact-email" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                                Alamat email <span class="text-rose-600">*</span>
-                            </label>
-                            <input type="email" 
-                                   id="contact-email" 
-                                   name="email" 
-                                   required 
-                                   placeholder="nama@email.com"
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
-                        </div>
+                    <div class="space-y-1.5">
+                        <label for="nama" class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
+                        <input type="text" 
+                               id="nama" 
+                               name="nama" 
+                               required 
+                               placeholder="Nama Anda atau perwakilan promotor"
+                               class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#FF6082] transition-colors">
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="contact-phone" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                                Nomor WhatsApp / HP
-                            </label>
-                            <input type="tel" 
-                                   id="contact-phone" 
-                                   name="telepon" 
-                                   placeholder="0812xxxxxxxx"
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
-                        </div>
-
-                        <div>
-                            <label for="contact-subject" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                                Keperluan / Subjek <span class="text-rose-600">*</span>
-                            </label>
-                            <select id="contact-subject" 
-                                    name="subjek" 
-                                    required
-                                    class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none transition-all">
-                                <option value="Bantuan Pembelian Tiket">Bantuan Pembelian Tiket</option>
-                                <option value="Verifikasi Pembayaran">Kendala Verifikasi Pembayaran</option>
-                                <option value="Kemitraan Promotor Konser">Kemitraan Promotor Konser</option>
-                                <option value="Sponsorship & Media">Sponsorship & Media</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
+                    <div class="space-y-1.5">
+                        <label for="email" class="block text-xs font-semibold text-slate-700">Alamat Email</label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               required 
+                               placeholder="nama@domain.com"
+                               class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#FF6082] transition-colors">
                     </div>
 
-                    <div>
-                        <label for="contact-message" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                            Pesan atau Pertanyaan <span class="text-rose-600">*</span>
-                        </label>
-                        <textarea id="contact-message" 
+                    <div class="space-y-1.5">
+                        <label for="subjek" class="block text-xs font-semibold text-slate-700">Subjek Keperluan</label>
+                        <select id="subjek" 
+                                name="subjek" 
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:border-[#FF6082] transition-colors">
+                            <option value="pertanyaan_tiket">Pertanyaan Pemesanan / E-Ticket</option>
+                            <option value="kemitraan_promotor">Kemitraan Penjualan Tiket Promotor</option>
+                            <option value="kendala_pembayaran">Kendala Transaksi Pembayaran</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="pesan" class="block text-xs font-semibold text-slate-700">Isi Pesan</label>
+                        <textarea id="pesan" 
                                   name="pesan" 
                                   rows="4" 
                                   required 
-                                  placeholder="Tuliskan pesan atau pertanyaan Anda secara rinci..."
-                                  class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all"></textarea>
+                                  placeholder="Jelaskan detail pertanyaan atau rencana konser musik Anda..."
+                                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#FF6082] transition-colors"></textarea>
                     </div>
 
                     <button type="submit" 
-                            class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] shadow-xs hover:shadow-sm transition-all focus:outline-none">
-                        <span>Kirim Pesan</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
+                            class="w-full py-3.5 px-4 rounded-xl text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#E0486D] transition-button shadow-sm hover:shadow">
+                        Kirim Pesan
                     </button>
                 </form>
             </div>
@@ -225,11 +184,9 @@ $flashError = getFlash('error');
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
-    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <!-- Animation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
     <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

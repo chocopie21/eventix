@@ -33,9 +33,8 @@ $successMessage = getFlash('success');
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        display: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     }
                 }
             }
@@ -45,7 +44,7 @@ $successMessage = getFlash('success');
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
-<body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-900 antialiased">
+<body class="min-h-full flex flex-col justify-between bg-[#FAFBFD] text-slate-900 antialiased font-sf">
 
     <!-- Top Navigation Simple Bar -->
     <header class="w-full glass-header py-4 px-4 sm:px-8">

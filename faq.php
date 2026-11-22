@@ -1,8 +1,7 @@
 <?php
 /**
  * EVENTIX - Halaman Pusat Bantuan & FAQ
- * Modern Minimalist Design
- * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
+ * Full Redesign: SF Pro Display & Hallmark Editorial Craft
  */
 require_once __DIR__ . '/config/app.php';
 ?>
@@ -21,9 +20,8 @@ require_once __DIR__ . '/config/app.php';
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        display: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     }
                 }
             }
@@ -36,110 +34,103 @@ require_once __DIR__ . '/config/app.php';
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+<body class="bg-[#FAFBFD] text-slate-900 antialiased flex flex-col min-h-screen font-sf">
 
     <!-- Navbar -->
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-10">
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         
-        <!-- Header Minimalist -->
-        <div class="text-center space-y-3 max-w-xl mx-auto">
-            <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-[#fff1f4] text-[#c5294e] border border-[#fed7e2] inline-block">
+        <!-- Header (No Eyebrow Pill) -->
+        <header class="space-y-4 max-w-2xl">
+            <p class="text-xs font-semibold text-[#FF6082] tracking-normal uppercase">
                 Pusat Bantuan
-            </span>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight gsap-words-reveal">
+            </p>
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.08]">
                 Pertanyaan yang Sering Diajukan
             </h1>
-            <p class="text-xs sm:text-sm text-slate-600 font-normal">
-                Temukan jawaban seputar tata cara pembelian tiket, konfirmasi pembayaran instan, dan akses e-ticket konser.
+            <p class="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+                Panduan lengkap seputar pembelian tiket, konfirmasi pembayaran instan, dan penukaran wristband di lokasi konser.
             </p>
-        </div>
+        </header>
 
-        <!-- FAQ Categories & Accordion List -->
-        <div class="space-y-4">
+        <!-- FAQ Editorial Accordion List (Clean Hairline Borders, No Number Boxes) -->
+        <section class="bg-white rounded-3xl border border-slate-200/90 shadow-xs divide-y divide-slate-100 overflow-hidden">
             
             <!-- Item 1 -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-2">
-                <h3 class="text-base font-bold text-slate-900 flex items-center gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-xs font-bold shrink-0">1</span>
+            <article class="p-6 sm:p-8 space-y-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Bagaimana cara memesan tiket konser di EVENTIX?
-                </h3>
-                <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
-                    Pilih konser musik yang ingin ditonton di halaman Beranda atau Katalog, klik detail event, tentukan kategori tiket dan jumlah tiket dengan tombol stepper (+), lalu klik <strong>Lanjut ke Pembayaran</strong>. Anda akan diarahkan ke halaman checkout untuk melakukan transfer bank.
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Pilih konser musik yang ingin ditonton di halaman Beranda atau Katalog, buka detail event, tentukan kategori tiket dan jumlah tiket dengan tombol stepper (+), lalu klik <strong>Lanjut ke Pembayaran</strong>. Anda akan diarahkan ke halaman checkout untuk memilih metode pembayaran transfer bank atau QRIS.
                 </p>
-            </div>
+            </article>
 
             <!-- Item 2 -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-2">
-                <h3 class="text-base font-bold text-slate-900 flex items-center gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+            <article class="p-6 sm:p-8 space-y-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Metode pembayaran apa saja yang didukung?
-                </h3>
-                <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
-                    Kami mendukung transfer bank resmi ke rekening PT EVENTIX INDONESIA (BCA, Mandiri, BNI) serta QRIS All E-Wallet (Gopay, OVO, Dana, LinkAja, ShopeePay). Pembayaran terverifikasi secara instan tanpa perlu repot mengunggah foto bukti fisik.
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Kami mendukung transfer bank resmi (BCA, Mandiri, BNI) serta QRIS All E-Wallet (GoPay, OVO, DANA, LinkAja, ShopeePay). Pembayaran diverifikasi langsung oleh sistem tanpa perlu repot mengunggah foto bukti fisik.
                 </p>
-            </div>
+            </article>
 
             <!-- Item 3 -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-2">
-                <h3 class="text-base font-bold text-slate-900 flex items-center gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+            <article class="p-6 sm:p-8 space-y-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Kapan E-Ticket saya akan terbit?
-                </h3>
-                <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                     Setelah Anda mengonfirmasi pembayaran di halaman checkout, E-Ticket resmi ber-QR Code unik akan langsung aktif seketika di menu <strong>Tiket Saya</strong> tanpa waktu tunggu.
                 </p>
-            </div>
+            </article>
 
             <!-- Item 4 -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-2">
-                <h3 class="text-base font-bold text-slate-900 flex items-center gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-xs font-bold shrink-0">4</span>
+            <article class="p-6 sm:p-8 space-y-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Bagaimana cara penukaran gelang wristband di lokasi acara?
-                </h3>
-                <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
-                    Tunjukkan E-Ticket digital berbarcode QR Code langsung dari layar ponsel Anda kepada staf penukaran di ticket box venue, beserta kartu identitas (KTP/SIM/Paspor) yang sesuai dengan nama pada akun pemesan.
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Tunjukkan E-Ticket digital berbarcode QR Code langsung dari layar ponsel Anda kepada staf penukaran di ticket box venue, beserta kartu identitas resmi (KTP/SIM/Paspor) yang sesuai dengan nama pada akun pemesan.
                 </p>
-            </div>
+            </article>
 
             <!-- Item 5 -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-2">
-                <h3 class="text-base font-bold text-slate-900 flex items-center gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center text-xs font-bold shrink-0">5</span>
+            <article class="p-6 sm:p-8 space-y-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Apakah tiket yang sudah dibeli bisa dibatalkan atau refund?
-                </h3>
-                <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
-                    Sesuai dengan ketentuan promotor konser, tiket yang telah lunas bersifat <em>non-refundable</em> (tidak dapat dikembalikan), kecuali terjadi pembatalan atau perubahan jadwal resmi dari pihak penyelenggara konser.
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    Sesuai dengan ketentuan standar promotor konser, tiket yang telah lunas bersifat <em>non-refundable</em> (tidak dapat dikembalikan), kecuali terjadi pembatalan atau perubahan jadwal resmi dari pihak promotor penyelenggara acara.
                 </p>
-            </div>
+            </article>
 
-        </div>
+        </section>
 
         <!-- Callout Hubungi CS -->
-        <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 text-center space-y-3 shadow-2xs">
-            <h3 class="text-lg font-bold text-slate-900">Masih Memiliki Pertanyaan Lain?</h3>
-            <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto font-normal">
-                Tim layanan pelanggan kami siap membantu Anda menyelesaikan kendala pemesanan atau verifikasi tiket.
-            </p>
-            <div class="pt-2">
-                <a href="<?= url('contact.php') ?>" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF6082] hover:bg-[#e54b6d] text-white font-semibold text-xs transition-all shadow-xs hover:shadow-sm">
-                    <span>Hubungi Tim Dukungan</span>
-                </a>
+        <section class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
+            <div class="space-y-1.5">
+                <h3 class="text-lg font-bold text-slate-900 tracking-tight">Masih Memerlukan Bantuan?</h3>
+                <p class="text-xs sm:text-sm text-slate-500 font-normal">
+                    Tim dukungan penonton kami siap membantu menjawab pertanyaan seputar transaksi Anda.
+                </p>
             </div>
-        </div>
+            <a href="<?= url('contact.php') ?>" class="px-6 py-3 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-semibold text-xs transition-colors shrink-0 whitespace-nowrap">
+                Hubungi Tim Dukungan
+            </a>
+        </section>
 
     </main>
 
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
-    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <!-- Animation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
     <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

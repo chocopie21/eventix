@@ -20,9 +20,8 @@ http_response_code(404);
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'Outfit', 'sans-serif'],
+                        sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        display: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     }
                 }
             }
@@ -32,7 +31,7 @@ http_response_code(404);
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+<body class="bg-[#FAFBFD] text-slate-900 antialiased flex flex-col min-h-screen font-sf">
 
     <!-- Navbar -->
     <?php include __DIR__ . '/components/navbar.php'; ?>

@@ -33,9 +33,8 @@ $errorMessage = getFlash('error');
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        sans: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        display: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     }
                 }
             }
@@ -45,7 +44,7 @@ $errorMessage = getFlash('error');
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
-<body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-900 antialiased">
+<body class="min-h-full flex flex-col justify-between bg-[#FAFBFD] text-slate-900 antialiased font-sf">
 
     <!-- Top Navigation Simple Bar -->
     <header class="w-full glass-header py-4 px-4 sm:px-8">
@@ -197,11 +196,8 @@ $errorMessage = getFlash('error');
 
                 <!-- Tombol Submit -->
                 <button type="submit" 
-                        class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all focus:outline-none shadow-xs hover:shadow-sm">
-                    <span>Masuk</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                        class="w-full py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#E0486D] transition-button focus:outline-none shadow-sm hover:shadow">
+                    Masuk
                 </button>
             </form>
 
