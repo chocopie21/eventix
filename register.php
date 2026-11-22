@@ -1,7 +1,8 @@
 <?php
 /**
  * EVENTIX - Halaman Registrasi / Daftar Akun Baru
- * Human-Crafted Editorial Minimalist
+ * Modern Minimalist Design
+ * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
  */
 
 require_once __DIR__ . '/config/app.php';
@@ -33,8 +34,8 @@ $successMessage = getFlash('success');
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'Outfit', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -47,15 +48,15 @@ $successMessage = getFlash('success');
 <body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-900 antialiased">
 
     <!-- Top Navigation Simple Bar -->
-    <header class="w-full bg-white border-b border-slate-200 py-3.5 px-4 sm:px-8">
+    <header class="w-full glass-header py-4 px-4 sm:px-8">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="<?= url('index.php') ?>" class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg bg-[#FF6082] flex items-center justify-center text-white">
+            <a href="<?= url('index.php') ?>" class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-[#FF6082] flex items-center justify-center text-white shadow-xs">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                     </svg>
                 </div>
-                <span class="text-xl font-black tracking-tight text-slate-950 font-display">
+                <span class="text-xl font-extrabold tracking-tight text-slate-900 font-sans">
                     EVENTIX
                 </span>
             </a>
@@ -71,11 +72,11 @@ $successMessage = getFlash('success');
 
     <!-- Main Content Area -->
     <main class="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-        <div class="w-full max-w-xl bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+        <div class="w-full max-w-xl bg-white rounded-3xl shadow-[0_4px_24px_rgba(15,23,42,0.05)] border border-slate-200/80 p-7 sm:p-9 space-y-6">
             
             <!-- Title -->
             <div>
-                <h1 class="text-2xl font-bold font-heading text-slate-900">
+                <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">
                     Buat Akun Baru
                 </h1>
                 <p class="mt-1 text-xs text-slate-500">
@@ -85,7 +86,7 @@ $successMessage = getFlash('success');
 
             <!-- Flash Message Alert -->
             <?php if ($errorMessage): ?>
-                <div class="p-3.5 rounded-lg bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs">
+                <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs">
                     <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -94,7 +95,7 @@ $successMessage = getFlash('success');
             <?php endif; ?>
 
             <?php if ($successMessage): ?>
-                <div class="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs">
+                <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs">
                     <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -108,7 +109,7 @@ $successMessage = getFlash('success');
 
                 <!-- Nama Lengkap -->
                 <div>
-                    <label for="nama" class="block text-xs font-semibold text-slate-800 mb-1">
+                    <label for="nama" class="block text-xs font-semibold text-slate-800 mb-1.5">
                         Nama lengkap <span class="text-rose-600">*</span>
                     </label>
                     <input type="text" 
@@ -118,14 +119,14 @@ $successMessage = getFlash('success');
                            placeholder="Sesuai kartu identitas (KTP / SIM)" 
                            required
                            autocomplete="name"
-                           class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                           class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                 </div>
 
                 <!-- 2 Kolom: Email & No Telepon -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Email -->
                     <div>
-                        <label for="email" class="block text-xs font-semibold text-slate-800 mb-1">
+                        <label for="email" class="block text-xs font-semibold text-slate-800 mb-1.5">
                             Alamat email <span class="text-rose-600">*</span>
                         </label>
                         <input type="email" 
@@ -135,12 +136,12 @@ $successMessage = getFlash('success');
                                placeholder="nama@email.com" 
                                required
                                autocomplete="email"
-                               class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                               class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                     </div>
 
                     <!-- No Telepon / WhatsApp -->
                     <div>
-                        <label for="no_telepon" class="block text-xs font-semibold text-slate-800 mb-1">
+                        <label for="no_telepon" class="block text-xs font-semibold text-slate-800 mb-1.5">
                             Nomor WhatsApp / HP <span class="text-rose-600">*</span>
                         </label>
                         <input type="tel" 
@@ -150,13 +151,13 @@ $successMessage = getFlash('success');
                                placeholder="0812xxxxxxxx" 
                                required
                                autocomplete="tel"
-                               class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                               class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                     </div>
                 </div>
 
                 <!-- Alamat Domisili -->
                 <div>
-                    <label for="alamat" class="block text-xs font-semibold text-slate-800 mb-1">
+                    <label for="alamat" class="block text-xs font-semibold text-slate-800 mb-1.5">
                         Kota asal / Alamat domisili <span class="text-slate-400 font-normal">(opsional)</span>
                     </label>
                     <input type="text" 
@@ -164,14 +165,14 @@ $successMessage = getFlash('success');
                            name="alamat" 
                            value="<?= htmlspecialchars($old['alamat'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
                            placeholder="Contoh: Jakarta Selatan, DKI Jakarta" 
-                           class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                           class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                 </div>
 
                 <!-- 2 Kolom: Kata Sandi & Konfirmasi Kata Sandi -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Password -->
                     <div>
-                        <label for="password" class="block text-xs font-semibold text-slate-800 mb-1">
+                        <label for="password" class="block text-xs font-semibold text-slate-800 mb-1.5">
                             Kata sandi <span class="text-rose-600">*</span>
                         </label>
                         <div class="relative">
@@ -182,9 +183,9 @@ $successMessage = getFlash('success');
                                    required
                                    minlength="6"
                                    autocomplete="new-password"
-                                   class="w-full px-3.5 pr-10 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                                   class="w-full px-3.5 pr-10 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                             <button type="button" 
-                                    class="toggle-pass-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700 focus:outline-none"
+                                    class="toggle-pass-btn absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 focus:outline-none"
                                     data-target="password"
                                     aria-label="Tampilkan sandi">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +198,7 @@ $successMessage = getFlash('success');
 
                     <!-- Konfirmasi Password -->
                     <div>
-                        <label for="password_confirm" class="block text-xs font-semibold text-slate-800 mb-1">
+                        <label for="password_confirm" class="block text-xs font-semibold text-slate-800 mb-1.5">
                             Ulangi kata sandi <span class="text-rose-600">*</span>
                         </label>
                         <div class="relative">
@@ -208,9 +209,9 @@ $successMessage = getFlash('success');
                                    required
                                    minlength="6"
                                    autocomplete="new-password"
-                                   class="w-full px-3.5 pr-10 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                                   class="w-full px-3.5 pr-10 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                             <button type="button" 
-                                    class="toggle-pass-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700 focus:outline-none"
+                                    class="toggle-pass-btn absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 focus:outline-none"
                                     data-target="password_confirm"
                                     aria-label="Tampilkan sandi">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -224,7 +225,7 @@ $successMessage = getFlash('success');
 
                 <!-- Checkbox Persetujuan -->
                 <div class="flex items-start pt-1">
-                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 mt-0.5 text-slate-900 focus:ring-slate-900 border-slate-300 rounded cursor-pointer">
+                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 mt-0.5 text-[#0F172A] focus:ring-[#FF6082] border-slate-300 rounded cursor-pointer">
                     <label for="terms" class="ml-2 block text-xs text-slate-600 leading-normal cursor-pointer">
                         Saya menyetujui ketentuan layanan dan kebijakan privasi pembelian tiket konser EVENTIX.
                     </label>
@@ -232,7 +233,7 @@ $successMessage = getFlash('success');
 
                 <!-- Submit Button -->
                 <button type="submit" 
-                        class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] shadow-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#FF6082] focus:ring-offset-2">
+                        class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] shadow-xs hover:shadow-sm transition-all focus:outline-none">
                     <span>Daftar Akun</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -252,7 +253,7 @@ $successMessage = getFlash('success');
     </main>
 
     <!-- Simple Footer -->
-    <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-200">
+    <footer class="py-5 text-center text-xs text-slate-400 border-t border-slate-200/80">
         &copy; <?= date('Y') ?> EVENTIX Indonesia. Hak cipta dilindungi.
     </footer>
 

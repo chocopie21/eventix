@@ -1,7 +1,8 @@
 <?php
 /**
  * EVENTIX - Halaman Konfirmasi Pesanan & Upload Bukti Pembayaran
- * Human-Crafted Editorial Minimalist
+ * Modern Minimalist Design
+ * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
  */
 
 require_once __DIR__ . '/config/app.php';
@@ -89,8 +90,8 @@ $flashSuccess = getFlash('success');
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'Outfit', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -106,48 +107,54 @@ $flashSuccess = getFlash('success');
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Container -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
         <!-- Breadcrumb -->
-        <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6">
+        <nav class="flex items-center gap-2 text-xs text-slate-500">
             <a href="<?= url('index.php') ?>" class="hover:text-slate-900 transition-colors">Beranda</a>
             <span>/</span>
             <a href="<?= url('my_orders.php') ?>" class="hover:text-slate-900 transition-colors">Riwayat Pesanan</a>
             <span>/</span>
-            <span class="text-slate-900 font-semibold">Konfirmasi & Pembayaran #EVX-<?= $idPesanan ?></span>
+            <span class="text-slate-900 font-semibold">Konfirmasi #EVX-<?= $idPesanan ?></span>
         </nav>
 
         <!-- Flash Messages -->
         <?php if ($flashError): ?>
-            <div class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3 text-rose-800 text-xs sm:text-sm">
+            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-3 text-rose-800 text-xs sm:text-sm">
                 <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span><?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?></span>
+                <div class="flex-1">
+                    <span class="font-bold block">Pemberitahuan</span>
+                    <span><?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?></span>
+                </div>
             </div>
         <?php endif; ?>
 
         <?php if ($flashSuccess): ?>
-            <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 text-emerald-800 text-xs sm:text-sm">
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 text-emerald-800 text-xs sm:text-sm">
                 <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span><?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?></span>
+                <div class="flex-1">
+                    <span class="font-bold block">Sukses</span>
+                    <span><?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?></span>
+                </div>
             </div>
         <?php endif; ?>
 
         <!-- Order Status Header Banner -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200">
+        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-200">
                         #EVX-<?= $order['id_pesanan'] ?>
                     </span>
-                    <span class="text-xs text-slate-500">
+                    <span class="text-xs text-slate-500 font-medium">
                         Dibuat: <?= formatTanggalIndo(date('Y-m-d', strtotime($order['tanggal']))) ?> • <?= date('H:i', strtotime($order['tanggal'])) ?> WIB
                     </span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-bold font-heading text-slate-900">
+                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
                     Konfirmasi Pesanan & Pembayaran
                 </h1>
             </div>
@@ -155,50 +162,27 @@ $flashSuccess = getFlash('success');
             <!-- Status Badge -->
             <div>
                 <?php if ($order['status'] === 'menunggu'): ?>
-                    <span class="badge-clean bg-amber-50 text-amber-800 border-amber-300">
-                        Menunggu Pembayaran
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                        <span>Menunggu Pembayaran</span>
                     </span>
                 <?php elseif ($order['status'] === 'menunggu_verifikasi'): ?>
-                    <span class="badge-clean bg-blue-50 text-blue-800 border-blue-300">
-                        Sedang Diverifikasi Admin
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                        <span>Sedang Diverifikasi Admin</span>
                     </span>
                 <?php elseif ($order['status'] === 'lunas'): ?>
-                    <span class="badge-clean bg-emerald-50 text-emerald-800 border-emerald-300">
-                        <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Pembayaran Lunas
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        <span>Lunas (E-Ticket Aktif)</span>
                     </span>
                 <?php else: ?>
-                    <span class="badge-clean bg-rose-50 text-rose-800 border-rose-300">
-                        Pembayaran Ditolak
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200">
+                        Dibatalkan
                     </span>
                 <?php endif; ?>
             </div>
         </div>
-
-        <?php if ($order['status'] === 'lunas'): ?>
-            <!-- Pesanan Sudah Lunas Notice -->
-            <div class="bg-emerald-50 rounded-xl p-6 border border-emerald-200 text-center space-y-3 mb-6">
-                <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <h2 class="text-lg font-bold text-emerald-950 font-heading">Pembayaran Telah Terverifikasi</h2>
-                <p class="text-xs sm:text-sm text-emerald-800 max-w-md mx-auto">
-                    E-ticket resmi Anda telah aktif. Tunjukkan kode QR pada menu Riwayat Pesanan saat masuk ke pintu venue konser.
-                </p>
-                <div class="pt-2">
-                    <a href="<?= url('my_orders.php') ?>" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs transition-colors">
-                        <span>Lihat E-Ticket di Riwayat Pesanan</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        <?php endif; ?>
 
         <!-- Two Columns Layout: Summary & Payment Form -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -207,31 +191,31 @@ $flashSuccess = getFlash('success');
             <div class="lg:col-span-6 space-y-6">
                 
                 <!-- Concert Brief Card -->
-                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
                     <div class="flex items-start gap-4">
                         <img src="<?= asset('uploads/posters/' . ($order['poster'] ?? 'default.jpg')) ?>" 
                              alt="<?= htmlspecialchars($order['nama_event'], ENT_QUOTES, 'UTF-8') ?>"
-                             class="w-20 h-28 object-cover rounded-lg border border-slate-200 shadow-xs shrink-0"
+                             class="w-20 h-28 object-cover rounded-xl border border-slate-200 shadow-xs shrink-0"
                              onerror="this.src='<?= asset('uploads/posters/default.jpg') ?>'">
                         <div class="space-y-1.5 flex-1 min-w-0">
-                            <span class="badge-clean bg-slate-100 text-slate-800 border-slate-200">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-800 border border-slate-200 inline-block">
                                 <?= htmlspecialchars($order['genre_musik'], ENT_QUOTES, 'UTF-8') ?>
                             </span>
-                            <h2 class="text-base font-bold text-slate-900 font-heading line-clamp-2">
+                            <h2 class="text-base font-bold text-slate-900 line-clamp-2 leading-snug">
                                 <?= htmlspecialchars($order['nama_event'], ENT_QUOTES, 'UTF-8') ?>
                             </h2>
-                            <p class="text-xs text-slate-500 line-clamp-1">
+                            <p class="text-xs text-slate-500 font-medium line-clamp-1">
                                 <?= htmlspecialchars($order['pengisi_acara'], ENT_QUOTES, 'UTF-8') ?>
                             </p>
                         </div>
                     </div>
 
-                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-2">
+                    <div class="pt-3.5 border-t border-slate-100 text-xs text-slate-600 space-y-2">
                         <div class="flex items-center gap-2">
                             <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <span><?= formatTanggalIndo($order['tanggal_event']) ?> • <?= formatJam($order['jam_event']) ?></span>
+                            <span><?= formatTanggalIndo($order['tanggal_event']) ?> • <?= formatJam($order['jam_event']) ?> WIB</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,7 +228,7 @@ $flashSuccess = getFlash('success');
                 </div>
 
                 <!-- Rincian Tiket yang Dipesan -->
-                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-4">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
                         Rincian Tiket Pesanan
                     </h3>
@@ -256,25 +240,25 @@ $flashSuccess = getFlash('success');
                                     <span class="font-bold text-slate-900 block"><?= htmlspecialchars($item['kategori'], ENT_QUOTES, 'UTF-8') ?></span>
                                     <span class="text-slate-500 text-[11px]"><?= $item['jumlah'] ?> Tiket x <?= formatRupiah($item['harga_satuan']) ?></span>
                                 </div>
-                                <span class="font-bold text-slate-900"><?= formatRupiah($item['sub_total']) ?></span>
+                                <span class="font-extrabold text-slate-900"><?= formatRupiah($item['sub_total']) ?></span>
                             </div>
                         <?php endforeach; ?>
                     </div>
 
-                    <div class="pt-3 border-t border-slate-200 space-y-2 text-xs">
+                    <div class="pt-3 border-t border-slate-200/80 space-y-2 text-xs">
                         <div class="flex justify-between text-slate-500">
                             <span>Biaya Layanan Platform</span>
                             <span class="text-emerald-700 font-bold">GRATIS</span>
                         </div>
-                        <div class="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-100">
+                        <div class="flex justify-between text-sm font-bold text-slate-900 pt-2.5 border-t border-slate-100">
                             <span>Total Pembayaran</span>
-                            <span class="text-base text-slate-950 font-black"><?= formatRupiah($order['harga']) ?></span>
+                            <span class="text-base text-slate-950 font-extrabold"><?= formatRupiah($order['harga']) ?></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Data Pemesan -->
-                <div class="bg-slate-100 rounded-xl p-4 border border-slate-200 text-xs text-slate-600 space-y-1.5">
+                <div class="bg-slate-100/80 rounded-2xl p-5 border border-slate-200/80 text-xs text-slate-600 space-y-1.5">
                     <span class="font-bold text-slate-900 block">Informasi Data Pemesan:</span>
                     <p><span class="text-slate-500">Nama:</span> <strong class="text-slate-900"><?= htmlspecialchars($user['nama'], ENT_QUOTES, 'UTF-8') ?></strong></p>
                     <p><span class="text-slate-500">Email:</span> <strong class="text-slate-900"><?= htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8') ?></strong></p>
@@ -287,22 +271,22 @@ $flashSuccess = getFlash('success');
             <div class="lg:col-span-6 space-y-6">
 
                 <!-- Rekening Bank Tujuan Transfer -->
-                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <div class="flex items-center justify-between">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
                             Pilih Rekening Tujuan Transfer
                         </h3>
-                        <span class="text-xs text-slate-500">Transfer Manual</span>
+                        <span class="text-xs text-slate-500 font-medium">Transfer Manual</span>
                     </div>
 
                     <!-- Pilihan Akun Bank -->
-                    <div class="space-y-2 text-xs">
+                    <div class="space-y-2.5 text-xs">
                         
                         <!-- Bank BCA -->
-                        <div class="bank-card p-3 rounded-lg border-2 border-slate-900 bg-slate-50 cursor-pointer transition-colors flex items-center justify-between"
+                        <div class="bank-card p-3.5 rounded-xl border-2 border-[#FF6082] bg-[#fff1f4] cursor-pointer transition-all flex items-center justify-between"
                              onclick="selectBank('BCA', '880123456789', 'PT EVENTIX INDONESIA', this)">
                             <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
+                                <div class="w-12 h-7 rounded-md bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
                                     BCA
                                 </div>
                                 <div>
@@ -310,14 +294,14 @@ $flashSuccess = getFlash('success');
                                     <span class="font-mono text-slate-600 text-xs">8801 2345 6789</span>
                                 </div>
                             </div>
-                            <span class="badge-clean bg-slate-900 text-white border-0 text-[10px]">Dipilih</span>
+                            <span class="badge-clean bg-[#FF6082] text-white border-0 text-[10px]">Dipilih</span>
                         </div>
 
                         <!-- Bank Mandiri -->
-                        <div class="bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between"
+                        <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
                              onclick="selectBank('Mandiri', '1370012345678', 'PT EVENTIX INDONESIA', this)">
                             <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded bg-sky-900 text-amber-400 font-bold text-[10px] flex items-center justify-center">
+                                <div class="w-12 h-7 rounded-md bg-sky-900 text-amber-400 font-bold text-[10px] flex items-center justify-center">
                                     MANDIRI
                                 </div>
                                 <div>
@@ -329,10 +313,10 @@ $flashSuccess = getFlash('success');
                         </div>
 
                         <!-- Bank BNI -->
-                        <div class="bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between"
+                        <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
                              onclick="selectBank('BNI', '0987654321', 'PT EVENTIX INDONESIA', this)">
                             <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded bg-orange-600 text-white font-bold text-xs flex items-center justify-center">
+                                <div class="w-12 h-7 rounded-md bg-orange-600 text-white font-bold text-xs flex items-center justify-center">
                                     BNI
                                 </div>
                                 <div>
@@ -344,10 +328,10 @@ $flashSuccess = getFlash('success');
                         </div>
 
                         <!-- QRIS -->
-                        <div class="bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between"
+                        <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
                              onclick="selectBank('QRIS', 'ID1020030040506', 'QRIS EVENTIX (Gopay/OVO/Dana/ShopeePay)', this)">
                             <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
+                                <div class="w-12 h-7 rounded-md bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
                                     QRIS
                                 </div>
                                 <div>
@@ -361,7 +345,7 @@ $flashSuccess = getFlash('success');
                     </div>
 
                     <!-- Kotak Salin Rekening Interaktif -->
-                    <div class="p-3.5 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-between gap-3 text-xs">
+                    <div class="p-4 rounded-xl bg-slate-100/90 border border-slate-200 flex items-center justify-between gap-3 text-xs">
                         <div>
                             <span class="text-[10px] font-semibold text-slate-500 block" id="selected-bank-label">Nomor Rekening BCA</span>
                             <span id="selected-bank-acc" class="font-mono font-bold text-sm text-slate-950">880123456789</span>
@@ -370,33 +354,33 @@ $flashSuccess = getFlash('success');
                         <button type="button" 
                                 onclick="copyAccountNumber()" 
                                 id="btn-copy-acc"
-                                class="px-3 py-1.5 rounded-md bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs shadow-xs transition-colors flex items-center gap-1 shrink-0">
+                                class="px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs shadow-2xs transition-all flex items-center gap-1 shrink-0">
                             <span id="copy-text">Salin</span>
                         </button>
                     </div>
 
-                    <div class="p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                        Mohon transfer tepat <strong><?= formatRupiah($order['harga']) ?></strong> agar transaksi dapat diverifikasi cepat oleh admin.
+                    <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+                        Mohon transfer tepat <strong><?= formatRupiah($order['harga']) ?></strong> agar transaksi dapat diverifikasi instan oleh sistem.
                     </div>
                 </div>
 
                 <!-- FORM UPLOAD BUKTI TRANSFER -->
                 <?php if ($order['status'] !== 'lunas'): ?>
-                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
                         <div>
                             <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
                                 Unggah Bukti Transfer
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Format file yang didukung: JPG, JPEG, PNG, WEBP (Maksimal 2 MB)</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Format file: JPG, PNG, WEBP (Maksimal 2 MB)</p>
                         </div>
 
                         <?php if ($payment && !empty($payment['bukti_bayar'])): ?>
-                            <div class="p-3.5 rounded-lg bg-slate-100 border border-slate-200 text-xs text-slate-700 space-y-2">
+                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2">
                                 <div class="flex items-center justify-between">
                                     <span class="font-semibold">Bukti transfer sebelumnya telah diunggah:</span>
                                     <span class="text-[10px] text-slate-500"><?= date('d/m/Y H:i', strtotime($payment['tanggal'])) ?></span>
                                 </div>
-                                <div class="w-20 h-20 rounded border border-slate-300 bg-white overflow-hidden">
+                                <div class="w-20 h-20 rounded-lg border border-slate-300 bg-white overflow-hidden">
                                     <img src="<?= asset('uploads/payments/' . $payment['bukti_bayar']) ?>" alt="Bukti Transfer" class="w-full h-full object-cover">
                                 </div>
                                 <p class="text-[11px] text-slate-500">Unggah bukti baru di bawah jika ingin memperbarui file.</p>
@@ -418,12 +402,12 @@ $flashSuccess = getFlash('success');
                                     Pilih File Bukti Pembayaran <span class="text-rose-500">*</span>
                                 </label>
                                 
-                                <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg transition-colors bg-slate-50/50 relative cursor-pointer group">
+                                <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-slate-300 hover:border-slate-400 rounded-2xl transition-colors bg-slate-50/50 relative cursor-pointer group">
                                     <div class="space-y-2 text-center">
                                         
                                         <!-- Preview Box Container -->
                                         <div id="preview-container" class="hidden mb-3">
-                                            <img id="image-preview" src="#" alt="Preview Bukti" class="max-h-40 mx-auto rounded border border-slate-300">
+                                            <img id="image-preview" src="#" alt="Preview Bukti" class="max-h-40 mx-auto rounded-lg border border-slate-300">
                                             <p id="file-name-text" class="text-xs font-medium text-slate-700 mt-2 truncate"></p>
                                         </div>
 
@@ -451,7 +435,7 @@ $flashSuccess = getFlash('success');
 
                             <!-- Tombol Kirim Bukti Transfer -->
                             <button type="submit" 
-                                    class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-colors focus:outline-none shadow-xs">
+                                    class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                 </svg>
@@ -483,7 +467,7 @@ $flashSuccess = getFlash('success');
 
             // Reset border active state
             document.querySelectorAll('.bank-card').forEach(card => {
-                card.className = 'bank-card p-3 rounded-lg border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-colors flex items-center justify-between';
+                card.className = 'bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between';
                 const badge = card.querySelector('span:last-child');
                 if (badge) {
                     badge.className = 'text-[10px] text-slate-400';
@@ -491,7 +475,7 @@ $flashSuccess = getFlash('success');
                 }
             });
 
-            element.className = 'bank-card p-3 rounded-lg border-2 border-[#FF6082] bg-[#fff1f4] cursor-pointer transition-colors flex items-center justify-between';
+            element.className = 'bank-card p-3.5 rounded-xl border-2 border-[#FF6082] bg-[#fff1f4] cursor-pointer transition-all flex items-center justify-between';
             const activeBadge = element.querySelector('span:last-child');
             if (activeBadge) {
                 activeBadge.className = 'badge-clean bg-[#FF6082] text-white border-0 text-[10px]';

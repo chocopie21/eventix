@@ -1,7 +1,8 @@
 <?php
 /**
  * EVENTIX - Halaman Masuk / Login
- * Human-Crafted Editorial Minimalist
+ * Modern Minimalist Design
+ * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
  */
 
 require_once __DIR__ . '/config/app.php';
@@ -33,8 +34,8 @@ $errorMessage = getFlash('error');
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'Outfit', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -47,15 +48,15 @@ $errorMessage = getFlash('error');
 <body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-900 antialiased">
 
     <!-- Top Navigation Simple Bar -->
-    <header class="w-full bg-white border-b border-slate-200 py-3.5 px-4 sm:px-8">
+    <header class="w-full glass-header py-4 px-4 sm:px-8">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="<?= url('index.php') ?>" class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg bg-[#FF6082] flex items-center justify-center text-white">
+            <a href="<?= url('index.php') ?>" class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-[#FF6082] flex items-center justify-center text-white shadow-xs">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                     </svg>
                 </div>
-                <span class="text-xl font-black tracking-tight text-slate-950 font-display">
+                <span class="text-xl font-extrabold tracking-tight text-slate-900 font-sans">
                     EVENTIX
                 </span>
             </a>
@@ -71,11 +72,11 @@ $errorMessage = getFlash('error');
 
     <!-- Main Content Area -->
     <main class="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-[0_4px_24px_rgba(15,23,42,0.05)] border border-slate-200/80 p-7 sm:p-9 space-y-6">
             
             <!-- Heading -->
             <div>
-                <h1 class="text-2xl font-bold font-heading text-slate-900">
+                <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">
                     Masuk ke Akun
                 </h1>
                 <p class="mt-1 text-xs text-slate-500">
@@ -85,7 +86,7 @@ $errorMessage = getFlash('error');
 
             <!-- Flash Message Alert -->
             <?php if ($successMessage): ?>
-                <div class="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs">
+                <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs">
                     <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -94,7 +95,7 @@ $errorMessage = getFlash('error');
             <?php endif; ?>
 
             <?php if ($errorMessage): ?>
-                <div class="p-3.5 rounded-lg bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs">
+                <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs">
                     <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -108,7 +109,7 @@ $errorMessage = getFlash('error');
 
                 <!-- Email Input -->
                 <div>
-                    <label for="email" class="block text-xs font-semibold text-slate-700 mb-1">
+                    <label for="email" class="block text-xs font-semibold text-slate-700 mb-1.5">
                         Alamat Email <span class="text-rose-500">*</span>
                     </label>
                     <input type="email" 
@@ -118,16 +119,16 @@ $errorMessage = getFlash('error');
                            placeholder="nama@email.com" 
                            required
                            autocomplete="email"
-                           class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 rounded-lg text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                           class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                 </div>
 
                 <!-- Password Input -->
                 <div>
-                    <div class="flex items-center justify-between mb-1">
+                    <div class="flex items-center justify-between mb-1.5">
                         <label for="password" class="block text-xs font-semibold text-slate-700">
                             Kata Sandi <span class="text-rose-500">*</span>
                         </label>
-                        <span class="text-[11px] text-slate-500 hover:text-slate-800 cursor-pointer" onclick="alert('Untuk keperluan evaluasi, klik tombol akun demo di bawah.')">
+                        <span class="text-[11px] text-slate-400 hover:text-slate-800 cursor-pointer font-medium" onclick="alert('Untuk keperluan evaluasi, klik tombol akun demo di bawah.')">
                             Lupa sandi?
                         </span>
                     </div>
@@ -138,10 +139,10 @@ $errorMessage = getFlash('error');
                                placeholder="••••••••" 
                                required
                                autocomplete="current-password"
-                               class="w-full pl-3.5 pr-10 py-2.5 bg-white border border-slate-300 focus:border-slate-900 rounded-lg text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                               class="w-full pl-3.5 pr-10 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                         <button type="button" 
                                 id="toggle-password" 
-                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none">
+                                class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none">
                             <svg id="eye-open" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -155,7 +156,7 @@ $errorMessage = getFlash('error');
 
                 <!-- Checkbox Ingat Saya -->
                 <div class="flex items-center">
-                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-slate-900 border-slate-300 rounded cursor-pointer">
+                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-[#0F172A] border-slate-300 rounded-md cursor-pointer focus:ring-[#FF6082]">
                     <label for="remember-me" class="ml-2 block text-xs text-slate-600 cursor-pointer">
                         Tetap masuk di perangkat ini
                     </label>
@@ -163,7 +164,7 @@ $errorMessage = getFlash('error');
 
                 <!-- Tombol Submit -->
                 <button type="submit" 
-                        class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-colors focus:outline-none shadow-xs">
+                        class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all focus:outline-none shadow-xs hover:shadow-sm">
                     <span>Masuk</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -177,13 +178,13 @@ $errorMessage = getFlash('error');
                 <div class="grid grid-cols-2 gap-2 text-[11px]">
                     <button type="button" 
                             onclick="fillCredentials('admin@eventix.id', 'admin123')"
-                            class="p-2.5 rounded-lg border border-amber-300 bg-amber-50 hover:bg-amber-100 text-left transition-colors">
+                            class="p-2.5 rounded-xl border border-amber-200 bg-amber-50 hover:bg-amber-100 text-left transition-colors">
                         <span class="font-bold text-amber-900 block">Akun Admin</span>
                         <span class="text-amber-700 text-[10px]">admin@eventix.id</span>
                     </button>
                     <button type="button" 
                             onclick="fillCredentials('budi@gmail.com', 'user123')"
-                            class="p-2.5 rounded-lg border border-blue-300 bg-blue-50 hover:bg-blue-100 text-left transition-colors">
+                            class="p-2.5 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-left transition-colors">
                         <span class="font-bold text-blue-900 block">Akun User</span>
                         <span class="text-blue-700 text-[10px]">budi@gmail.com</span>
                     </button>
@@ -202,7 +203,7 @@ $errorMessage = getFlash('error');
     </main>
 
     <!-- Simple Footer -->
-    <footer class="py-4 text-center text-xs text-slate-400 border-t border-slate-200">
+    <footer class="py-5 text-center text-xs text-slate-400 border-t border-slate-200/80">
         &copy; <?= date('Y') ?> EVENTIX Indonesia. All rights reserved.
     </footer>
 

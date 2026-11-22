@@ -1,7 +1,8 @@
 <?php
 /**
  * EVENTIX - Admin Panel: Kelola Konser Musik
- * Human-Crafted Editorial Minimalist
+ * Modern Minimalist Design
+ * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
  */
 
 require_once __DIR__ . '/../config/app.php';
@@ -71,8 +72,8 @@ $flashError = getFlash('error');
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-                        heading: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'Outfit', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -91,25 +92,25 @@ $flashError = getFlash('error');
     <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
         
         <!-- Top Navigation Header -->
-        <header class="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 gap-3">
+        <header class="h-16 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 gap-3">
             <div class="flex items-center gap-3 min-w-0">
                 <!-- Hamburger Button for Mobile / Tablet -->
                 <button type="button" 
                         id="admin-sidebar-open" 
-                        class="lg:hidden p-2 -ml-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0" 
+                        class="lg:hidden p-2 -ml-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0" 
                         aria-label="Buka Menu Admin">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
                 <div class="min-w-0">
-                    <h1 class="text-sm sm:text-base font-bold text-slate-900 font-heading truncate">Manajemen Konser Musik</h1>
+                    <h1 class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight truncate">Manajemen Konser Musik</h1>
                     <p class="text-[11px] sm:text-xs text-slate-500 truncate hidden sm:block">Atur jadwal, informasi artis, poster, dan katalog konser</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <a href="#form-konser" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-lg bg-[#FF6082] text-white font-medium text-xs hover:bg-[#e54b6d] transition-colors shadow-xs">
+                <a href="#form-konser" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FF6082] text-white font-semibold text-xs hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
                     <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
@@ -124,7 +125,7 @@ $flashError = getFlash('error');
             
             <!-- Flash Messages -->
             <?php if ($flashSuccess): ?>
-                <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs">
+                <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-emerald-800 text-xs">
                     <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -133,7 +134,7 @@ $flashError = getFlash('error');
             <?php endif; ?>
 
             <?php if ($flashError): ?>
-                <div class="p-4 rounded-lg bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs">
+                <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-rose-800 text-xs">
                     <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -145,7 +146,7 @@ $flashError = getFlash('error');
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
                 <!-- Card 1: Total Konser -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1.5">
                     <div class="flex items-center justify-between text-slate-500">
                         <span class="text-xs font-semibold">Konser aktif</span>
                         <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -154,14 +155,14 @@ $flashError = getFlash('error');
                             </svg>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold text-slate-900 font-heading">
+                    <div class="text-2xl font-extrabold text-slate-900 tracking-tight">
                         <?= $totalKonser ?> <span class="text-xs font-normal text-slate-500">Event</span>
                     </div>
-                    <p class="text-xs text-slate-500">Tersedia di katalog</p>
+                    <p class="text-[11px] text-slate-400">Tersedia di katalog</p>
                 </div>
 
                 <!-- Card 2: Kategori Tiket -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1.5">
                     <div class="flex items-center justify-between text-slate-500">
                         <span class="text-xs font-semibold">Kategori tiket</span>
                         <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
@@ -170,14 +171,14 @@ $flashError = getFlash('error');
                             </svg>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold text-slate-900 font-heading">
+                    <div class="text-2xl font-extrabold text-slate-900 tracking-tight">
                         <?= $totalTiketKategori ?> <span class="text-xs font-normal text-slate-500">Kategori</span>
                     </div>
-                    <p class="text-xs text-slate-500">VIP, Festival, Tribune</p>
+                    <p class="text-[11px] text-slate-400">VIP, Festival, Tribune</p>
                 </div>
 
                 <!-- Card 3: Total Transaksi -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1.5">
                     <div class="flex items-center justify-between text-slate-500">
                         <span class="text-xs font-semibold">Total pesanan</span>
                         <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
@@ -186,14 +187,14 @@ $flashError = getFlash('error');
                             </svg>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold text-slate-900 font-heading">
+                    <div class="text-2xl font-extrabold text-slate-900 tracking-tight">
                         <?= $totalPesanan ?> <span class="text-xs font-normal text-slate-500">Transaksi</span>
                     </div>
-                    <p class="text-xs text-slate-500">Masuk ke sistem</p>
+                    <p class="text-[11px] text-slate-400">Masuk ke sistem</p>
                 </div>
 
                 <!-- Card 4: Pendapatan Lunas -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-1.5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1.5">
                     <div class="flex items-center justify-between text-slate-500">
                         <span class="text-xs font-semibold">Pendapatan lunas</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -202,25 +203,25 @@ $flashError = getFlash('error');
                             </svg>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold text-slate-900 font-heading truncate" title="<?= formatRupiah($totalPendapatan) ?>">
+                    <div class="text-2xl font-extrabold text-slate-900 tracking-tight truncate" title="<?= formatRupiah($totalPendapatan) ?>">
                         <?= formatRupiah($totalPendapatan) ?>
                     </div>
-                    <p class="text-xs text-slate-500">Pesanan terverifikasi</p>
+                    <p class="text-[11px] text-slate-400">Pesanan terverifikasi</p>
                 </div>
 
             </div>
 
             <!-- FORM TAMBAH / EDIT KONSER MUSIK -->
-            <div id="form-konser" class="bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+            <div id="form-konser" class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-2xs space-y-6">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                     <div>
-                        <h2 class="text-lg font-bold font-heading text-slate-900">
+                        <h2 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">
                             <?= $editEvent ? 'Edit Data Konser: ' . htmlspecialchars($editEvent['nama_event'], ENT_QUOTES, 'UTF-8') : 'Tambah Konser Musik Baru' ?>
                         </h2>
                     </div>
 
                     <?php if ($editEvent): ?>
-                        <a href="<?= url('admin/index.php') ?>" class="text-xs font-medium text-slate-600 hover:text-slate-900 underline underline-offset-2">
+                        <a href="<?= url('admin/index.php') ?>" class="text-xs font-semibold text-slate-600 hover:text-slate-900 underline underline-offset-2">
                             Batal edit
                         </a>
                     <?php endif; ?>
@@ -238,7 +239,7 @@ $flashError = getFlash('error');
                         
                         <!-- Nama Event Konser -->
                         <div>
-                            <label for="nama_event" class="block text-xs font-semibold text-slate-800 mb-1">
+                            <label for="nama_event" class="block text-xs font-semibold text-slate-800 mb-1.5">
                                 Nama konser musik <span class="text-rose-600">*</span>
                             </label>
                             <input type="text" 
@@ -247,94 +248,94 @@ $flashError = getFlash('error');
                                    value="<?= htmlspecialchars($editEvent['nama_event'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
                                    placeholder="Contoh: Sheila on 7: Tunggu Aku Di Jakarta 2026" 
                                    required
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                         </div>
 
-                        <!-- Pengisi Acara / Artis -->
+                        <!-- Pengisi Acara / Musisi -->
                         <div>
-                            <label for="pengisi_acara" class="block text-xs font-semibold text-slate-800 mb-1">
-                                Pengisi acara / Bintang tamu <span class="text-rose-600">*</span>
+                            <label for="pengisi_acara" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                                Pengisi acara / artis <span class="text-rose-600">*</span>
                             </label>
                             <input type="text" 
                                    id="pengisi_acara" 
                                    name="pengisi_acara" 
                                    value="<?= htmlspecialchars($editEvent['pengisi_acara'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
-                                   placeholder="Contoh: Sheila on 7, Perunggu" 
+                                   placeholder="Contoh: Sheila on 7, Opening Act: Perunggu" 
                                    required
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                         </div>
 
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         
-                        <!-- Genre Musik -->
-                        <div>
-                            <label for="genre_musik" class="block text-xs font-semibold text-slate-800 mb-1">
-                                Genre musik <span class="text-rose-600">*</span>
-                            </label>
-                            <input type="text" 
-                                   id="genre_musik" 
-                                   name="genre_musik" 
-                                   value="<?= htmlspecialchars($editEvent['genre_musik'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
-                                   placeholder="Contoh: Pop Rock, Indie, Rock" 
-                                   required
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
-                        </div>
-
                         <!-- Tanggal Event -->
                         <div>
-                            <label for="tanggal_event" class="block text-xs font-semibold text-slate-800 mb-1">
-                                Tanggal pelaksanaan <span class="text-rose-600">*</span>
+                            <label for="tanggal_event" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                                Tanggal konser <span class="text-rose-600">*</span>
                             </label>
                             <input type="date" 
                                    id="tanggal_event" 
                                    name="tanggal_event" 
                                    value="<?= htmlspecialchars($editEvent['tanggal_event'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
                                    required
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 focus:outline-none transition-colors">
+                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 focus:outline-none transition-all">
                         </div>
 
                         <!-- Jam Mulai -->
                         <div>
-                            <label for="jam_event" class="block text-xs font-semibold text-slate-800 mb-1">
-                                Waktu mulai (WIB) <span class="text-rose-600">*</span>
+                            <label for="jam_event" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                                Jam mulai (WIB) <span class="text-rose-600">*</span>
                             </label>
                             <input type="time" 
                                    id="jam_event" 
                                    name="jam_event" 
-                                   value="<?= htmlspecialchars($editEvent['jam_event'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
+                                   value="<?= htmlspecialchars($editEvent['jam_event'] ?? '19:00', ENT_QUOTES, 'UTF-8') ?>" 
                                    required
-                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 focus:outline-none transition-colors">
+                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 focus:outline-none transition-all">
+                        </div>
+
+                        <!-- Genre Musik -->
+                        <div>
+                            <label for="genre_musik" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                                Genre musik <span class="text-rose-600">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="genre_musik" 
+                                   name="genre_musik" 
+                                   value="<?= htmlspecialchars($editEvent['genre_musik'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
+                                   placeholder="Contoh: Pop Rock, Indie, Rock, Jazz" 
+                                   required
+                                   class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                         </div>
 
                     </div>
 
-                    <!-- Venue / Lokasi Konser -->
+                    <!-- Lokasi Venue -->
                     <div>
-                        <label for="venue" class="block text-xs font-semibold text-slate-800 mb-1">
-                            Lokasi venue / Tempat acara <span class="text-rose-600">*</span>
+                        <label for="venue" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                            Lokasi venue konser <span class="text-rose-600">*</span>
                         </label>
                         <input type="text" 
                                id="venue" 
                                name="venue" 
                                value="<?= htmlspecialchars($editEvent['venue'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
-                               placeholder="Contoh: Stadion Madya Gelora Bung Karno, Senayan, Jakarta" 
+                               placeholder="Contoh: Stadion Madya Gelora Bung Karno, Senayan, Jakarta Pusat" 
                                required
-                               class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                               class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                     </div>
 
-                    <!-- Daftar Lagu / Setlist -->
+                    <!-- Setlist Prediksi -->
                     <div>
-                        <label for="daftar_lagu" class="block text-xs font-semibold text-slate-800 mb-1">
-                            Daftar lagu (setlist prediksi - pisahkan dengan tanda koma)
+                        <label for="daftar_lagu" class="block text-xs font-semibold text-slate-800 mb-1.5">
+                            Daftar lagu (setlist - pisahkan dengan tanda koma)
                         </label>
                         <input type="text" 
                                id="daftar_lagu" 
                                name="daftar_lagu" 
                                value="<?= htmlspecialchars($editEvent['daftar_lagu'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
                                placeholder="Contoh: Dan, Sephia, Sahabat Sejati, Pejantan Tangguh, Melompat Lebih Tinggi" 
-                               class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors">
+                               class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                     </div>
 
                     <!-- Deskripsi Konser & Upload Poster (2 Kolom) -->
@@ -342,25 +343,25 @@ $flashError = getFlash('error');
                         
                         <!-- Deskripsi -->
                         <div>
-                            <label for="deskripsi" class="block text-xs font-semibold text-slate-800 mb-1">
+                            <label for="deskripsi" class="block text-xs font-semibold text-slate-800 mb-1.5">
                                 Deskripsi konser & informasi acara
                             </label>
                             <textarea id="deskripsi" 
                                       name="deskripsi" 
                                       rows="4" 
                                       placeholder="Tuliskan latar belakang konser, ketentuan panggung, dan informasi penting lainnya..."
-                                      class="w-full px-3.5 py-2.5 bg-white border border-slate-300 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors"><?= htmlspecialchars($editEvent['deskripsi'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                                      class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all"><?= htmlspecialchars($editEvent['deskripsi'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                         </div>
 
                         <!-- Upload File Poster -->
                         <div>
-                            <label for="poster" class="block text-xs font-semibold text-slate-800 mb-1">
+                            <label for="poster" class="block text-xs font-semibold text-slate-800 mb-1.5">
                                 File poster konser <span class="text-slate-400 font-normal">(JPG, PNG, WEBP maks 3MB)</span>
                             </label>
                             
                             <?php if (!empty($editEvent['poster'])): ?>
-                                <div class="flex items-center gap-3 mb-2 p-2 bg-slate-50 rounded-lg border border-slate-200">
-                                    <img src="<?= asset('uploads/posters/' . $editEvent['poster']) ?>" alt="Poster" class="w-10 h-12 object-cover rounded">
+                                <div class="flex items-center gap-3 mb-2 p-2 bg-slate-50 rounded-xl border border-slate-200">
+                                    <img src="<?= asset('uploads/posters/' . $editEvent['poster']) ?>" alt="Poster" class="w-10 h-12 object-cover rounded-lg">
                                     <div class="text-xs text-slate-600 min-w-0">
                                         <span class="block font-medium text-slate-900">Poster saat ini:</span>
                                         <span class="truncate block text-slate-500"><?= htmlspecialchars($editEvent['poster'], ENT_QUOTES, 'UTF-8') ?></span>
@@ -372,8 +373,8 @@ $flashError = getFlash('error');
                                    id="poster" 
                                    name="poster" 
                                    accept="image/jpeg,image/png,image/webp"
-                                   class="w-full px-3 py-2 bg-white border border-slate-300 focus:border-slate-900 rounded-lg text-xs text-slate-600 focus:outline-none file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-slate-900 file:text-white cursor-pointer">
-                            <p class="text-xs text-slate-500 mt-1">Kosongkan jika tidak ingin mengubah poster saat edit.</p>
+                                   class="w-full px-3 py-2 bg-white border border-slate-200/90 focus:border-[#FF6082] rounded-xl text-xs text-slate-600 focus:outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#0F172A] file:text-white cursor-pointer">
+                            <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah poster saat edit.</p>
                         </div>
 
                     </div>
@@ -381,13 +382,13 @@ $flashError = getFlash('error');
                     <!-- Tombol Simpan -->
                     <div class="pt-2 flex items-center justify-end gap-3">
                         <?php if ($editEvent): ?>
-                            <a href="<?= url('admin/index.php') ?>" class="px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-xs font-medium text-slate-700 transition-colors">
+                            <a href="<?= url('admin/index.php') ?>" class="px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors">
                                 Batal
                             </a>
                         <?php endif; ?>
 
                         <button type="submit" 
-                                class="px-5 py-2.5 rounded-lg text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] shadow-xs transition-colors">
+                                class="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] shadow-xs hover:shadow-sm transition-all">
                             <?= $editEvent ? 'Perbarui Data Konser' : 'Simpan & Publikasikan Konser' ?>
                         </button>
                     </div>
@@ -396,10 +397,10 @@ $flashError = getFlash('error');
             </div>
 
             <!-- TABEL DAFTAR KONSER MUSIK -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-                <div class="px-4 sm:px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
+                <div class="px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h3 class="text-sm font-bold font-heading text-slate-900">Daftar Seluruh Konser Musik</h3>
+                        <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">Daftar Seluruh Konser Musik</h3>
                         <p class="text-xs text-slate-500">Total <?= count($concerts) ?> konser terdaftar dalam database</p>
                     </div>
                 </div>
@@ -407,20 +408,20 @@ $flashError = getFlash('error');
                 <div class="w-full overflow-x-auto lg:overflow-hidden">
                     <table class="w-full min-w-[720px] lg:min-w-0 lg:table-fixed text-left border-collapse text-xs">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
-                                <th class="py-3 px-2.5 w-[6%] text-center">Poster</th>
-                                <th class="py-3 px-2.5 w-[26%]">Nama konser & artis</th>
-                                <th class="py-3 px-2.5 w-[9%]">Genre</th>
-                                <th class="py-3 px-2.5 w-[14%]">Jadwal & waktu</th>
-                                <th class="py-3 px-2.5 w-[16%]">Lokasi venue</th>
-                                <th class="py-3 px-2.5 w-[13%]">Kategori & sisa kuota</th>
+                            <tr class="bg-slate-50/80 border-b border-slate-100 text-slate-500 font-semibold">
+                                <th class="py-3 px-3 w-[6%] text-center">Poster</th>
+                                <th class="py-3 px-3 w-[26%]">Nama konser & artis</th>
+                                <th class="py-3 px-3 w-[9%]">Genre</th>
+                                <th class="py-3 px-3 w-[14%]">Jadwal & waktu</th>
+                                <th class="py-3 px-3 w-[16%]">Lokasi venue</th>
+                                <th class="py-3 px-3 w-[13%]">Kategori & sisa kuota</th>
                                 <th class="py-3 px-3 w-[16%] text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             <?php if (empty($concerts)): ?>
                                 <tr>
-                                    <td colspan="7" class="py-8 text-center text-slate-400 italic">Belum ada data konser di sistem.</td>
+                                    <td colspan="7" class="py-10 text-center text-slate-400 italic">Belum ada data konser di sistem.</td>
                                 </tr>
                             <?php else: ?>
                                 <?php 
@@ -428,93 +429,95 @@ $flashError = getFlash('error');
                                 foreach ($concerts as $c): 
                                     $idC = (int)$c['id_event'];
                                     $tEvent = strtotime($c['tanggal_event']);
-                                    $tglFmt = date('j', $tEvent) . ' ' . ($bulanPendek[(int)date('n', $tEvent)] ?? '') . ' ' . date('Y', $tEvent);
+                                    $tglEventStr = $tEvent ? (date('j', $tEvent) . ' ' . ($bulanPendek[(int)date('n', $tEvent)] ?? date('M', $tEvent)) . ' ' . date('Y', $tEvent)) : '-';
+                                    $jamEventStr = !empty($c['jam_event']) ? substr($c['jam_event'], 0, 5) : '19:00';
                                 ?>
-                                    <tr class="hover:bg-slate-50/75 transition-colors">
+                                    <tr class="hover:bg-slate-50/70 transition-colors">
                                         
-                                        <!-- Poster Thumbnail -->
-                                        <td class="py-2.5 px-2.5 text-center">
-                                            <img src="<?= asset('uploads/posters/' . ($c['poster'] ?? 'default.jpg')) ?>" 
-                                                 alt="Poster" 
-                                                 class="w-8 h-10 object-cover rounded border border-slate-200 shadow-2xs mx-auto"
-                                                 onerror="this.src='https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=150&q=80'">
+                                        <!-- Poster -->
+                                        <td class="py-3 px-3 text-center align-middle">
+                                            <div class="w-8 h-10 mx-auto rounded-lg overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
+                                                <img src="<?= asset('uploads/posters/' . ($c['poster'] ?? 'default.jpg')) ?>" 
+                                                     alt="Poster" 
+                                                     class="w-full h-full object-cover"
+                                                     onerror="this.src='<?= asset('uploads/posters/default.jpg') ?>'">
+                                            </div>
                                         </td>
 
                                         <!-- Nama & Artis -->
-                                        <td class="py-2.5 px-2.5 min-w-0">
-                                            <span class="font-semibold text-slate-900 block truncate" title="<?= htmlspecialchars($c['nama_event'], ENT_QUOTES, 'UTF-8') ?>">
+                                        <td class="py-3 px-3 align-middle">
+                                            <span class="font-bold text-slate-900 block truncate leading-snug" title="<?= htmlspecialchars($c['nama_event'], ENT_QUOTES, 'UTF-8') ?>">
                                                 <?= htmlspecialchars($c['nama_event'], ENT_QUOTES, 'UTF-8') ?>
                                             </span>
-                                            <span class="text-slate-500 text-xs block truncate" title="<?= htmlspecialchars($c['pengisi_acara'], ENT_QUOTES, 'UTF-8') ?>">
+                                            <span class="text-[11px] text-slate-500 block truncate" title="<?= htmlspecialchars($c['pengisi_acara'], ENT_QUOTES, 'UTF-8') ?>">
                                                 <?= htmlspecialchars($c['pengisi_acara'], ENT_QUOTES, 'UTF-8') ?>
                                             </span>
                                         </td>
 
                                         <!-- Genre -->
-                                        <td class="py-2.5 px-2.5 min-w-0">
-                                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700 border border-slate-200 truncate max-w-full" title="<?= htmlspecialchars($c['genre_musik'] ?? '-', ENT_QUOTES, 'UTF-8') ?>">
+                                        <td class="py-3 px-3 align-middle">
+                                            <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 truncate max-w-full">
                                                 <?= htmlspecialchars($c['genre_musik'] ?? '-', ENT_QUOTES, 'UTF-8') ?>
                                             </span>
                                         </td>
 
-                                        <!-- Tanggal & Jam -->
-                                        <td class="py-2.5 px-2.5 min-w-0">
-                                            <span class="font-medium text-slate-900 block truncate"><?= $tglFmt ?></span>
-                                            <span class="text-slate-500 text-[11px] block"><?= formatJam($c['jam_event']) ?></span>
+                                        <!-- Tanggal & Waktu -->
+                                        <td class="py-3 px-3 align-middle whitespace-nowrap">
+                                            <span class="font-semibold text-slate-800 block text-[11px]"><?= $tglEventStr ?></span>
+                                            <span class="text-[10px] text-slate-400 block"><?= $jamEventStr ?> WIB</span>
                                         </td>
 
                                         <!-- Venue -->
-                                        <td class="py-2.5 px-2.5 min-w-0">
-                                            <span class="text-slate-600 text-xs block truncate" title="<?= htmlspecialchars($c['venue'], ENT_QUOTES, 'UTF-8') ?>">
+                                        <td class="py-3 px-3 align-middle">
+                                            <span class="truncate block text-slate-600 text-[11px]" title="<?= htmlspecialchars($c['venue'], ENT_QUOTES, 'UTF-8') ?>">
                                                 <?= htmlspecialchars($c['venue'], ENT_QUOTES, 'UTF-8') ?>
                                             </span>
                                         </td>
 
-                                        <!-- Kategori Tiket & Kuota -->
-                                        <td class="py-2.5 px-2.5 min-w-0">
-                                            <span class="font-medium text-slate-900 block truncate"><?= $c['total_kategori'] ?> Kategori</span>
-                                            <span class="text-xs text-blue-600 font-medium block truncate">Sisa <?= number_format($c['total_kuota'], 0, ',', '.') ?> tiket</span>
+                                        <!-- Kategori & Kuota -->
+                                        <td class="py-3 px-3 align-middle whitespace-nowrap">
+                                            <span class="text-slate-800 font-semibold block text-[11px]">
+                                                <?= $c['total_kategori'] ?> Kategori
+                                            </span>
+                                            <span class="text-[10px] <?= $c['total_kuota'] > 0 ? 'text-emerald-700 font-medium' : 'text-rose-600 font-semibold' ?> block">
+                                                <?= $c['total_kuota'] > 0 ? 'Sisa ' . number_format($c['total_kuota'], 0, ',', '.') . ' tiket' : 'Tiket Habis' ?>
+                                            </span>
                                         </td>
 
-                                        <!-- Aksi Buttons -->
-                                        <td class="py-2.5 px-3 text-right whitespace-nowrap">
+                                        <!-- Aksi -->
+                                        <td class="py-3 px-3 text-right align-middle whitespace-nowrap">
                                             <div class="inline-flex items-center justify-end gap-1">
-                                                
-                                                <!-- Tombol Kelola Tiket -->
                                                 <a href="<?= url('admin/tickets.php?id_event=' . $idC) ?>" 
-                                                   class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-[11px] inline-flex items-center gap-1 transition-colors"
-                                                   title="Atur Kategori & Kuota Tiket">
-                                                    <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                   class="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors inline-flex items-center gap-1 text-[11px]" 
+                                                   title="Kelola Tiket">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                                                     </svg>
-                                                    <span>Tiket</span>
+                                                    <span class="hidden sm:inline">Tiket</span>
                                                 </a>
-
-                                                <!-- Tombol Edit -->
+                                                
                                                 <a href="<?= url('admin/index.php?edit=' . $idC . '#form-konser') ?>" 
-                                                   class="p-1 rounded border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors"
-                                                   title="Edit Data Konser">
+                                                   class="p-1.5 rounded-lg border border-slate-200 text-blue-600 hover:bg-blue-50 transition-colors" 
+                                                   title="Edit Konser">
                                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                     </svg>
                                                 </a>
 
-                                                <!-- Tombol Hapus Form -->
                                                 <form action="<?= url('actions/admin_event_delete.php') ?>" 
                                                       method="POST" 
-                                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus konser \'<?= htmlspecialchars(addslashes($c['nama_event']), ENT_QUOTES, 'UTF-8') ?>\' beserta seluruh tiketnya? Tindakan ini tidak dapat dibatalkan.');" 
-                                                      class="inline">
+                                                      class="inline-block"
+                                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus konser ini?');">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="id_event" value="<?= $idC ?>">
                                                     <button type="submit" 
-                                                            class="p-1 rounded border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors"
+                                                            class="p-1.5 rounded-lg border border-slate-200 text-rose-600 hover:bg-rose-50 transition-colors" 
                                                             title="Hapus Konser">
                                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                         </svg>
                                                     </button>
                                                 </form>
-
                                             </div>
                                         </td>
 
