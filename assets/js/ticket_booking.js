@@ -223,12 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'booking-toast';
-            toast.className = 'fixed bottom-6 right-6 z-50 bg-[#003441] text-white text-xs font-semibold py-3 px-4 rounded-xl shadow-2xl transition-all duration-300 max-w-sm flex items-center gap-2 border border-teal-500/30';
+            toast.className = 'fixed bottom-6 right-6 z-50 bg-[#0F172A] text-white text-xs font-semibold py-3 px-4 rounded-xl shadow-2xl transition-all duration-300 max-w-sm flex items-center gap-2 border border-[#FF6082]/40';
             document.body.appendChild(toast);
         }
         toast.innerHTML = `
-            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <svg class="w-4 h-4 text-[#FF6082] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>${message}</span>
         `;
@@ -239,6 +239,241 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateY(10px)';
         }, 3500);
+    }
+
+    // ========================================================
+    // INTERACTIVE SEATING MAP & TICKET CARDS SYNCHRONIZATION
+    // ========================================================
+    const seatingCanvas = document.getElementById('seating-canvas-container');
+    const seatingTooltip = document.getElementById('seating-tooltip');
+    const tooltipCatName = document.getElementById('tooltip-cat-name');
+    const tooltipCatPrice = document.getElementById('tooltip-cat-price');
+    const tooltipCatStatus = document.getElementById('tooltip-cat-status');
+    const zoneGroups = document.querySelectorAll('.seating-zone-group');
+    const legendItems = document.querySelectorAll('.seating-legend-item');
+
+    function highlightTicketCard(ticketId, shouldHighlight) {
+        const card = document.querySelector(`.ticket-card[data-ticket-id="${ticketId}"]`);
+        if (!card) return;
+        if (shouldHighlight) {
+            card.classList.add('ring-2', 'ring-[#FF6082]', 'border-[#FF6082]', 'bg-[#fff5f7]');
+        } else {
+            card.classList.remove('ring-2', 'ring-[#FF6082]', 'border-[#FF6082]', 'bg-[#fff5f7]');
+        }
+    }
+
+    function highlightZone(ticketId, shouldHighlight) {
+        const groups = document.querySelectorAll(`.seating-zone-group[data-ticket-id="${ticketId}"]`);
+        groups.forEach(group => {
+            const shapes = group.querySelectorAll('.zone-shape');
+            shapes.forEach(shape => {
+                if (shouldHighlight) {
+                    shape.setAttribute('stroke-width', '3');
+                    shape.style.filter = 'drop-shadow(0 0 10px rgba(255, 96, 130, 0.65))';
+                } else {
+                    shape.setAttribute('stroke-width', '1.5');
+                    shape.style.filter = 'none';
+                }
+            });
+        });
+    }
+
+    zoneGroups.forEach(group => {
+        const ticketId = group.getAttribute('data-ticket-id');
+        const name = group.getAttribute('data-name');
+        const price = group.getAttribute('data-price');
+        const quota = parseInt(group.getAttribute('data-quota'), 10) || 0;
+
+        group.addEventListener('mouseenter', () => {
+            highlightZone(ticketId, true);
+            highlightTicketCard(ticketId, true);
+
+            if (seatingTooltip && seatingCanvas) {
+                if (tooltipCatName) tooltipCatName.textContent = name;
+                if (tooltipCatPrice) tooltipCatPrice.textContent = price;
+                if (tooltipCatStatus) {
+                    if (quota <= 0) {
+                        tooltipCatStatus.textContent = 'Habis';
+                        tooltipCatStatus.className = 'px-2 py-0.5 rounded text-[10px] font-semibold bg-rose-500/20 text-rose-400';
+                    } else {
+                        tooltipCatStatus.textContent = `Tersedia (${quota})`;
+                        tooltipCatStatus.className = 'px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-400';
+                    }
+                }
+                seatingTooltip.style.opacity = '1';
+            }
+        });
+
+        group.addEventListener('mousemove', (e) => {
+            if (seatingTooltip && seatingCanvas) {
+                const rect = seatingCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left + 15;
+                const y = e.clientY - rect.top + 15;
+                seatingTooltip.style.left = `${Math.min(x, rect.width - 180)}px`;
+                seatingTooltip.style.top = `${Math.min(y, rect.height - 80)}px`;
+            }
+        });
+
+        group.addEventListener('mouseleave', () => {
+            highlightZone(ticketId, false);
+            highlightTicketCard(ticketId, false);
+            if (seatingTooltip) {
+                seatingTooltip.style.opacity = '0';
+            }
+        });
+
+        // Click zone to select ticket
+        group.addEventListener('click', () => {
+            const card = document.querySelector(`.ticket-card[data-ticket-id="${ticketId}"]`);
+            if (!card) return;
+
+            if (quota <= 0) {
+                showToast(`Tiket kategori ${name} saat ini sudah habis terjual.`);
+                return;
+            }
+
+            const inputQty = card.querySelector('.ticket-qty-input');
+            if (inputQty) {
+                let current = parseInt(inputQty.value, 10) || 0;
+                if (current < 4 && current < quota) {
+                    inputQty.value = current + 1;
+                    calculateTotals();
+                    showToast(`Kategori ${name} ditambahkan (+1).`);
+                }
+            }
+
+            // Scroll to booking form or highlight card
+            if (window.lenis) {
+                window.lenis.scrollTo(card, { offset: -100, duration: 1.0 });
+            } else {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    });
+
+    // Legend hover/click
+    legendItems.forEach(item => {
+        const ticketId = item.getAttribute('data-ticket-id');
+        item.addEventListener('mouseenter', () => {
+            highlightZone(ticketId, true);
+            highlightTicketCard(ticketId, true);
+        });
+        item.addEventListener('mouseleave', () => {
+            highlightZone(ticketId, false);
+            highlightTicketCard(ticketId, false);
+        });
+        item.addEventListener('click', () => {
+            const card = document.querySelector(`.ticket-card[data-ticket-id="${ticketId}"]`);
+            if (card) {
+                if (window.lenis) {
+                    window.lenis.scrollTo(card, { offset: -100, duration: 1.0 });
+                } else {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+    });
+
+    // Hover from ticket cards back to SVG zone
+    document.querySelectorAll('.ticket-card').forEach(card => {
+        const ticketId = card.getAttribute('data-ticket-id');
+        card.addEventListener('mouseenter', () => {
+            highlightZone(ticketId, true);
+        });
+        card.addEventListener('mouseleave', () => {
+            highlightZone(ticketId, false);
+        });
+    });
+
+    // ========================================================
+    // MODAL LIGHTBOX ZOOM DENAH PANGGUNG
+    // ========================================================
+    window.openSeatingModal = function() {
+        const modal = document.getElementById('seating-modal');
+        const target = document.getElementById('modal-svg-target');
+        const originalSvg = document.getElementById('seating-svg');
+        if (!modal || !target || !originalSvg) return;
+
+        target.innerHTML = '';
+        const clonedSvg = originalSvg.cloneNode(true);
+        clonedSvg.id = 'modal-seating-svg';
+        clonedSvg.classList.add('w-full', 'h-auto', 'max-h-[75vh]');
+        target.appendChild(clonedSvg);
+
+        modal.classList.remove('hidden');
+    };
+
+    window.closeSeatingModal = function() {
+        const modal = document.getElementById('seating-modal');
+        if (modal) modal.classList.add('hidden');
+    };
+
+    // Close on Escape or click outside
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            window.closeSeatingModal();
+        }
+    });
+
+    // ========================================================
+    // STICKY MOBILE ACTION BAR & SMOOTH SCROLL
+    // ========================================================
+    window.scrollToBooking = function() {
+        const bookingCard = document.getElementById('booking-form');
+        if (bookingCard) {
+            if (window.lenis) {
+                window.lenis.scrollTo(bookingCard, { offset: -20, duration: 1.0 });
+            } else {
+                bookingCard.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    };
+
+    const mobileBottomBar = document.getElementById('mobile-bottom-bar');
+    const submitBtn = document.getElementById('btn-submit-order');
+    if (mobileBottomBar && submitBtn && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    mobileBottomBar.classList.add('translate-y-full', 'opacity-0');
+                    mobileBottomBar.classList.remove('translate-y-0', 'opacity-100');
+                } else {
+                    mobileBottomBar.classList.remove('translate-y-full', 'opacity-0');
+                    mobileBottomBar.classList.add('translate-y-0', 'opacity-100');
+                }
+            });
+        }, { threshold: 0.1 });
+        observer.observe(submitBtn);
+    }
+
+    // ========================================================
+    // SHARE EVENT BUTTON (WEB SHARE API)
+    // ========================================================
+    const btnShare = document.getElementById('btn-share-event');
+    if (btnShare) {
+        btnShare.addEventListener('click', async () => {
+            const eventTitle = document.title;
+            const eventUrl = window.location.href;
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: eventTitle,
+                        text: `Beli tiket konser resmi ${eventTitle} di EVENTIX:`,
+                        url: eventUrl
+                    });
+                } catch (err) {}
+            } else {
+                navigator.clipboard.writeText(eventUrl).then(() => {
+                    const textSpan = document.getElementById('share-btn-text');
+                    if (textSpan) {
+                        const original = textSpan.textContent;
+                        textSpan.textContent = 'Tautan Disalin!';
+                        setTimeout(() => { textSpan.textContent = original; }, 2000);
+                    }
+                    showToast('Tautan jadwal konser berhasil disalin ke clipboard!');
+                });
+            }
+        });
     }
 
     // Inisialisasi awal

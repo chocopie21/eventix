@@ -176,6 +176,33 @@ $flashSuccess = getFlash('success');
             </div>
         </div>
 
+        <!-- Payment Expiry Countdown Timer (Hanya tampil saat status menunggu) -->
+        <?php if ($order['status'] === 'menunggu'): ?>
+            <div id="countdown-card" class="bg-white rounded-2xl p-5 border border-amber-200/90 shadow-2xs space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-900">Selesaikan Pembayaran Sebelum Batas Waktu Berakhir</p>
+                            <p class="text-[11px] text-slate-500 font-normal">Kuota tiket Anda diamankan. Selesaikan transfer dan unggah bukti sebelum waktu habis.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 self-start sm:self-auto bg-amber-50/80 px-4 py-2 rounded-xl border border-amber-200/80 shrink-0">
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-amber-800">Sisa Waktu:</span>
+                        <span id="countdown-timer" class="font-mono text-xl font-black text-[#FF6082] tracking-tight">15:00</span>
+                    </div>
+                </div>
+                <!-- Progress Line -->
+                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div id="countdown-progress-bar" class="bg-[#FF6082] h-full transition-all duration-1000 ease-linear rounded-full" style="width: 100%;"></div>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <!-- Two Columns Layout: Summary & Payment Form -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
@@ -459,6 +486,55 @@ $flashSuccess = getFlash('success');
                 }, 2000);
             });
         }
+
+        // Countdown Timer Logic (15 Menit = 900 Detik)
+        (function() {
+            const timerElem = document.getElementById('countdown-timer');
+            const progressElem = document.getElementById('countdown-progress-bar');
+            if (!timerElem) return;
+
+            const orderId = <?= (int)$order['id_pesanan'] ?>;
+            const storageKey = 'eventix_timer_order_' + orderId;
+            const totalDuration = 15 * 60; // 15 menit
+
+            let startTime = localStorage.getItem(storageKey);
+            if (!startTime) {
+                startTime = Date.now();
+                localStorage.setItem(storageKey, startTime);
+            } else {
+                startTime = parseInt(startTime, 10);
+            }
+
+            function updateTimer() {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const remaining = totalDuration - elapsed;
+
+                if (remaining <= 0) {
+                    timerElem.textContent = '00:00';
+                    if (progressElem) progressElem.style.width = '0%';
+                    
+                    const submitBtn = document.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.setAttribute('disabled', 'disabled');
+                        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                    return;
+                }
+
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                timerElem.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+
+                if (progressElem) {
+                    const percent = Math.max(0, (remaining / totalDuration) * 100);
+                    progressElem.style.width = percent + '%';
+                }
+
+                setTimeout(updateTimer, 1000);
+            }
+
+            updateTimer();
+        })();
     </script>
 </body>
 </html>
