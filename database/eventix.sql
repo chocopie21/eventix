@@ -1,13 +1,13 @@
--- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
+-- MySQL dump 10.13  Distrib 8.4.3, for Win64 (x86_64)
 --
 -- Host: localhost    Database: eventix
 -- ------------------------------------------------------
--- Server version	10.4.32-MariaDB
+-- Server version	8.4.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,12 +21,12 @@
 
 DROP TABLE IF EXISTS `detail_pesanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `detail_pesanan` (
-  `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pesanan` int(11) NOT NULL,
-  `id_tiket` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
+  `id_detail_pesanan` int NOT NULL AUTO_INCREMENT,
+  `id_pesanan` int NOT NULL,
+  `id_tiket` int NOT NULL,
+  `jumlah` int NOT NULL,
   `sub_total` decimal(12,2) NOT NULL,
   PRIMARY KEY (`id_detail_pesanan`),
   KEY `fk_detail_pesanan` (`id_pesanan`),
@@ -51,19 +51,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event` (
-  `id_event` int(11) NOT NULL AUTO_INCREMENT,
-  `venue` varchar(150) NOT NULL,
-  `nama_event` varchar(150) NOT NULL,
+  `id_event` int NOT NULL AUTO_INCREMENT,
+  `venue` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_event` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal_event` date NOT NULL,
   `jam_event` time NOT NULL,
-  `pengisi_acara` varchar(255) NOT NULL,
-  `deskripsi` text DEFAULT NULL,
-  `poster` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `pengisi_acara` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci,
+  `poster` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_event`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (10,'Jakarta International Stadium (JIS), Jakarta Utara','SEVENTEEN [RIGHT HERE] World Tour in Jakarta','2026-12-12','18:30:00','SEVENTEEN','Konser tur dunia SEVENTEEN kembali menyapa CARAT Indonesia dengan panggung megah berskala stadion. Open gate dimulai pukul 15:00 WIB, wajib membawa e-ticket dan kartu identitas resmi saat penukaran wristband.','poster_1795378146_c6aac4a2.jpg','2026-11-22 20:01:49'),(11,'ICE BSD City Hall 5-6, Tangerang','IU H.E.R. World Tour Concert in Jakarta','2026-12-19','19:00:00','IU','Pertunjukan solo spesial dari IU yang membawakan deretan lagu hits dan album terbaru bersama live band penuh. Seluruh kategori bersifat numbered seating, penukaran tiket dibuka mulai pukul 11:00 WIB.','iu.jpg','2026-11-22 20:01:49'),(12,'Stadion Madya Gelora Bung Karno, Senayan, Jakarta','DAY6 3rd World Tour <FOREVER YOUNG> Jakarta','2027-01-09','19:00:00','DAY6','Band rock asal Korea Selatan DAY6 hadir membawakan energi live performance penuh untuk My Day Indonesia. Dilarang membawa kamera profesional, tripod, dan makanan dari luar area stadion.','day6.jpg','2026-11-22 20:01:49'),(13,'Stadion Utama Gelora Bung Karno (SUGBK), Jakarta','BLACKPINK World Tour [BORN PINK] Jakarta','2027-01-23','19:00:00','BLACKPINK (Jisoo, Jennie, Rosé, Lisa)','Konser stadion berskala internasional dari BLACKPINK dengan produksi panggung, koreografi, dan tata kembang api spektakuler. Catatan: seluruh kuota diisi 0 untuk contoh tampilan status Habis di katalog.','blackpink.jpg','2026-11-22 20:01:49'),(14,'Istora Senayan, Jakarta Pusat','wave to earth – 0.03 World Tour in Jakarta','2027-02-06','20:00:00','wave to earth','Trio indie rock dan lo-fi asal Seoul kembali membawa suasana hangat dan intim lewat tur 0.03 World Tour. Pintu masuk dibuka pukul 17:30 WIB dengan area merchandise resmi di selasar Istora.','wave_to_earth.jpg','2026-11-22 20:01:49'),(15,'Beach City International Stadium, Ancol, Jakarta','aespa LIVE TOUR – SYNK : PARALLEL LINE Jakarta','2027-02-20','19:00:00','aespa (Karina, Giselle, Winter, Ningning)','Tur dunia aespa yang memadukan konsep futuristik, visual LED imersif, serta penampilan solo dari keempat member. Tiket sudah termasuk akses masuk kawasan Ancol pada hari acara.','aespa.jpg','2026-11-22 20:01:49'),(16,'Stadion Utama Gelora Bung Karno (SUGBK), Jakarta','NCT DREAM – THE DREAM SHOW 3 in Jakarta','2027-03-06','19:00:00','NCT DREAM','Konser stadion akbar NCT DREAM bertajuk DREAM( )SCAPE yang menampilkan setlist energik, panggung bergerak, dan interaksi langsung bersama NCTzen Indonesia.','nct_dream.jpg','2026-11-22 20:01:49'),(17,'Beach City International Stadium, Ancol, Jakarta','THE DREAM REBORN World Tour in Jakarta','2027-03-20','19:30:00','DPR IAN, DPR CREAM, DPR ARTIC','Kolektif musik independen Dream Perfect Regime menghadirkan malam penuh eksplorasi visual sinematik, R&B, dan rock alternatif bersama DPR IAN, DPR CREAM, dan DPR ARTIC.','dpr.jpg','2026-11-22 20:01:49'),(18,'Jakarta International Stadium (JIS), Jakarta Utara','TWICE 5TH WORLD TOUR \'READY TO BE\' in Jakarta','2027-04-10','19:00:00','TWICE','Sembilan member TWICE menyapa ONCE Indonesia dalam konser stadion megah lengkap dengan live band dan panggung solo tiap member. Shuttle bus resmi tersedia dari area parkir JIExpo.','twice.jpg','2026-11-22 20:01:49'),(19,'Indonesia Arena Gelora Bung Karno, Jakarta Pusat','Stray Kids World Tour <dominATE> Jakarta','2027-04-24','19:00:00','Stray Kids','Stray Kids membawa energi panggung eksplosif dengan aransemen live band keras dan koreografi intens untuk STAY Indonesia di arena indoor berkapasitas besar.','stray_kids.jpg','2026-11-22 20:01:49'),(20,'ICE BSD City Hall 5-6, Tangerang','TAEYEON CONCERT – The ODD Of LOVE in Jakarta','2027-05-08','18:30:00','TAEYEON','Pertunjukan vokal memukau dari solois legendaris TAEYEON bersama full live band, menampilkan lagu-lagu balada dan pop ikonik dalam tata akustik hall terbaik.','taeyeon.jpg','2026-11-22 20:01:49'),(21,'ICE BSD City Hall 5, Tangerang','BAEKHYUN ASIA TOUR [Lonsdaleite] in Jakarta','2027-05-22','19:00:00','BAEKHYUN','Tur solo Asia perdana BAEKHYUN yang menyuguhkan perpaduan vokal R&B halus, koreografi tajam, dan sesi interaksi hangat bersama EXO-L Indonesia.','baekhyun.jpg','2026-11-22 20:01:49');
+INSERT INTO `event` VALUES (10,'Jakarta International Stadium (JIS), Jakarta Utara','SEVENTEEN [RIGHT HERE] World Tour in Jakarta','2026-12-12','18:30:00','SEVENTEEN','Konser tur dunia SEVENTEEN kembali menyapa CARAT Indonesia dengan panggung megah berskala stadion. Open gate dimulai pukul 15:00 WIB, wajib membawa e-ticket dan kartu identitas resmi saat penukaran wristband.','poster_1795378146_c6aac4a2.jpg','2026-11-22 20:01:49'),(11,'ICE BSD City Hall 5-6, Tangerang','IU H.E.R. World Tour Concert in Jakarta','2026-12-19','19:00:00','IU','Pertunjukan solo spesial dari IU yang membawakan deretan lagu hits dan album terbaru bersama live band penuh. Seluruh kategori bersifat numbered seating, penukaran tiket dibuka mulai pukul 11:00 WIB.','iu.jpg','2026-11-22 20:01:49'),(12,'Stadion Madya Gelora Bung Karno, Senayan, Jakarta','DAY6 3rd World Tour <FOREVER YOUNG> Jakarta','2027-01-09','19:00:00','DAY6','Band rock asal Korea Selatan DAY6 hadir membawakan energi live performance penuh untuk My Day Indonesia. Dilarang membawa kamera profesional, tripod, dan makanan dari luar area stadion.','day6.jpg','2026-11-22 20:01:49'),(13,'Stadion Utama Gelora Bung Karno (SUGBK), Jakarta','BLACKPINK World Tour [BORN PINK] Jakarta','2027-01-23','19:00:00','BLACKPINK (Jisoo, Jennie, Rosé, Lisa)','Konser stadion berskala internasional dari BLACKPINK dengan produksi panggung, koreografi, dan tata kembang api spektakuler. Catatan: seluruh kuota diisi 0 untuk contoh tampilan status Habis di katalog.','blackpink.jpg','2026-11-22 20:01:49'),(14,'Istora Senayan, Jakarta Pusat','wave to earth – 0.03 World Tour in Jakarta','2027-02-06','20:00:00','wave to earth','Trio indie rock dan lo-fi asal Seoul kembali membawa suasana hangat dan intim lewat tur 0.03 World Tour. Pintu masuk dibuka pukul 17:30 WIB dengan area merchandise resmi di selasar Istora.','wave_to_earth.jpg','2026-11-22 20:01:49'),(15,'Beach City International Stadium, Ancol, Jakarta','aespa LIVE TOUR – SYNK : PARALLEL LINE Jakarta','2027-02-20','19:00:00','aespa (Karina, Giselle, Winter, Ningning)','Tur dunia aespa yang memadukan konsep futuristik, visual LED imersif, serta penampilan solo dari keempat member. Tiket sudah termasuk akses masuk kawasan Ancol pada hari acara.','aespa.jpg','2026-11-22 20:01:49'),(16,'Stadion Utama Gelora Bung Karno (SUGBK), Jakarta','NCT DREAM – THE DREAM SHOW 3 in Jakarta','2027-03-06','19:00:00','NCT DREAM','Konser stadion akbar NCT DREAM bertajuk DREAM( )SCAPE yang menampilkan setlist energik, panggung bergerak, dan interaksi langsung bersama NCTzen Indonesia.','nct_dream.jpg','2026-11-22 20:01:49'),(17,'Beach City International Stadium, Ancol, Jakarta','THE DREAM REBORN World Tour in Jakarta','2027-03-20','19:30:00','DPR IAN, DPR CREAM, DPR ARTIC','Kolektif musik independen Dream Perfect Regime menghadirkan malam penuh eksplorasi visual sinematik, R&B, dan rock alternatif bersama DPR IAN, DPR CREAM, dan DPR ARTIC.','dpr.jpg','2026-11-22 20:01:49'),(18,'Jakarta International Stadium (JIS), Jakarta Utara','TWICE 5TH WORLD TOUR \'READY TO BE\' in Jakarta','2027-04-10','19:00:00','TWICE','Sembilan member TWICE menyapa ONCE Indonesia dalam konser stadion megah lengkap dengan live band dan panggung solo tiap member. Shuttle bus resmi tersedia dari area parkir JIExpo.','twice.jpg','2026-11-22 20:01:49'),(19,'Indonesia Arena Gelora Bung Karno, Jakarta Pusat','Stray Kids World Tour <dominATE> Jakarta','2027-04-24','19:00:00','Stray Kids','Stray Kids membawa energi panggung eksplosif dengan aransemen live band keras dan koreografi intens untuk STAY Indonesia di arena indoor berkapasitas besar.','stray_kids.jpg','2026-11-22 20:01:49'),(20,'ICE BSD City Hall 5-6, Tangerang','TAEYEON CONCERT – The ODD Of LOVE in Jakarta','2027-05-08','18:30:00','TAEYEON','Pertunjukan vokal memukau dari solois legendaris TAEYEON bersama full live band, menampilkan lagu-lagu balada dan pop ikonik dalam tata akustik hall terbaik.','taeyeon.jpg','2026-11-22 20:01:49'),(21,'ICE BSD City Hall 5, Tangerang','BAEKHYUN ASIA TOUR [Lonsdaleite] in Jakarta','2027-05-22','19:00:00','BAEKHYUN','Tur solo Asia perdana BAEKHYUN yang menyuguhkan perpaduan vokal R&B halus, koreografi tajam, dan sesi interaksi hangat bersama EXO-L Indonesia.','baekhyun.jpg','2026-11-22 20:01:49'),(22,'GELORA BUNG KARNO','tes','2026-12-23','19:00:00','uki','','default.jpg','2026-11-22 20:33:38');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,11 +82,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `konser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `konser` (
-  `id_event` int(11) NOT NULL,
-  `daftar_lagu` text DEFAULT NULL,
-  `genre_musik` varchar(100) NOT NULL,
+  `id_event` int NOT NULL,
+  `daftar_lagu` text COLLATE utf8mb4_unicode_ci,
+  `genre_musik` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_event`),
   CONSTRAINT `fk_konser_event` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -98,7 +98,7 @@ CREATE TABLE `konser` (
 
 LOCK TABLES `konser` WRITE;
 /*!40000 ALTER TABLE `konser` DISABLE KEYS */;
-INSERT INTO `konser` VALUES (10,'','K-Pop / Performance'),(11,'','K-Pop / Ballad'),(12,'','K-Rock / Pop Rock'),(13,'','K-Pop / Hip-Hop'),(14,'','K-Indie / Lo-Fi'),(15,'','K-Pop / Hyperpop'),(16,'','K-Pop / Dance Pop'),(17,'','K-R&B / Alternative'),(18,'','K-Pop / Pop Dance'),(19,'','K-Pop / Rap Rock'),(20,'','K-Pop / Vocal'),(21,'','K-Pop / R&B');
+INSERT INTO `konser` VALUES (10,'','K-Pop / Performance'),(11,'','K-Pop / Ballad'),(12,'','K-Rock / Pop Rock'),(13,'','K-Pop / Hip-Hop'),(14,'','K-Indie / Lo-Fi'),(15,'','K-Pop / Hyperpop'),(16,'','K-Pop / Dance Pop'),(17,'','K-R&B / Alternative'),(18,'','K-Pop / Pop Dance'),(19,'','K-Pop / Rap Rock'),(20,'','K-Pop / Vocal'),(21,'','K-Pop / R&B'),(22,'','indie');
 /*!40000 ALTER TABLE `konser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,16 +108,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pembayaran`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pembayaran` (
-  `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pesanan` int(11) NOT NULL,
+  `id_pembayaran` int NOT NULL AUTO_INCREMENT,
+  `id_pesanan` int NOT NULL,
   `tanggal` datetime NOT NULL,
-  `metode` varchar(50) NOT NULL,
+  `metode` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jumlah` decimal(12,2) NOT NULL,
-  `bukti_bayar` varchar(255) DEFAULT NULL,
-  `status` enum('menunggu','lunas','ditolak') NOT NULL DEFAULT 'menunggu',
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `bukti_bayar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('menunggu','lunas','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pembayaran`),
   KEY `fk_pembayaran_pesanan` (`id_pesanan`),
   CONSTRAINT `fk_pembayaran_pesanan` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`) ON DELETE CASCADE
@@ -140,16 +140,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pengguna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pengguna` (
-  `id_pengguna` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `alamat` text DEFAULT NULL,
-  `no_telepon` varchar(20) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` enum('user','admin') NOT NULL DEFAULT 'user',
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `id_pengguna` int NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat` text COLLATE utf8mb4_unicode_ci,
+  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('user','admin') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pengguna`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -171,14 +171,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pesanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pesanan` (
-  `id_pesanan` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pengguna` int(11) NOT NULL,
+  `id_pesanan` int NOT NULL AUTO_INCREMENT,
+  `id_pengguna` int NOT NULL,
   `tanggal` datetime NOT NULL,
   `harga` decimal(12,2) NOT NULL,
-  `status` enum('menunggu','menunggu_verifikasi','lunas','ditolak') NOT NULL DEFAULT 'menunggu',
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `status` enum('menunggu','menunggu_verifikasi','lunas','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pesanan`),
   KEY `fk_pesanan_pengguna` (`id_pengguna`),
   CONSTRAINT `fk_pesanan_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE
@@ -201,13 +201,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tiket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tiket` (
-  `id_tiket` int(11) NOT NULL AUTO_INCREMENT,
-  `id_event` int(11) NOT NULL,
-  `kategori` varchar(50) NOT NULL,
-  `deskripsi` text DEFAULT NULL,
-  `kuota_tersedia` int(11) NOT NULL DEFAULT 0,
+  `id_tiket` int NOT NULL AUTO_INCREMENT,
+  `id_event` int NOT NULL,
+  `kategori` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci,
+  `kuota_tersedia` int NOT NULL DEFAULT '0',
   `harga` decimal(12,2) NOT NULL,
   PRIMARY KEY (`id_tiket`),
   KEY `fk_tiket_event` (`id_event`),
@@ -234,4 +234,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-23  3:17:34
+-- Dump completed on 2026-11-23  3:34:00
