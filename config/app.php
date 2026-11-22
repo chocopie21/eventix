@@ -40,6 +40,9 @@ if (!defined('BASE_URL')) {
 // 4. Sertakan koneksi database
 require_once __DIR__ . '/database.php';
 
+// 5. Sertakan konfigurasi OAuth (Google, Apple, dll)
+require_once __DIR__ . '/oauth.php';
+
 
 // ============================================================
 // HELPER URL & ASSET
