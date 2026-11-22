@@ -16,12 +16,10 @@
 
 
 -- Dumping database structure for eventix
-DROP DATABASE IF EXISTS `eventix`;
 CREATE DATABASE IF NOT EXISTS `eventix` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `eventix`;
 
 -- Dumping structure for table eventix.detail_pesanan
-DROP TABLE IF EXISTS `detail_pesanan`;
 CREATE TABLE IF NOT EXISTS `detail_pesanan` (
   `id_detail_pesanan` int NOT NULL AUTO_INCREMENT,
   `id_pesanan` int NOT NULL,
@@ -40,7 +38,6 @@ INSERT INTO `detail_pesanan` (`id_detail_pesanan`, `id_pesanan`, `id_tiket`, `ju
 	(4, 4, 18, 1, 3800000.00);
 
 -- Dumping structure for table eventix.event
-DROP TABLE IF EXISTS `event`;
 CREATE TABLE IF NOT EXISTS `event` (
   `id_event` int NOT NULL AUTO_INCREMENT,
   `venue` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -56,10 +53,10 @@ CREATE TABLE IF NOT EXISTS `event` (
 
 -- Dumping data for table eventix.event: ~1 rows (approximately)
 INSERT INTO `event` (`id_event`, `venue`, `nama_event`, `tanggal_event`, `jam_event`, `pengisi_acara`, `deskripsi`, `poster`, `created_at`) VALUES
-	(8, 'Jakarta International Stadium (JIS), Jakarta Utara', 'SEVENTEEN [RIGHT HERE] World Tour in Jakarta', '2026-12-12', '18:30:00', 'SEVENTEEN', 'Konser tur dunia SEVENTEEN kembali menyapa CARAT Indonesia dengan panggung megah berskala stadion. Open gate dimulai pukul 15:00 WIB, wajib membawa e-ticket dan kartu identitas resmi saat penukaran wristband.', 'default.jpg', '2026-11-22 18:56:24');
+	(8, 'Jakarta International Stadium (JIS), Jakarta Utara', 'SEVENTEEN [RIGHT HERE] World Tour in Jakarta', '2026-12-12', '18:30:00', 'SEVENTEEN', 'Konser tur dunia SEVENTEEN kembali menyapa CARAT Indonesia dengan panggung megah berskala stadion. Open gate dimulai pukul 15:00 WIB, wajib membawa e-ticket dan kartu identitas resmi saat penukaran wristband.', 'default.jpg', '2026-11-22 18:56:24'),
+	(9, 'GELORA BUNG KARNO', 'nafi', '2002-02-22', '19:00:00', 'Perunggu', 'daadaa', 'default.jpg', '2026-11-22 19:52:03');
 
 -- Dumping structure for table eventix.konser
-DROP TABLE IF EXISTS `konser`;
 CREATE TABLE IF NOT EXISTS `konser` (
   `id_event` int NOT NULL,
   `daftar_lagu` text COLLATE utf8mb4_unicode_ci,
@@ -70,10 +67,10 @@ CREATE TABLE IF NOT EXISTS `konser` (
 
 -- Dumping data for table eventix.konser: ~1 rows (approximately)
 INSERT INTO `konser` (`id_event`, `daftar_lagu`, `genre_musik`) VALUES
-	(8, '', 'K-Pop / Performance');
+	(8, '', 'K-Pop / Performance'),
+	(9, '', 'indie');
 
 -- Dumping structure for table eventix.pembayaran
-DROP TABLE IF EXISTS `pembayaran`;
 CREATE TABLE IF NOT EXISTS `pembayaran` (
   `id_pembayaran` int NOT NULL AUTO_INCREMENT,
   `id_pesanan` int NOT NULL,
@@ -94,7 +91,6 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `id_pesanan`, `tanggal`, `metode`, `j
 	(2, 3, '2026-11-22 23:59:45', 'Verifikasi Langsung Admin', 1650000.00, NULL, 'lunas', '2026-11-22 16:59:45');
 
 -- Dumping structure for table eventix.pengguna
-DROP TABLE IF EXISTS `pengguna`;
 CREATE TABLE IF NOT EXISTS `pengguna` (
   `id_pengguna` int NOT NULL AUTO_INCREMENT,
   `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -114,7 +110,6 @@ INSERT INTO `pengguna` (`id_pengguna`, `nama`, `email`, `alamat`, `no_telepon`, 
 	(2, 'Budi Santoso', 'budi@gmail.com', 'Jl. Tebet Timur Dalam Raya No. 42, Jakarta Selatan', '081311223344', '$2y$10$F2WYCiy5xydoLck6BlTUAOb2HQEGsu7hZq5IMWHEbxhnG0Bb5uUC2', 'user', '2026-11-21 17:32:28');
 
 -- Dumping structure for table eventix.pesanan
-DROP TABLE IF EXISTS `pesanan`;
 CREATE TABLE IF NOT EXISTS `pesanan` (
   `id_pesanan` int NOT NULL AUTO_INCREMENT,
   `id_pengguna` int NOT NULL,
@@ -135,7 +130,6 @@ INSERT INTO `pesanan` (`id_pesanan`, `id_pengguna`, `tanggal`, `harga`, `status`
 	(4, 1, '2026-11-23 01:58:29', 3800000.00, 'menunggu', '2026-11-22 18:58:29');
 
 -- Dumping structure for table eventix.tiket
-DROP TABLE IF EXISTS `tiket`;
 CREATE TABLE IF NOT EXISTS `tiket` (
   `id_tiket` int NOT NULL AUTO_INCREMENT,
   `id_event` int NOT NULL,
@@ -148,9 +142,10 @@ CREATE TABLE IF NOT EXISTS `tiket` (
   CONSTRAINT `fk_tiket_event` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table eventix.tiket: ~1 rows (approximately)
+-- Dumping data for table eventix.tiket: ~2 rows (approximately)
 INSERT INTO `tiket` (`id_tiket`, `id_event`, `kategori`, `deskripsi`, `kuota_tersedia`, `harga`) VALUES
-	(18, 8, 'PINK Soundcheck', 'Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif', 199, 3800000.00);
+	(18, 8, 'PINK Soundcheck', 'Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif', 199, 3800000.00),
+	(19, 9, 'TIKET PERUNGGU', 'Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif', 111, 20000000.00);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
