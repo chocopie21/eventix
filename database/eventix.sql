@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.4.3, for Win64 (x86_64)
+-- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: eventix
 -- ------------------------------------------------------
--- Server version	8.4.3
+-- Server version	10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,19 +21,19 @@
 
 DROP TABLE IF EXISTS `detail_pesanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `detail_pesanan` (
-  `id_detail_pesanan` int NOT NULL AUTO_INCREMENT,
-  `id_pesanan` int NOT NULL,
-  `id_tiket` int NOT NULL,
-  `jumlah` int NOT NULL,
+  `id_detail_pesanan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pesanan` int(11) NOT NULL,
+  `id_tiket` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
   `sub_total` decimal(12,2) NOT NULL,
   PRIMARY KEY (`id_detail_pesanan`),
   KEY `fk_detail_pesanan` (`id_pesanan`),
   KEY `fk_detail_tiket` (`id_tiket`),
   CONSTRAINT `fk_detail_pesanan` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`) ON DELETE CASCADE,
   CONSTRAINT `fk_detail_tiket` FOREIGN KEY (`id_tiket`) REFERENCES `tiket` (`id_tiket`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `detail_pesanan` (
 
 LOCK TABLES `detail_pesanan` WRITE;
 /*!40000 ALTER TABLE `detail_pesanan` DISABLE KEYS */;
+INSERT INTO `detail_pesanan` VALUES (5,5,36,1,2400000.00);
 /*!40000 ALTER TABLE `detail_pesanan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,17 +52,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `event` (
-  `id_event` int NOT NULL AUTO_INCREMENT,
-  `venue` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_event` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_event` int(11) NOT NULL AUTO_INCREMENT,
+  `venue` varchar(150) NOT NULL,
+  `nama_event` varchar(150) NOT NULL,
   `tanggal_event` date NOT NULL,
   `jam_event` time NOT NULL,
-  `pengisi_acara` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci,
-  `poster` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `pengisi_acara` varchar(255) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `poster` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_event`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -82,11 +83,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `konser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `konser` (
-  `id_event` int NOT NULL,
-  `daftar_lagu` text COLLATE utf8mb4_unicode_ci,
-  `genre_musik` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_event` int(11) NOT NULL,
+  `daftar_lagu` text DEFAULT NULL,
+  `genre_musik` varchar(100) NOT NULL,
   PRIMARY KEY (`id_event`),
   CONSTRAINT `fk_konser_event` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -108,20 +109,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pembayaran`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pembayaran` (
-  `id_pembayaran` int NOT NULL AUTO_INCREMENT,
-  `id_pesanan` int NOT NULL,
+  `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pesanan` int(11) NOT NULL,
   `tanggal` datetime NOT NULL,
-  `metode` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `metode` varchar(50) NOT NULL,
   `jumlah` decimal(12,2) NOT NULL,
-  `bukti_bayar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('menunggu','lunas','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `bukti_bayar` varchar(255) DEFAULT NULL,
+  `status` enum('menunggu','lunas','ditolak') NOT NULL DEFAULT 'menunggu',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_pembayaran`),
   KEY `fk_pembayaran_pesanan` (`id_pesanan`),
   CONSTRAINT `fk_pembayaran_pesanan` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +131,7 @@ CREATE TABLE `pembayaran` (
 
 LOCK TABLES `pembayaran` WRITE;
 /*!40000 ALTER TABLE `pembayaran` DISABLE KEYS */;
-INSERT INTO `pembayaran` VALUES (1,2,'2026-11-22 00:48:41','Transfer Bank BCA',125000.00,'pay_2_20261122_004841_e40b8af7.jpg','lunas','2026-11-21 17:48:41'),(2,3,'2026-11-22 23:59:45','Verifikasi Langsung Admin',1650000.00,NULL,'lunas','2026-11-22 16:59:45');
+INSERT INTO `pembayaran` VALUES (1,2,'2026-11-22 00:48:41','Transfer Bank BCA',125000.00,'pay_2_20261122_004841_e40b8af7.jpg','lunas','2026-11-21 17:48:41'),(2,3,'2026-11-22 23:59:45','Verifikasi Langsung Admin',1650000.00,NULL,'lunas','2026-11-22 16:59:45'),(3,5,'2026-11-23 06:29:01','Transfer Bank BNI',2400000.00,NULL,'','2026-11-22 23:29:01');
 /*!40000 ALTER TABLE `pembayaran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,16 +141,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pengguna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pengguna` (
-  `id_pengguna` int NOT NULL AUTO_INCREMENT,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci,
-  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('user','admin') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_pengguna` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `no_telepon` varchar(20) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('user','admin') NOT NULL DEFAULT 'user',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_pengguna`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -171,18 +172,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pesanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pesanan` (
-  `id_pesanan` int NOT NULL AUTO_INCREMENT,
-  `id_pengguna` int NOT NULL,
+  `id_pesanan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pengguna` int(11) NOT NULL,
   `tanggal` datetime NOT NULL,
   `harga` decimal(12,2) NOT NULL,
-  `status` enum('menunggu','menunggu_verifikasi','lunas','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('menunggu','menunggu_verifikasi','lunas','ditolak') NOT NULL DEFAULT 'menunggu',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_pesanan`),
   KEY `fk_pesanan_pengguna` (`id_pengguna`),
   CONSTRAINT `fk_pesanan_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +192,7 @@ CREATE TABLE `pesanan` (
 
 LOCK TABLES `pesanan` WRITE;
 /*!40000 ALTER TABLE `pesanan` DISABLE KEYS */;
-INSERT INTO `pesanan` VALUES (1,1,'2026-11-22 00:48:09',125000.00,'ditolak','2026-11-21 17:48:09'),(2,1,'2026-11-22 00:48:28',125000.00,'lunas','2026-11-21 17:48:28'),(3,1,'2026-11-22 23:57:35',1650000.00,'lunas','2026-11-22 16:57:35'),(4,1,'2026-11-23 01:58:29',3800000.00,'menunggu','2026-11-22 18:58:29');
+INSERT INTO `pesanan` VALUES (1,1,'2026-11-22 00:48:09',125000.00,'ditolak','2026-11-21 17:48:09'),(2,1,'2026-11-22 00:48:28',125000.00,'lunas','2026-11-21 17:48:28'),(3,1,'2026-11-22 23:57:35',1650000.00,'lunas','2026-11-22 16:57:35'),(4,1,'2026-11-23 01:58:29',3800000.00,'menunggu','2026-11-22 18:58:29'),(5,2,'2026-11-23 06:28:51',2400000.00,'lunas','2026-11-22 23:28:51');
 /*!40000 ALTER TABLE `pesanan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,13 +202,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tiket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tiket` (
-  `id_tiket` int NOT NULL AUTO_INCREMENT,
-  `id_event` int NOT NULL,
-  `kategori` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci,
-  `kuota_tersedia` int NOT NULL DEFAULT '0',
+  `id_tiket` int(11) NOT NULL AUTO_INCREMENT,
+  `id_event` int(11) NOT NULL,
+  `kategori` varchar(50) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `kuota_tersedia` int(11) NOT NULL DEFAULT 0,
   `harga` decimal(12,2) NOT NULL,
   PRIMARY KEY (`id_tiket`),
   KEY `fk_tiket_event` (`id_event`),
@@ -221,7 +222,7 @@ CREATE TABLE `tiket` (
 
 LOCK TABLES `tiket` WRITE;
 /*!40000 ALTER TABLE `tiket` DISABLE KEYS */;
-INSERT INTO `tiket` VALUES (20,10,'PINK Soundcheck','Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif.',200,3800000.00),(21,10,'CAT 1 (Festival)','Area festival berdiri dekat panggung utama dengan queue number.',500,2900000.00),(22,10,'CAT 2 (Lower Tribune)','Kursi bernomor di tribun bawah dengan pandangan langsung ke panggung.',400,2200000.00),(23,10,'CAT 3 (Upper Tribune)','Kursi bernomor di tribun atas dengan layar LED pendamping.',600,1600000.00),(24,11,'VIP Seated','Barisan kursi depan panggung, souvenir seat cushion & photocard spesial.',250,2900000.00),(25,11,'CAT 1','Kursi bernomor area tengah hall dengan visibilitas optimal.',400,2400000.00),(26,11,'CAT 2','Kursi bernomor area sayap kanan dan kiri hall.',450,1800000.00),(27,11,'CAT 3','Kursi bernomor area belakang dengan akses penuh ke layar utama.',500,1100000.00),(28,12,'PINK Soundcheck','Akses soundcheck, area standing terdepan, dan exclusive merchandise lanyard.',200,3400000.00),(29,12,'BLUE Festival','Area festival berdiri di tengah lapangan dekat extended stage.',450,2500000.00),(30,12,'YELLOW Tribune','Kursi tribun bernomor menghadap langsung ke panggung utama.',400,1500000.00),(31,12,'GREEN Tribune','Kursi tribun sisi kanan dan kiri dengan harga paling terjangkau.',500,850000.00),(32,13,'VIP Soundcheck','Kursi terdepan dekat panggung utama, akses soundcheck, jalur masuk khusus, dan laminate eksklusif.',0,3800000.00),(33,13,'Platinum Seated','Kursi lapangan bernomor tepat di belakang area VIP dengan jarak pandang dekat.',0,3400000.00),(34,13,'CAT 1','Area tribun bawah sisi barat dan timur stadion dengan kursi bernomor.',0,2900000.00),(35,13,'CAT 4 (Upper)','Area tribun atas stadion dengan pandangan panorama panggung dan lautan lightstick.',0,1350000.00),(36,14,'VIP Meet & Greet','Early entry ke area festival, sesi foto grup 1:6, poster bertanda tangan, dan VIP lanyard.',150,2400000.00),(37,14,'CAT 1 (Standing)','Area berdiri lantai utama tepat di depan panggung dengan audio akustik jernih.',600,1250000.00),(38,14,'CAT 2 (Seated)','Kursi tribun tengah menghadap langsung ke panggung.',400,950000.00),(39,14,'CAT 3 (Seated)','Kursi tribun bagian atas dengan suasana konser yang nyaman.',450,650000.00),(40,15,'VIP Soundcheck','Akses soundcheck eksklusif, area standing terdekat panggung, dan VIP gift set.',250,3000000.00),(41,15,'CAT 1 (Standing)','Area berdiri di sekitar extended stage dengan nomor antrean masuk.',500,2750000.00),(42,15,'CAT 2 (Seated)','Kursi tribun bernomor di lantai 2 dengan sudut pandang lurus ke panggung.',400,2550000.00),(43,15,'CAT 4 (Upper Seated)','Kursi tribun lantai atas dengan visibilitas layar utama penuh.',550,1300000.00),(44,16,'DREAM A/B Soundcheck','Area standing paling depan, akses soundcheck, jalur prioritas, dan lanyard eksklusif.',300,3350000.00),(45,16,'DREAM C (Standing)','Area festival lapangan mengelilingi panggung tengah stadion.',600,2950000.00),(46,16,'CAT 2 (Lower Seated)','Kursi tribun bawah bernomor dengan kenyamanan penuh dan pandangan jelas.',500,2550000.00),(47,16,'CAT 6 (Upper Seated)','Kursi tribun atas bernomor dengan harga terjangkau.',700,1050000.00),(48,17,'VIP Meet & Greet','Early entry, sesi foto grup bersama DPR, akses Q&A singkat, dan exclusive merch pack.',150,3800000.00),(49,17,'Early Entry Festival','Area berdiri lantai utama dengan akses masuk lebih awal sebelum penonton reguler.',350,2150000.00),(50,17,'General Standing','Area berdiri reguler di lantai utama menghadap panggung.',500,1550000.00),(51,17,'Seated Tribune','Kursi tribun bernomor dengan tata suara jernih.',450,950000.00),(52,18,'PINK Soundcheck','Kursi lapangan terdepan, akses soundcheck session, dan souvenir lanyard eksklusif.',250,3600000.00),(53,18,'BLUE Seated','Kursi bernomor di area lapangan tepat di samping panggung utama.',400,3300000.00),(54,18,'GREEN Tribune','Kursi tribun lantai 1 menghadap panggung utama secara langsung.',500,2200000.00),(55,18,'GRAY Tribune','Kursi tribun tingkat atas dengan visibilitas keseluruhan stadion.',650,1200000.00),(56,19,'VIP Soundcheck','Area standing terdekat panggung, sesi soundcheck, lanyard VIP, dan jalur antrean khusus.',200,3600000.00),(57,19,'CAT 1 (Standing)','Area festival berdiri tepat di sekitar panggung utama dan catwalk.',450,2900000.00),(58,19,'CAT 3 (Seated)','Kursi tribun bawah bernomor dengan sudut pandang optimal ke seluruh arena.',400,2200000.00),(59,19,'CAT 5 (Upper Seated)','Kursi tribun atas bernomor di dalam arena ber-AC penuh.',550,1200000.00),(60,20,'CAT 1 (Standing)','Area berdiri paling dekat panggung dengan nomor antrean masuk.',300,2900000.00),(61,20,'CAT 2 (Seated)','Kursi bernomor area depan tengah hall untuk menikmati kualitas vokal secara intim.',350,2700000.00),(62,20,'CAT 4 (Seated)','Kursi bernomor area sayap kanan dan kiri hall.',400,1900000.00),(63,20,'CAT 5 (Seated)','Kursi bernomor area belakang hall dengan dukungan layar LED besar.',450,1100000.00),(64,21,'VIP Soundcheck','Akses soundcheck, sesi send-off terbatas, area standing terdepan, dan photocard eksklusif.',200,3100000.00),(65,21,'CAT 1 (Standing)','Area berdiri dekat extended stage dengan nomor antrean.',400,2600000.00),(66,21,'CAT 2 (Seated)','Kursi bernomor area tribun tengah menghadap langsung ke panggung.',350,2200000.00),(67,21,'CAT 3 (Seated)','Kursi bernomor area belakang dengan pandangan jelas ke panggung dan layar utama.',450,1600000.00);
+INSERT INTO `tiket` VALUES (20,10,'PINK Soundcheck','Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif.',200,3800000.00),(21,10,'CAT 1 (Festival)','Area festival berdiri dekat panggung utama dengan queue number.',500,2900000.00),(22,10,'CAT 2 (Lower Tribune)','Kursi bernomor di tribun bawah dengan pandangan langsung ke panggung.',400,2200000.00),(23,10,'CAT 3 (Upper Tribune)','Kursi bernomor di tribun atas dengan layar LED pendamping.',600,1600000.00),(24,11,'VIP Seated','Barisan kursi depan panggung, souvenir seat cushion & photocard spesial.',250,2900000.00),(25,11,'CAT 1','Kursi bernomor area tengah hall dengan visibilitas optimal.',400,2400000.00),(26,11,'CAT 2','Kursi bernomor area sayap kanan dan kiri hall.',450,1800000.00),(27,11,'CAT 3','Kursi bernomor area belakang dengan akses penuh ke layar utama.',500,1100000.00),(28,12,'PINK Soundcheck','Akses soundcheck, area standing terdepan, dan exclusive merchandise lanyard.',200,3400000.00),(29,12,'BLUE Festival','Area festival berdiri di tengah lapangan dekat extended stage.',450,2500000.00),(30,12,'YELLOW Tribune','Kursi tribun bernomor menghadap langsung ke panggung utama.',400,1500000.00),(31,12,'GREEN Tribune','Kursi tribun sisi kanan dan kiri dengan harga paling terjangkau.',500,850000.00),(32,13,'VIP Soundcheck','Kursi terdepan dekat panggung utama, akses soundcheck, jalur masuk khusus, dan laminate eksklusif.',0,3800000.00),(33,13,'Platinum Seated','Kursi lapangan bernomor tepat di belakang area VIP dengan jarak pandang dekat.',0,3400000.00),(34,13,'CAT 1','Area tribun bawah sisi barat dan timur stadion dengan kursi bernomor.',0,2900000.00),(35,13,'CAT 4 (Upper)','Area tribun atas stadion dengan pandangan panorama panggung dan lautan lightstick.',0,1350000.00),(36,14,'VIP Meet & Greet','Early entry ke area festival, sesi foto grup 1:6, poster bertanda tangan, dan VIP lanyard.',149,2400000.00),(37,14,'CAT 1 (Standing)','Area berdiri lantai utama tepat di depan panggung dengan audio akustik jernih.',600,1250000.00),(38,14,'CAT 2 (Seated)','Kursi tribun tengah menghadap langsung ke panggung.',400,950000.00),(39,14,'CAT 3 (Seated)','Kursi tribun bagian atas dengan suasana konser yang nyaman.',450,650000.00),(40,15,'VIP Soundcheck','Akses soundcheck eksklusif, area standing terdekat panggung, dan VIP gift set.',250,3000000.00),(41,15,'CAT 1 (Standing)','Area berdiri di sekitar extended stage dengan nomor antrean masuk.',500,2750000.00),(42,15,'CAT 2 (Seated)','Kursi tribun bernomor di lantai 2 dengan sudut pandang lurus ke panggung.',400,2550000.00),(43,15,'CAT 4 (Upper Seated)','Kursi tribun lantai atas dengan visibilitas layar utama penuh.',550,1300000.00),(44,16,'DREAM A/B Soundcheck','Area standing paling depan, akses soundcheck, jalur prioritas, dan lanyard eksklusif.',300,3350000.00),(45,16,'DREAM C (Standing)','Area festival lapangan mengelilingi panggung tengah stadion.',600,2950000.00),(46,16,'CAT 2 (Lower Seated)','Kursi tribun bawah bernomor dengan kenyamanan penuh dan pandangan jelas.',500,2550000.00),(47,16,'CAT 6 (Upper Seated)','Kursi tribun atas bernomor dengan harga terjangkau.',700,1050000.00),(48,17,'VIP Meet & Greet','Early entry, sesi foto grup bersama DPR, akses Q&A singkat, dan exclusive merch pack.',150,3800000.00),(49,17,'Early Entry Festival','Area berdiri lantai utama dengan akses masuk lebih awal sebelum penonton reguler.',350,2150000.00),(50,17,'General Standing','Area berdiri reguler di lantai utama menghadap panggung.',500,1550000.00),(51,17,'Seated Tribune','Kursi tribun bernomor dengan tata suara jernih.',450,950000.00),(52,18,'PINK Soundcheck','Kursi lapangan terdepan, akses soundcheck session, dan souvenir lanyard eksklusif.',250,3600000.00),(53,18,'BLUE Seated','Kursi bernomor di area lapangan tepat di samping panggung utama.',400,3300000.00),(54,18,'GREEN Tribune','Kursi tribun lantai 1 menghadap panggung utama secara langsung.',500,2200000.00),(55,18,'GRAY Tribune','Kursi tribun tingkat atas dengan visibilitas keseluruhan stadion.',650,1200000.00),(56,19,'VIP Soundcheck','Area standing terdekat panggung, sesi soundcheck, lanyard VIP, dan jalur antrean khusus.',200,3600000.00),(57,19,'CAT 1 (Standing)','Area festival berdiri tepat di sekitar panggung utama dan catwalk.',450,2900000.00),(58,19,'CAT 3 (Seated)','Kursi tribun bawah bernomor dengan sudut pandang optimal ke seluruh arena.',400,2200000.00),(59,19,'CAT 5 (Upper Seated)','Kursi tribun atas bernomor di dalam arena ber-AC penuh.',550,1200000.00),(60,20,'CAT 1 (Standing)','Area berdiri paling dekat panggung dengan nomor antrean masuk.',300,2900000.00),(61,20,'CAT 2 (Seated)','Kursi bernomor area depan tengah hall untuk menikmati kualitas vokal secara intim.',350,2700000.00),(62,20,'CAT 4 (Seated)','Kursi bernomor area sayap kanan dan kiri hall.',400,1900000.00),(63,20,'CAT 5 (Seated)','Kursi bernomor area belakang hall dengan dukungan layar LED besar.',450,1100000.00),(64,21,'VIP Soundcheck','Akses soundcheck, sesi send-off terbatas, area standing terdepan, dan photocard eksklusif.',200,3100000.00),(65,21,'CAT 1 (Standing)','Area berdiri dekat extended stage dengan nomor antrean.',400,2600000.00),(66,21,'CAT 2 (Seated)','Kursi bernomor area tribun tengah menghadap langsung ke panggung.',350,2200000.00),(67,21,'CAT 3 (Seated)','Kursi bernomor area belakang dengan pandangan jelas ke panggung dan layar utama.',450,1600000.00);
 /*!40000 ALTER TABLE `tiket` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -234,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-23  3:55:02
+-- Dump completed on 2026-11-23  6:46:33
