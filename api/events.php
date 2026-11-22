@@ -13,7 +13,7 @@ try {
     // Ambil parameter GET dengan sanitasi
     $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
     $genre   = isset($_GET['genre']) ? trim($_GET['genre']) : '';
-    $date    = isset($_GET['date']) ? trim($_GET['date']) : '';
+    $date    = isset($_GET['date']) ? trim($_GET['date']) : (isset($_GET['tanggal']) ? trim($_GET['tanggal']) : '');
 
     // Bangun SQL Query Dasar
     $sql = "SELECT 
@@ -39,8 +39,11 @@ try {
 
     // Filter Keyword (Nama Event, Pengisi Acara, atau Venue)
     if ($keyword !== '') {
-        $sql .= " AND (e.nama_event LIKE :q OR e.pengisi_acara LIKE :q OR e.venue LIKE :q)";
-        $params[':q'] = '%' . $keyword . '%';
+        $sql .= " AND (e.nama_event LIKE :q1 OR e.pengisi_acara LIKE :q2 OR e.venue LIKE :q3)";
+        $searchTerm = '%' . $keyword . '%';
+        $params[':q1'] = $searchTerm;
+        $params[':q2'] = $searchTerm;
+        $params[':q3'] = $searchTerm;
     }
 
     // Filter Genre Musik

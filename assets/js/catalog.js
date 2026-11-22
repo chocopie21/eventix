@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
+    const searchBtn   = document.getElementById('search-btn');
+    const searchForm  = document.getElementById('hero-search-form');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
     const dateFilter  = document.getElementById('date-filter');
     const resetFilterBtn = document.getElementById('reset-filter');
     const eventsGrid  = document.getElementById('events-grid');
@@ -15,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let debounceTimer = null;
     let currentAbortController = null;
+    const apiEndpoint = window.EVENTIX_API_EVENTS || 'api/events.php';
 
     /**
      * Escape HTML untuk proteksi XSS
@@ -158,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderLoadingSkeleton();
 
-        fetch(`api/events.php?${params.toString()}`, {
+        fetch(`${apiEndpoint}?${params.toString()}`, {
             signal: currentAbortController.signal
         })
         .then(response => {
@@ -198,11 +202,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Event listener search input
+    /**
+     * Jalankan pencarian dan scroll halus ke katalog
+     */
+    function executeSearchAndScroll() {
+        clearTimeout(debounceTimer);
+        fetchEvents();
+        const katalogSection = document.getElementById('katalog');
+        if (katalogSection) {
+            katalogSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Event listener search input (Live Search saat mengetik)
     if (searchInput) {
         searchInput.addEventListener('input', () => {
+            const hasText = searchInput.value.trim().length > 0;
+            if (clearSearchBtn) {
+                clearSearchBtn.classList.toggle('hidden', !hasText);
+            }
             clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(fetchEvents, 300);
+            debounceTimer = setTimeout(fetchEvents, 250);
+        });
+
+        // Tekan tombol Enter pada keyboard
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                executeSearchAndScroll();
+            }
+        });
+    }
+
+    // Event listener tombol Cari Tiket & Form submit
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            executeSearchAndScroll();
+        });
+    } else if (searchBtn) {
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            executeSearchAndScroll();
+        });
+    }
+
+    // Tombol Clear Search (X)
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.focus();
+            }
+            clearSearchBtn.classList.add('hidden');
+            fetchEvents();
         });
     }
 
@@ -229,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resetFilterBtn) {
         resetFilterBtn.addEventListener('click', () => {
             if (searchInput) searchInput.value = '';
+            if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
             if (dateFilter) dateFilter.value = '';
             categoryPills.forEach(p => {
                 p.classList.remove('active', 'bg-[#FF6082]', 'text-white', 'shadow-xs');

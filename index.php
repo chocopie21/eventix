@@ -7,6 +7,10 @@
 
 require_once __DIR__ . '/config/app.php';
 
+// Ambil parameter filter awal dari URL jika ada
+$searchQuery = trim($_GET['q'] ?? '');
+$selectedGenre = trim($_GET['genre'] ?? '');
+
 // Ambil data konser awal secara SSR dari PDO
 try {
     $sql = "SELECT 
@@ -26,9 +30,24 @@ try {
             FROM event e
             INNER JOIN konser k ON e.id_event = k.id_event
             LEFT JOIN tiket t ON e.id_event = t.id_event
-            GROUP BY e.id_event
-            ORDER BY e.tanggal_event ASC";
-    $stmt = $pdo->query($sql);
+            WHERE 1=1";
+    
+    $params = [];
+    if ($searchQuery !== '') {
+        $sql .= " AND (e.nama_event LIKE :q1 OR e.pengisi_acara LIKE :q2 OR e.venue LIKE :q3)";
+        $searchTerm = '%' . $searchQuery . '%';
+        $params[':q1'] = $searchTerm;
+        $params[':q2'] = $searchTerm;
+        $params[':q3'] = $searchTerm;
+    }
+    if ($selectedGenre !== '' && $selectedGenre !== 'all') {
+        $sql .= " AND k.genre_musik = :genre";
+        $params[':genre'] = $selectedGenre;
+    }
+
+    $sql .= " GROUP BY e.id_event ORDER BY e.tanggal_event ASC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
     $initialEvents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Ambil daftar genre musik unik untuk pilihan filter
@@ -93,20 +112,33 @@ try {
 
                     <!-- Modern Search Bar -->
                     <div class="pt-2 max-w-2xl">
-                        <div class="bg-white p-2 rounded-2xl border border-slate-200/90 shadow-[0_10px_30px_rgba(15,23,42,0.06)] flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <form id="hero-search-form" action="#katalog" method="GET" class="bg-white p-2 rounded-2xl border border-slate-200/90 shadow-[0_10px_30px_rgba(15,23,42,0.06)] flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                             <div class="flex items-center flex-1 px-3 py-1.5 gap-2.5">
                                 <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                                 <input type="text" 
                                        id="search-input" 
+                                       name="q"
+                                       value="<?= htmlspecialchars($searchQuery, ENT_QUOTES, 'UTF-8') ?>"
                                        placeholder="Cari artis, band, atau venue konser..." 
+                                       autocomplete="off"
                                        class="w-full text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none bg-transparent">
+                                <button type="button" 
+                                        id="clear-search-btn" 
+                                        class="<?= empty($searchQuery) ? 'hidden' : '' ?> text-slate-400 hover:text-slate-600 focus:outline-none"
+                                        title="Hapus pencarian">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
                             </div>
-                            <a href="#katalog" class="px-6 py-3 rounded-xl bg-[#FF6082] hover:bg-[#e54b6d] text-white font-semibold text-xs text-center transition-all shadow-xs hover:shadow-sm shrink-0">
+                            <button type="submit" 
+                                    id="search-btn" 
+                                    class="px-6 py-3 rounded-xl bg-[#FF6082] hover:bg-[#e54b6d] text-white font-semibold text-xs text-center transition-all shadow-xs hover:shadow-sm shrink-0 cursor-pointer">
                                 Cari Tiket
-                            </a>
-                        </div>
+                            </button>
+                        </form>
                     </div>
 
                     <!-- Trust Indicators -->
@@ -180,8 +212,12 @@ try {
             <!-- CONCERTS GRID -->
             <div id="events-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php if (empty($initialEvents)): ?>
-                    <div class="col-span-full py-16 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
-                        Belum ada konser musik yang tersedia saat ini.
+                    <div class="col-span-full py-16 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">
+                        <p class="font-bold text-slate-800 text-base">Tidak ada konser musik yang ditemukan</p>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <?= !empty($searchQuery) ? 'Tidak ada konser yang cocok dengan kata kunci "' . htmlspecialchars($searchQuery, ENT_QUOTES, 'UTF-8') . '".' : 'Belum ada konser musik yang tersedia saat ini.' ?>
+                            Coba kata kunci lain atau klik <a href="<?= url('index.php') ?>" class="text-[#FF6082] font-semibold underline">Reset Filter</a>.
+                        </p>
                     </div>
                 <?php else: ?>
                     <?php foreach ($initialEvents as $index => $ev): 
@@ -273,6 +309,11 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
     <script src="<?= asset('js/animations.js') ?>"></script>
+
+    <!-- Catalog API Endpoint Config -->
+    <script>
+        window.EVENTIX_API_EVENTS = '<?= url("api/events.php") ?>';
+    </script>
 
     <!-- Catalog Live Search Script -->
     <script src="<?= asset('js/catalog.js') ?>"></script>
