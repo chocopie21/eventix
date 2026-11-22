@@ -77,6 +77,9 @@ $isUserLoggedIn = isLoggedIn();
         }
     </script>
 
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
@@ -146,7 +149,7 @@ $isUserLoggedIn = isLoggedIn();
                         </span>
                     </div>
 
-                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.1] tracking-tight gsap-words-reveal">
                         <?= htmlspecialchars($event['nama_event'], ENT_QUOTES, 'UTF-8') ?>
                     </h1>
 
@@ -216,36 +219,7 @@ $isUserLoggedIn = isLoggedIn();
                     </div>
                 </div>
 
-                <!-- 2. Setlist Lagu -->
-                <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-2xs space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <h2 class="text-base font-bold text-slate-900">
-                            Daftar Lagu Konser (Setlist)
-                        </h2>
-                        <span class="text-xs text-slate-500 font-semibold">
-                            <?= count($setlist) ?> Lagu
-                        </span>
-                    </div>
-
-                    <?php if (!empty($setlist)): ?>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                            <?php foreach ($setlist as $index => $song): ?>
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-slate-300 transition-colors">
-                                    <span class="w-6 h-6 rounded-md bg-white border border-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">
-                                        <?= $index + 1 ?>
-                                    </span>
-                                    <span class="text-xs font-semibold text-slate-800 truncate">
-                                        <?= htmlspecialchars($song, ENT_QUOTES, 'UTF-8') ?>
-                                    </span>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php else: ?>
-                        <p class="text-xs text-slate-400 italic">Daftar lagu resmi akan diumumkan mendekati hari pelaksanaan konser.</p>
-                    <?php endif; ?>
-                </div>
-
-                <!-- 3. Syarat & Ketentuan Konser Musik -->
+                <!-- 2. Syarat & Ketentuan Konser Musik -->
                 <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-2xs space-y-3">
                     <h2 class="text-base font-bold text-slate-900">
                         Ketentuan Masuk Venue & Penukaran Gelang
@@ -420,6 +394,13 @@ $isUserLoggedIn = isLoggedIn();
 
     <!-- Footer Component -->
     <?php include __DIR__ . '/components/footer.php'; ?>
+
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 
     <!-- Ticket Booking Interactive Script -->
     <script src="<?= asset('js/ticket_booking.js') ?>"></script>

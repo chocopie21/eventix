@@ -65,6 +65,9 @@ try {
         }
     </script>
 
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
@@ -80,7 +83,7 @@ try {
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl space-y-5">
                     
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.08]">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.08] gsap-words-reveal">
                         Tiket Resmi Konser Musik Indonesia
                     </h1>
 
@@ -132,7 +135,7 @@ try {
             <!-- Section Header & Filter Pills -->
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200/80 pb-5">
                 <div>
-                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">
+                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight gsap-words-reveal">
                         Jadwal Konser Musik
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -263,6 +266,13 @@ try {
 
     <!-- Footer Component -->
     <?php include __DIR__ . '/components/footer.php'; ?>
+
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 
     <!-- Catalog Live Search Script -->
     <script src="<?= asset('js/catalog.js') ?>"></script>

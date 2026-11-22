@@ -114,6 +114,9 @@ $flashInfo = getFlash('info');
         }
     </script>
 
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
@@ -133,7 +136,7 @@ $flashInfo = getFlash('info');
                     <span>/</span>
                     <span class="text-slate-900 font-semibold">Riwayat Pesanan</span>
                 </nav>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight gsap-words-reveal">
                     Tiket & Riwayat Pesanan
                 </h1>
                 <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -323,18 +326,13 @@ $flashInfo = getFlash('info');
                                 </div>
 
                                 <div>
-                                    <?php if ($status === 'menunggu'): ?>
+                                    <?php if ($status === 'menunggu' || $status === 'menunggu_verifikasi'): ?>
                                         <a href="<?= url('checkout.php?id_pesanan=' . $idPesanan) ?>" 
                                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
                                             <span>Bayar Sekarang</span>
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                             </svg>
-                                        </a>
-                                    <?php elseif ($status === 'menunggu_verifikasi'): ?>
-                                        <a href="<?= url('checkout.php?id_pesanan=' . $idPesanan) ?>" 
-                                           class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 transition-all shadow-2xs">
-                                            <span>Lihat Bukti Bayar</span>
                                         </a>
                                     <?php elseif ($status === 'lunas'): ?>
                                         <button type="button" 
@@ -419,6 +417,13 @@ $flashInfo = getFlash('info');
 
     <!-- Footer Component -->
     <?php include __DIR__ . '/components/footer.php'; ?>
+
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 
     <script>
         function openTicketModal(id, title, user, date, venue) {

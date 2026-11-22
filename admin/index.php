@@ -325,19 +325,6 @@ $flashError = getFlash('error');
                                class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
                     </div>
 
-                    <!-- Setlist Prediksi -->
-                    <div>
-                        <label for="daftar_lagu" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                            Daftar lagu (setlist - pisahkan dengan tanda koma)
-                        </label>
-                        <input type="text" 
-                               id="daftar_lagu" 
-                               name="daftar_lagu" 
-                               value="<?= htmlspecialchars($editEvent['daftar_lagu'] ?? '', ENT_QUOTES, 'UTF-8') ?>" 
-                               placeholder="Contoh: Dan, Sephia, Sahabat Sejati, Pejantan Tangguh, Melompat Lebih Tinggi" 
-                               class="w-full px-3.5 py-2.5 bg-white border border-slate-200/90 focus:border-[#FF6082] focus:ring-2 focus:ring-[#FF6082]/15 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-all">
-                    </div>
-
                     <!-- Deskripsi Konser & Upload Poster (2 Kolom) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         

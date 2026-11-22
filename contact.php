@@ -43,6 +43,9 @@ $flashError = getFlash('error');
         }
     </script>
 
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
@@ -59,7 +62,7 @@ $flashError = getFlash('error');
             <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-[#fff1f4] text-[#c5294e] border border-[#fed7e2] inline-block">
                 Layanan & Kemitraan
             </span>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight gsap-words-reveal">
                 Ada yang Bisa Kami Bantu?
             </h1>
             <p class="text-xs sm:text-sm text-slate-600 font-normal">
@@ -222,5 +225,11 @@ $flashError = getFlash('error');
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

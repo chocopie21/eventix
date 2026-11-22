@@ -30,6 +30,9 @@ require_once __DIR__ . '/config/app.php';
         }
     </script>
 
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
@@ -46,11 +49,11 @@ require_once __DIR__ . '/config/app.php';
             <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-[#fff1f4] text-[#c5294e] border border-[#fed7e2] inline-block">
                 Pusat Bantuan
             </span>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight gsap-words-reveal">
                 Pertanyaan yang Sering Diajukan
             </h1>
             <p class="text-xs sm:text-sm text-slate-600 font-normal">
-                Temukan jawaban seputar tata cara pembelian tiket, upload bukti bayar, dan akses e-ticket konser.
+                Temukan jawaban seputar tata cara pembelian tiket, konfirmasi pembayaran instan, dan akses e-ticket konser.
             </p>
         </div>
 
@@ -75,7 +78,7 @@ require_once __DIR__ . '/config/app.php';
                     Metode pembayaran apa saja yang didukung?
                 </h3>
                 <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
-                    Kami mendukung transfer bank resmi ke rekening PT EVENTIX INDONESIA (BCA, Mandiri, BNI, BRI) serta QRIS All E-Wallet (Gopay, OVO, Dana, LinkAja, ShopeePay). Setelah transfer, unggah foto bukti transfer di halaman checkout.
+                    Kami mendukung transfer bank resmi ke rekening PT EVENTIX INDONESIA (BCA, Mandiri, BNI) serta QRIS All E-Wallet (Gopay, OVO, Dana, LinkAja, ShopeePay). Pembayaran terverifikasi secara instan tanpa perlu repot mengunggah foto bukti fisik.
                 </p>
             </div>
 
@@ -86,7 +89,7 @@ require_once __DIR__ . '/config/app.php';
                     Kapan E-Ticket saya akan terbit?
                 </h3>
                 <p class="text-xs sm:text-sm text-slate-600 pl-10 leading-relaxed font-normal">
-                    Setelah Anda mengunggah bukti transfer, tim verifikator kami akan memeriksa keaslian mutasi dalam waktu maksimal 1x24 jam. Begitu diverifikasi berstatus <strong>Lunas</strong>, E-Ticket resmi berbarcode QR Code unik akan otomatis aktif di menu <strong>Tiket & Pesanan Saya</strong>.
+                    Setelah Anda mengonfirmasi pembayaran di halaman checkout, E-Ticket resmi ber-QR Code unik akan langsung aktif seketika di menu <strong>Tiket Saya</strong> tanpa waktu tunggu.
                 </p>
             </div>
 
@@ -132,5 +135,11 @@ require_once __DIR__ . '/config/app.php';
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

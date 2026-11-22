@@ -180,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                 } else {
                     eventsGrid.innerHTML = res.data.map(createEventCard).join('');
+                    if (window.initCardsAnimation) {
+                        window.initCardsAnimation();
+                    }
                 }
             }
         })

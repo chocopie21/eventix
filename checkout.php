@@ -1,6 +1,6 @@
 <?php
 /**
- * EVENTIX - Halaman Konfirmasi Pesanan & Upload Bukti Pembayaran
+ * EVENTIX - Halaman Konfirmasi Pesanan & Pembayaran
  * Modern Minimalist Design
  * 2 Primary Colors: #FF6082 (Punch Pink) & #0F172A (Deep Slate Noir)
  */
@@ -61,11 +61,6 @@ try {
     $stmtDetails->execute([':id_pesanan' => $idPesanan]);
     $orderDetails = $stmtDetails->fetchAll(PDO::FETCH_ASSOC);
 
-    // 4. Ambil data pembayaran jika sudah ada upload sebelumnya
-    $stmtPay = $pdo->prepare("SELECT * FROM pembayaran WHERE id_pesanan = :id_pesanan ORDER BY id_pembayaran DESC LIMIT 1");
-    $stmtPay->execute([':id_pesanan' => $idPesanan]);
-    $payment = $stmtPay->fetch(PDO::FETCH_ASSOC);
-
 } catch (PDOException $e) {
     error_log("[Checkout Query Error] " . $e->getMessage());
     setFlash('error', 'Terjadi kesalahan sistem saat memuat data pesanan.');
@@ -97,6 +92,9 @@ $flashSuccess = getFlash('success');
             }
         }
     </script>
+
+    <!-- Lenis Smooth Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
@@ -154,7 +152,7 @@ $flashSuccess = getFlash('success');
                         Dibuat: <?= formatTanggalIndo(date('Y-m-d', strtotime($order['tanggal']))) ?> • <?= date('H:i', strtotime($order['tanggal'])) ?> WIB
                     </span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight gsap-words-reveal">
                     Konfirmasi Pesanan & Pembayaran
                 </h1>
             </div>
@@ -165,11 +163,6 @@ $flashSuccess = getFlash('success');
                     <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                         <span>Menunggu Pembayaran</span>
-                    </span>
-                <?php elseif ($order['status'] === 'menunggu_verifikasi'): ?>
-                    <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                        <span>Sedang Diverifikasi Admin</span>
                     </span>
                 <?php elseif ($order['status'] === 'lunas'): ?>
                     <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
@@ -267,16 +260,16 @@ $flashSuccess = getFlash('success');
 
             </div>
 
-            <!-- RIGHT COLUMN: Metode Pembayaran & Form Upload Bukti -->
+            <!-- RIGHT COLUMN: Metode Pembayaran & Konfirmasi -->
             <div class="lg:col-span-6 space-y-6">
 
                 <!-- Rekening Bank Tujuan Transfer -->
                 <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                            Pilih Rekening Tujuan Transfer
+                            Pilih Metode Pembayaran
                         </h3>
-                        <span class="text-xs text-slate-500 font-medium">Transfer Manual</span>
+                        <span class="text-xs text-slate-500 font-medium">Instan & Terverifikasi</span>
                     </div>
 
                     <!-- Pilihan Akun Bank -->
@@ -360,88 +353,56 @@ $flashSuccess = getFlash('success');
                     </div>
 
                     <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                        Mohon transfer tepat <strong><?= formatRupiah($order['harga']) ?></strong> agar transaksi dapat diverifikasi instan oleh sistem.
+                        Total yang harus dibayar: <strong><?= formatRupiah($order['harga']) ?></strong>
                     </div>
                 </div>
 
-                <!-- FORM UPLOAD BUKTI TRANSFER -->
+                <!-- FORM KONFIRMASI PEMBAYARAN TANPA UPLOAD FILE -->
                 <?php if ($order['status'] !== 'lunas'): ?>
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
+                    <form action="<?= url('actions/payment_upload.php') ?>" 
+                          method="POST" 
+                          class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
+                        
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="id_pesanan" value="<?= $idPesanan ?>">
+                        <input type="hidden" name="metode" id="input-metode" value="Transfer Bank BCA">
+
                         <div>
                             <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                                Unggah Bukti Transfer
+                                Konfirmasi Pembayaran
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Format file: JPG, PNG, WEBP (Maksimal 2 MB)</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Selesaikan pemesanan tiket Anda tanpa antre dan tanpa ribet.</p>
                         </div>
 
-                        <?php if ($payment && !empty($payment['bukti_bayar'])): ?>
-                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="font-semibold">Bukti transfer sebelumnya telah diunggah:</span>
-                                    <span class="text-[10px] text-slate-500"><?= date('d/m/Y H:i', strtotime($payment['tanggal'])) ?></span>
-                                </div>
-                                <div class="w-20 h-20 rounded-lg border border-slate-300 bg-white overflow-hidden">
-                                    <img src="<?= asset('uploads/payments/' . $payment['bukti_bayar']) ?>" alt="Bukti Transfer" class="w-full h-full object-cover">
-                                </div>
-                                <p class="text-[11px] text-slate-500">Unggah bukti baru di bawah jika ingin memperbarui file.</p>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5 text-xs text-slate-600">
+                            <div class="flex items-center gap-2 text-emerald-700 font-semibold">
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                <span>E-Ticket QR Langsung Aktif</span>
                             </div>
-                        <?php endif; ?>
+                            <p class="text-[11px] text-slate-500 leading-relaxed">
+                                Setelah Anda menekan tombol konfirmasi, tiket akan langsung diterbitkan secara digital dan dapat segera digunakan di pintu masuk konser.
+                            </p>
+                        </div>
 
-                        <form action="<?= url('actions/payment_upload.php') ?>" 
-                              method="POST" 
-                              enctype="multipart/form-data" 
-                              class="space-y-4">
-                            
-                            <?= csrf_field() ?>
-                            <input type="hidden" name="id_pesanan" value="<?= $idPesanan ?>">
-                            <input type="hidden" name="metode" id="input-metode" value="Transfer Bank BCA">
-
-                            <!-- File Upload Box -->
-                            <div>
-                                <label for="bukti_bayar" class="block text-xs font-semibold text-slate-800 mb-1.5">
-                                    Pilih File Bukti Pembayaran <span class="text-rose-500">*</span>
-                                </label>
-                                
-                                <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-slate-300 hover:border-slate-400 rounded-2xl transition-colors bg-slate-50/50 relative cursor-pointer group">
-                                    <div class="space-y-2 text-center">
-                                        
-                                        <!-- Preview Box Container -->
-                                        <div id="preview-container" class="hidden mb-3">
-                                            <img id="image-preview" src="#" alt="Preview Bukti" class="max-h-40 mx-auto rounded-lg border border-slate-300">
-                                            <p id="file-name-text" class="text-xs font-medium text-slate-700 mt-2 truncate"></p>
-                                        </div>
-
-                                        <div id="upload-prompt" class="space-y-1">
-                                            <svg class="mx-auto h-8 w-8 text-slate-400 group-hover:text-slate-600 transition-colors" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            <div class="text-xs text-slate-600">
-                                                <span class="font-semibold text-slate-900 group-hover:underline">Klik untuk memilih file</span>
-                                                <span>atau seret ke sini</span>
-                                            </div>
-                                            <p class="text-[10px] text-slate-400">PNG, JPG, JPEG, WEBP hingga 2MB</p>
-                                        </div>
-
-                                        <input id="bukti_bayar" 
-                                               name="bukti_bayar" 
-                                               type="file" 
-                                               accept="image/jpeg,image/png,image/webp" 
-                                               required
-                                               class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                               onchange="handleFilePreview(this)">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tombol Kirim Bukti Transfer -->
-                            <button type="submit" 
-                                    class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                </svg>
-                                <span>Kirim Bukti Pembayaran</span>
-                            </button>
-                        </form>
+                        <!-- Tombol Konfirmasi Bayar -->
+                        <button type="submit" 
+                                class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Saya Sudah Bayar - Konfirmasi Sekarang</span>
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4 text-center">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900">Pembayaran Terverifikasi Lunas</h3>
+                        <p class="text-xs text-slate-500">E-Ticket Anda telah aktif dan dapat langsung ditunjukkan di venue konser.</p>
+                        <a href="<?= url('my_orders.php') ?>" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F172A] text-white font-semibold text-xs hover:bg-slate-800 transition-all">
+                            <span>Buka E-Ticket Saya</span>
+                        </a>
                     </div>
                 <?php endif; ?>
 
@@ -453,6 +414,13 @@ $flashSuccess = getFlash('success');
 
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
+
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 
     <!-- Interactive Scripts -->
     <script>
@@ -491,27 +459,6 @@ $flashSuccess = getFlash('success');
                     copyText.textContent = 'Salin';
                 }, 2000);
             });
-        }
-
-        function handleFilePreview(input) {
-            const previewContainer = document.getElementById('preview-container');
-            const previewImg = document.getElementById('image-preview');
-            const fileNameText = document.getElementById('file-name-text');
-            const uploadPrompt = document.getElementById('upload-prompt');
-
-            if (input.files && input.files[0]) {
-                const file = input.files[0];
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    fileNameText.textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
-                    previewContainer.classList.remove('hidden');
-                    uploadPrompt.classList.add('hidden');
-                };
-
-                reader.readAsDataURL(file);
-            }
         }
     </script>
 </body>
