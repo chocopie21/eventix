@@ -1,6 +1,6 @@
 /**
- * EVENTIX - Catalog Real-time Live Search & Filter
- * Modern Minimalist Card Rendering
+ * EVENTIX - Catalog Real-time Live Search
+ * Modern Minimalist Card Rendering & Motion Integration
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,11 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBtn   = document.getElementById('search-btn');
     const searchForm  = document.getElementById('hero-search-form');
     const clearSearchBtn = document.getElementById('clear-search-btn');
-    const dateFilter  = document.getElementById('date-filter');
-    const resetFilterBtn = document.getElementById('reset-filter');
     const eventsGrid  = document.getElementById('events-grid');
     const eventsCount = document.getElementById('events-count');
-    const categoryPills = document.querySelectorAll('.category-pill');
 
     if (!eventsGrid) return;
 
@@ -42,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let skeletons = '';
         for (let i = 0; i < 3; i++) {
             skeletons += `
-                <div class="modern-card animate-pulse bg-white border border-slate-200/80 rounded-2xl overflow-hidden">
+                <div class="concert-card modern-card animate-pulse bg-white border border-slate-200/80 rounded-2xl overflow-hidden">
                     <div class="w-full aspect-[16/10] bg-slate-200"></div>
                     <div class="p-5 space-y-3">
                         <div class="h-3 w-28 bg-slate-200 rounded"></div>
@@ -67,14 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const isSoldOut = event.is_sold_out;
 
         return `
-            <article class="modern-card flex flex-col justify-between overflow-hidden group">
-                <!-- Poster -->
-                <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 rounded-t-2xl">
+            <article class="concert-card modern-card flex flex-col justify-between overflow-hidden group">
+                <!-- Poster Container -->
+                <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 rounded-t-[19px]">
                     <img src="${escapeHtml(posterSrc)}" alt="${escapeHtml(event.nama_event)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out">
                     
                     <!-- Genre Badge -->
                     <div class="absolute top-3 left-3 z-10">
-                        <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0F172A]/80 backdrop-blur-md text-white shadow-xs">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[#0F172A]/85 backdrop-blur-md text-white border border-white/10 shadow-xs">
                             ${escapeHtml(event.genre_musik || 'Konser')}
                         </span>
                     </div>
@@ -82,11 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Kuota Badge -->
                     <div class="absolute top-3 right-3 z-10">
                         ${isSoldOut ? `
-                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-600/90 backdrop-blur-md text-white shadow-xs">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-rose-600/90 backdrop-blur-md text-white border border-white/10 shadow-xs">
                                 Habis
                             </span>
                         ` : `
-                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600/90 backdrop-blur-md text-white shadow-xs">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-600/90 backdrop-blur-md text-white border border-white/10 shadow-xs">
                                 Tersedia
                             </span>
                         `}
@@ -124,10 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
 
                         <a href="${escapeHtml(event.detail_url)}" 
-                           class="px-4 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                           class="px-4 py-2.5 rounded-xl text-xs font-semibold transition-button ${
                                isSoldOut 
                                ? 'bg-slate-200 text-slate-400 pointer-events-none' 
-                               : 'bg-[#FF6082] hover:bg-[#e54b6d] text-white shadow-xs hover:shadow-sm'
+                               : 'bg-[#FF6082] hover:bg-[#E0486D] text-white shadow-xs hover:shadow'
                            }">
                             ${isSoldOut ? 'Tiket Habis' : 'Pilih Tiket'}
                         </a>
@@ -147,18 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         currentAbortController = new AbortController();
 
         const q = searchInput ? searchInput.value.trim() : '';
-        const date = dateFilter ? dateFilter.value : '';
-        
-        let genre = '';
-        const activePill = document.querySelector('.category-pill.active');
-        if (activePill) {
-            genre = activePill.getAttribute('data-genre') || '';
-        }
-
         const params = new URLSearchParams();
         if (q) params.append('q', q);
-        if (genre) params.append('genre', genre);
-        if (date) params.append('tanggal', date);
 
         renderLoadingSkeleton();
 
@@ -172,14 +159,16 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => {
             if (res.status === 'success' && Array.isArray(res.data)) {
                 if (eventsCount) {
-                    eventsCount.textContent = `Menampilkan ${res.data.length} konser musik`;
+                    eventsCount.textContent = `Menampilkan ${res.data.length} jadwal konser musik`;
                 }
 
                 if (res.data.length === 0) {
                     eventsGrid.innerHTML = `
                         <div class="col-span-full py-16 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">
-                            <p class="font-bold text-slate-800 text-base">Tidak ada konser musik yang ditemukan</p>
-                            <p class="text-xs text-slate-400 mt-1">Coba gunakan kata kunci pencarian atau filter genre lain.</p>
+                            <p class="font-bold text-slate-900 text-base">Tidak ada konser musik yang ditemukan</p>
+                            <p class="text-xs text-slate-500 mt-1">
+                                Coba kata kunci lain atau kosongkan kolom pencarian.
+                            </p>
                         </div>
                     `;
                 } else {
@@ -210,7 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchEvents();
         const katalogSection = document.getElementById('katalog');
         if (katalogSection) {
-            katalogSection.scrollIntoView({ behavior: 'smooth' });
+            if (window.lenis) {
+                window.lenis.scrollTo(katalogSection, { offset: -30, duration: 1.2 });
+            } else {
+                katalogSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     }
 
@@ -255,44 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.focus();
             }
             clearSearchBtn.classList.add('hidden');
-            fetchEvents();
-        });
-    }
-
-    // Event listener tanggal
-    if (dateFilter) {
-        dateFilter.addEventListener('change', fetchEvents);
-    }
-
-    // Event listener kategori pill
-    categoryPills.forEach(pill => {
-        pill.addEventListener('click', (e) => {
-            e.preventDefault();
-            categoryPills.forEach(p => {
-                p.classList.remove('active', 'bg-[#FF6082]', 'text-white', 'shadow-xs');
-                p.classList.add('bg-white', 'text-slate-700', 'border-slate-200/80');
-            });
-            pill.classList.add('active', 'bg-[#FF6082]', 'text-white', 'shadow-xs');
-            pill.classList.remove('bg-white', 'text-slate-700', 'border-slate-200/80');
-            fetchEvents();
-        });
-    });
-
-    // Event listener reset
-    if (resetFilterBtn) {
-        resetFilterBtn.addEventListener('click', () => {
-            if (searchInput) searchInput.value = '';
-            if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
-            if (dateFilter) dateFilter.value = '';
-            categoryPills.forEach(p => {
-                p.classList.remove('active', 'bg-[#FF6082]', 'text-white', 'shadow-xs');
-                p.classList.add('bg-white', 'text-slate-700', 'border-slate-200/80');
-            });
-            const firstPill = categoryPills[0];
-            if (firstPill) {
-                firstPill.classList.add('active', 'bg-[#FF6082]', 'text-white', 'shadow-xs');
-                firstPill.classList.remove('bg-white', 'text-slate-700');
-            }
             fetchEvents();
         });
     }

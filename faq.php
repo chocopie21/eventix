@@ -40,14 +40,14 @@ require_once __DIR__ . '/config/app.php';
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         
         <!-- Header (No Eyebrow Pill) -->
-        <header class="space-y-4 max-w-2xl">
+        <header class="space-y-4 max-w-3xl">
             <p class="text-xs font-semibold text-[#FF6082] tracking-normal uppercase">
                 Pusat Bantuan
             </p>
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.08]">
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.08] gsap-words-reveal">
                 Pertanyaan yang Sering Diajukan
             </h1>
             <p class="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
@@ -128,9 +128,11 @@ require_once __DIR__ . '/config/app.php';
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
-    <!-- Animation Libraries -->
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
     <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

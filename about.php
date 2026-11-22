@@ -40,14 +40,14 @@ require_once __DIR__ . '/config/app.php';
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
         
         <!-- Editorial Manifesto Header (No Eyebrow Pill) -->
-        <header class="space-y-6 max-w-3xl">
+        <header class="space-y-6 max-w-4xl">
             <p class="text-xs font-semibold text-[#FF6082] tracking-normal uppercase">
                 Tentang Platform
             </p>
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.08]">
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.08] gsap-words-reveal">
                 Mengembalikan Kemurnian Pengalaman Menonton Konser Live.
             </h1>
             <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
@@ -58,7 +58,7 @@ require_once __DIR__ . '/config/app.php';
         <!-- Editorial Split: Story & Architecture -->
         <section class="grid grid-cols-1 md:grid-cols-12 gap-10 pt-4 border-t border-slate-200/90 items-start">
             <div class="md:col-span-5 space-y-3">
-                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight gsap-words-reveal">
                     Mengapa Sistem Tiket Konser Harus Berubah
                 </h2>
                 <p class="text-xs text-slate-500 leading-relaxed">
@@ -78,14 +78,14 @@ require_once __DIR__ . '/config/app.php';
         <!-- 3 Pilar Integritas Sistem (Asymmetric Editorial Cards, No Gimmick Icons) -->
         <section class="space-y-6">
             <div class="border-b border-slate-200/90 pb-4">
-                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight gsap-words-reveal">
                     Standar Operasional EVENTIX
                 </h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <article class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
+                <article class="modern-card bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
                     <span class="text-xs font-mono font-bold text-slate-400 block">01</span>
                     <h3 class="text-base font-bold text-slate-900 tracking-tight">Alokasi Resmi Promotor</h3>
                     <p class="text-xs text-slate-600 leading-relaxed font-normal">
@@ -93,7 +93,7 @@ require_once __DIR__ . '/config/app.php';
                     </p>
                 </article>
 
-                <article class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
+                <article class="modern-card bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
                     <span class="text-xs font-mono font-bold text-slate-400 block">02</span>
                     <h3 class="text-base font-bold text-slate-900 tracking-tight">Pencegahan Overselling</h3>
                     <p class="text-xs text-slate-600 leading-relaxed font-normal">
@@ -101,7 +101,7 @@ require_once __DIR__ . '/config/app.php';
                     </p>
                 </article>
 
-                <article class="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
+                <article class="modern-card bg-white p-8 rounded-2xl border border-slate-200/90 shadow-xs space-y-3">
                     <span class="text-xs font-mono font-bold text-slate-400 block">03</span>
                     <h3 class="text-base font-bold text-slate-900 tracking-tight">E-Ticket QR Terverifikasi</h3>
                     <p class="text-xs text-slate-600 leading-relaxed font-normal">
@@ -132,5 +132,11 @@ require_once __DIR__ . '/config/app.php';
     <!-- Footer -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script src="<?= asset('js/animations.js') ?>"></script>
 </body>
 </html>

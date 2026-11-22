@@ -103,7 +103,7 @@ try {
                     <p class="text-xs font-semibold text-[#FF6082] tracking-normal uppercase">
                         Katalog Resmi Penyelenggara 2026/2027
                     </p>
-                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.04]">
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.04] gsap-words-reveal">
                         Tiket Konser Live & Festival Resmi.
                     </h1>
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
@@ -145,49 +145,19 @@ try {
             </div>
         </section>
 
-        <!-- KATALOG & FILTER SECTION -->
+        <!-- KATALOG SECTION -->
         <section id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pt-2">
             
-            <!-- Section Header & Filter Pills -->
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200/90 pb-6">
+            <!-- Section Header & Count -->
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200/90 pb-6">
                 <div class="space-y-1">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight gsap-words-reveal">
                         Daftar Pertunjukan Konser
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-500 font-normal">
-                        Pilih konser untuk melihat denah kategori tempat duduk dan reservasi tiket.
+                        Pilih konser untuk melihat denah kategori tempat duduk dan reservasi tiket resmi.
                     </p>
                 </div>
-
-                <!-- Genre Filter Pills -->
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs">
-                    <button type="button" 
-                            class="category-pill active px-4 py-2 rounded-xl font-semibold transition-colors bg-[#0F172A] text-white shadow-xs"
-                            data-genre="">
-                        Semua Genre
-                    </button>
-                    <?php foreach ($genres as $g): ?>
-                        <button type="button" 
-                                class="category-pill px-4 py-2 rounded-xl font-medium border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 transition-colors shadow-2xs"
-                                data-genre="<?= htmlspecialchars($g, ENT_QUOTES, 'UTF-8') ?>">
-                            <?= htmlspecialchars($g, ENT_QUOTES, 'UTF-8') ?>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <!-- Date Filter & Count -->
-            <div class="flex flex-wrap items-center justify-between gap-4 text-xs">
-                <div class="flex items-center gap-3">
-                    <span class="text-slate-500 font-medium">Filter tanggal:</span>
-                    <input type="date" 
-                           id="date-filter" 
-                           class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs focus:outline-none focus:border-[#FF6082] shadow-2xs">
-                    <button type="button" id="reset-filter" class="text-xs text-slate-600 hover:text-slate-900 font-semibold underline underline-offset-4 cursor-pointer">
-                        Reset filter
-                    </button>
-                </div>
-
                 <div id="events-count" class="text-slate-500 font-medium text-xs">
                     Menampilkan <?= count($initialEvents) ?> jadwal konser musik
                 </div>
@@ -200,7 +170,7 @@ try {
                         <p class="font-bold text-slate-900 text-base">Tidak ada konser musik yang ditemukan</p>
                         <p class="text-xs text-slate-500 mt-1">
                             <?= !empty($searchQuery) ? 'Tidak ada konser yang cocok dengan kata kunci "' . htmlspecialchars($searchQuery, ENT_QUOTES, 'UTF-8') . '".' : 'Belum ada konser musik yang tersedia saat ini.' ?>
-                            Coba kata kunci lain atau klik <a href="<?= url('index.php') ?>" class="text-[#FF6082] font-semibold underline">Reset Filter</a>.
+                            Coba kata kunci lain atau klik <a href="<?= url('index.php') ?>" class="text-[#FF6082] font-semibold underline">Lihat Semua Konser</a>.
                         </p>
                     </div>
                 <?php else: ?>

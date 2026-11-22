@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             el.dataset.splitDone = 'true';
 
             const rawText = el.textContent.trim();
-            const words = rawText.split(/\s+/);
+            const words = rawText.split(/\s+/).filter(w => w.length > 0);
 
             el.innerHTML = words.map(w => 
-                `<span class="inline-block overflow-hidden mr-[0.22em] align-top"><span class="inline-block word-reveal will-change-transform">${w}</span></span>`
+                `<span class="inline-block overflow-hidden mr-[0.24em] align-top"><span class="inline-block word-reveal will-change-transform">${w}</span></span>`
             ).join('');
 
             const wordSpans = el.querySelectorAll('.word-reveal');
@@ -96,6 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
             }
         });
+
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+        }
     }
 
     // ==========================================
@@ -105,9 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.modern-card:not(.motion-initialized)');
         if (!cards.length) return;
 
-        // Use Motion library if loaded
-        if (window.Motion && typeof window.Motion.animate === 'function') {
-            const { animate, stagger } = window.Motion;
+        // Support both global Motion and window.motion
+        const motionLib = (typeof Motion !== 'undefined' ? Motion : (window.Motion || window.motion));
+
+        if (motionLib && typeof motionLib.animate === 'function') {
+            const { animate, stagger } = motionLib;
 
             animate(
                 Array.from(cards),

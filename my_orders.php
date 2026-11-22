@@ -125,7 +125,7 @@ $flashInfo = getFlash('info');
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Container -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
         <!-- Breadcrumb & Header Title -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

@@ -142,7 +142,7 @@ $isUserLoggedIn = isLoggedIn();
                         <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#0F172A] text-white">
                             <?= htmlspecialchars($event['genre_musik']) ?>
                         </span>
-                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.08] tracking-tight">
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.08] tracking-tight gsap-words-reveal">
                             <?= htmlspecialchars($event['nama_event'], ENT_QUOTES, 'UTF-8') ?>
                         </h1>
                         <p class="text-base sm:text-lg text-slate-600 font-medium pt-1">
@@ -360,9 +360,11 @@ $isUserLoggedIn = isLoggedIn();
     <!-- Footer Component -->
     <?php include __DIR__ . '/components/footer.php'; ?>
 
-    <!-- Animation Libraries -->
+    <!-- Animation Libraries: GSAP, ScrollTrigger, Lenis, Motion -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
     <script src="<?= asset('js/animations.js') ?>"></script>
 
     <!-- Stepper & Form Interactivity Script -->

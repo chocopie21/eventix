@@ -104,7 +104,7 @@ $flashSuccess = getFlash('success');
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <!-- Main Container -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-slate-500">
