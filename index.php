@@ -182,20 +182,22 @@ try {
                             
                             <!-- Poster Container -->
                             <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 rounded-t-[19px]">
-                                <img src="<?= asset('uploads/posters/' . ($ev['poster'] ?? 'default.jpg')) ?>" 
-                                     alt="<?= htmlspecialchars($ev['nama_event'], ENT_QUOTES, 'UTF-8') ?>"
-                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out"
-                                     onerror="this.src='<?= asset('uploads/posters/default.jpg') ?>'">
+                                <a href="<?= url('detail_event.php?id=' . $idEv) ?>" class="block w-full h-full">
+                                    <img src="<?= asset('uploads/posters/' . ($ev['poster'] ?? 'default.jpg')) ?>" 
+                                         alt="<?= htmlspecialchars($ev['nama_event'], ENT_QUOTES, 'UTF-8') ?>"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out"
+                                         onerror="this.src='<?= asset('uploads/posters/default.jpg') ?>'">
+                                </a>
                                 
                                 <!-- Genre Badge -->
-                                <div class="absolute top-3 left-3 z-10">
+                                <div class="absolute top-3 left-3 z-10 pointer-events-none">
                                     <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0F172A]/85 backdrop-blur-md text-white shadow-xs">
                                         <?= htmlspecialchars($ev['genre_musik'] ?? 'Konser', ENT_QUOTES, 'UTF-8') ?>
                                     </span>
                                 </div>
 
                                 <!-- Sold Out or Quota Badge -->
-                                <div class="absolute top-3 right-3 z-10">
+                                <div class="absolute top-3 right-3 z-10 pointer-events-none">
                                     <?php if ($isSoldOut): ?>
                                         <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-600/90 backdrop-blur-md text-white shadow-xs">
                                             Habis
@@ -214,8 +216,10 @@ try {
                                     <p class="text-xs font-semibold text-slate-500">
                                         <?= formatTanggalIndo($ev['tanggal_event'], false) ?> • <?= formatJam($ev['jam_event']) ?> WIB
                                     </p>
-                                    <h3 class="text-lg font-bold text-slate-900 group-hover:text-[#FF6082] transition-colors leading-snug line-clamp-1" title="<?= htmlspecialchars($ev['nama_event'], ENT_QUOTES, 'UTF-8') ?>">
-                                        <?= htmlspecialchars($ev['nama_event'], ENT_QUOTES, 'UTF-8') ?>
+                                    <h3 class="text-lg font-bold text-slate-900 leading-snug line-clamp-1" title="<?= htmlspecialchars($ev['nama_event'], ENT_QUOTES, 'UTF-8') ?>">
+                                        <a href="<?= url('detail_event.php?id=' . $idEv) ?>" class="hover:text-[#FF6082] transition-colors">
+                                            <?= htmlspecialchars($ev['nama_event'], ENT_QUOTES, 'UTF-8') ?>
+                                        </a>
                                     </h3>
                                     <p class="text-xs text-slate-600 font-medium line-clamp-1">
                                         <?= htmlspecialchars($ev['pengisi_acara'], ENT_QUOTES, 'UTF-8') ?>
@@ -239,7 +243,7 @@ try {
                                     </div>
 
                                     <a href="<?= url('detail_event.php?id=' . $idEv) ?>" 
-                                       class="px-4 py-2.5 rounded-xl text-xs font-semibold transition-button <?= $isSoldOut ? 'bg-slate-200 text-slate-400 pointer-events-none' : 'bg-[#FF6082] hover:bg-[#E0486D] text-white shadow-xs hover:shadow' ?>">
+                                       class="px-4 py-2.5 rounded-xl text-xs font-semibold transition-button cursor-pointer <?= $isSoldOut ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 shadow-2xs hover:shadow-xs' : 'bg-[#FF6082] hover:bg-[#E0486D] text-white shadow-xs hover:shadow' ?>">
                                         <?= $isSoldOut ? 'Tiket Habis' : 'Pilih Tiket' ?>
                                     </a>
                                 </div>

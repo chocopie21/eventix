@@ -67,23 +67,25 @@ document.addEventListener('DOMContentLoaded', () => {
             <article class="concert-card modern-card flex flex-col justify-between overflow-hidden group">
                 <!-- Poster Container -->
                 <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 rounded-t-[19px]">
-                    <img src="${escapeHtml(posterSrc)}" alt="${escapeHtml(event.nama_event)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out">
+                    <a href="${escapeHtml(event.detail_url)}" class="block w-full h-full">
+                        <img src="${escapeHtml(posterSrc)}" alt="${escapeHtml(event.nama_event)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out">
+                    </a>
                     
                     <!-- Genre Badge -->
-                    <div class="absolute top-3 left-3 z-10">
-                        <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[#0F172A]/85 backdrop-blur-md text-white border border-white/10 shadow-xs">
+                    <div class="absolute top-3 left-3 z-10 pointer-events-none">
+                        <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0F172A]/85 backdrop-blur-md text-white border border-white/10 shadow-xs">
                             ${escapeHtml(event.genre_musik || 'Konser')}
                         </span>
                     </div>
 
                     <!-- Kuota Badge -->
-                    <div class="absolute top-3 right-3 z-10">
+                    <div class="absolute top-3 right-3 z-10 pointer-events-none">
                         ${isSoldOut ? `
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-rose-600/90 backdrop-blur-md text-white border border-white/10 shadow-xs">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-600/90 backdrop-blur-md text-white border border-white/10 shadow-xs">
                                 Habis
                             </span>
                         ` : `
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-600/90 backdrop-blur-md text-white border border-white/10 shadow-xs">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600/90 backdrop-blur-md text-white border border-white/10 shadow-xs">
                                 Tersedia
                             </span>
                         `}
@@ -96,8 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="text-xs font-semibold text-slate-500">
                             ${escapeHtml(event.formatted_tanggal)} • ${escapeHtml(event.formatted_jam)}
                         </p>
-                        <h3 class="text-base font-bold text-slate-900 group-hover:text-[#FF6082] transition-colors leading-snug line-clamp-1" title="${escapeHtml(event.nama_event)}">
-                            ${escapeHtml(event.nama_event)}
+                        <h3 class="text-base font-bold text-slate-900 leading-snug line-clamp-1" title="${escapeHtml(event.nama_event)}">
+                            <a href="${escapeHtml(event.detail_url)}" class="hover:text-[#FF6082] transition-colors">
+                                ${escapeHtml(event.nama_event)}
+                            </a>
                         </h3>
                         <p class="text-xs text-slate-600 font-medium line-clamp-1">
                             ${escapeHtml(event.pengisi_acara)}
@@ -121,9 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
 
                         <a href="${escapeHtml(event.detail_url)}" 
-                           class="px-4 py-2.5 rounded-xl text-xs font-semibold transition-button ${
+                           class="px-4 py-2.5 rounded-xl text-xs font-semibold transition-button cursor-pointer ${
                                isSoldOut 
-                               ? 'bg-slate-200 text-slate-400 pointer-events-none' 
+                               ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 shadow-2xs hover:shadow-xs' 
                                : 'bg-[#FF6082] hover:bg-[#E0486D] text-white shadow-xs hover:shadow'
                            }">
                             ${isSoldOut ? 'Tiket Habis' : 'Pilih Tiket'}
