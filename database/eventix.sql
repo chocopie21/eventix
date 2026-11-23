@@ -33,7 +33,7 @@ CREATE TABLE `detail_pesanan` (
   KEY `fk_detail_tiket` (`id_tiket`),
   CONSTRAINT `fk_detail_pesanan` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`) ON DELETE CASCADE,
   CONSTRAINT `fk_detail_tiket` FOREIGN KEY (`id_tiket`) REFERENCES `tiket` (`id_tiket`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `detail_pesanan` (
 
 LOCK TABLES `detail_pesanan` WRITE;
 /*!40000 ALTER TABLE `detail_pesanan` DISABLE KEYS */;
-INSERT INTO `detail_pesanan` VALUES (5,5,36,1,2400000.00),(6,6,76,1,5075000.00),(7,7,68,500,1075000000.00),(8,8,76,99,502425000.00),(9,8,77,100,507500000.00),(10,8,78,100,507500000.00),(11,8,79,100,507500000.00),(12,8,71,300,1242000000.00),(13,8,72,300,1242000000.00),(14,8,73,300,1242000000.00),(15,8,74,300,1242000000.00),(16,8,75,300,1242000000.00),(17,8,70,400,1282000000.00),(18,8,69,400,1062000000.00);
+INSERT INTO `detail_pesanan` VALUES (5,5,36,1,2400000.00),(6,6,76,1,5075000.00),(7,7,68,500,1075000000.00),(19,9,27,1,1100000.00),(21,11,23,1,1600000.00),(22,12,23,1,1600000.00),(23,13,20,1,3800000.00),(24,14,24,1,2900000.00),(25,15,24,1,2900000.00),(26,16,23,1,1600000.00);
 /*!40000 ALTER TABLE `detail_pesanan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `pembayaran` (
   PRIMARY KEY (`id_pembayaran`),
   KEY `fk_pembayaran_pesanan` (`id_pesanan`),
   CONSTRAINT `fk_pembayaran_pesanan` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `pembayaran` (
 
 LOCK TABLES `pembayaran` WRITE;
 /*!40000 ALTER TABLE `pembayaran` DISABLE KEYS */;
-INSERT INTO `pembayaran` VALUES (1,2,'2026-11-22 00:48:41','Transfer Bank BCA',125000.00,'pay_2_20261122_004841_e40b8af7.jpg','lunas','2026-11-21 17:48:41'),(2,3,'2026-11-22 23:59:45','Verifikasi Langsung Admin',1650000.00,NULL,'lunas','2026-11-22 16:59:45'),(3,5,'2026-11-23 06:29:01','Transfer Bank BNI',2400000.00,NULL,'','2026-11-22 23:29:01'),(4,6,'2026-11-23 18:52:21','Transfer Bank BCA',5075000.00,NULL,'','2026-11-23 11:52:21'),(5,7,'2026-11-23 18:54:55','Transfer Bank BCA',1075000000.00,NULL,'','2026-11-23 11:54:55'),(6,8,'2026-11-23 18:56:57','Transfer Bank QRIS',9999999999.99,NULL,'','2026-11-23 11:56:57'),(7,4,'2026-11-23 23:41:32','Verifikasi Langsung Admin',3800000.00,NULL,'lunas','2026-11-23 16:41:32');
+INSERT INTO `pembayaran` VALUES (1,2,'2026-11-22 00:48:41','Transfer Bank BCA',125000.00,'pay_2_20261122_004841_e40b8af7.jpg','lunas','2026-11-21 17:48:41'),(2,3,'2026-11-22 23:59:45','Verifikasi Langsung Admin',1650000.00,NULL,'lunas','2026-11-22 16:59:45'),(3,5,'2026-11-23 06:29:01','Transfer Bank BNI',2400000.00,NULL,'','2026-11-22 23:29:01'),(4,6,'2026-11-23 18:52:21','Transfer Bank BCA',5075000.00,NULL,'','2026-11-23 11:52:21'),(5,7,'2026-11-23 18:54:55','Transfer Bank BCA',1075000000.00,NULL,'','2026-11-23 11:54:55'),(7,4,'2026-11-23 23:41:32','Verifikasi Langsung Admin',3800000.00,NULL,'lunas','2026-11-23 16:41:32'),(8,9,'2026-11-23 23:53:22','Transfer Bank BNI',1100000.00,NULL,'','2026-11-23 16:53:22'),(10,12,'2026-11-24 00:13:52','QRIS All E-Wallet',1600000.00,NULL,'','2026-11-23 17:13:52');
 /*!40000 ALTER TABLE `pembayaran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +153,7 @@ CREATE TABLE `pengguna` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_pengguna`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,8 +162,37 @@ CREATE TABLE `pengguna` (
 
 LOCK TABLES `pengguna` WRITE;
 /*!40000 ALTER TABLE `pengguna` DISABLE KEYS */;
-INSERT INTO `pengguna` VALUES (1,'Administrator Eventix','admin@eventix.id','Gedung Cyber 2 Lt. 15, Jl. H.R. Rasuna Said, Jakarta Selatan','081298765432','$2y$10$Kkyb1X979om1lbGn0MFHnuyZb2BWWYScOHbFfOZAaK0cqnUbGVY2O','admin','2026-11-21 17:32:28'),(2,'Budi Santoso','budi@gmail.com','Jl. Tebet Timur Dalam Raya No. 42, Jakarta Selatan','081311223344','$2y$10$F2WYCiy5xydoLck6BlTUAOb2HQEGsu7hZq5IMWHEbxhnG0Bb5uUC2','user','2026-11-21 17:32:28'),(3,'Ahmad Nafi','ahmad.nafi@icloud.com','Terhubung via Akun Apple','081291797657','$2y$10$PzM3RwbhoLvMCC69jJvEbuHqXvKjoGfkcjY0mNv1kQER/X/OQfLOS','user','2026-11-23 16:38:28');
+INSERT INTO `pengguna` VALUES (1,'Administrator Eventix','admin@eventix.id','Gedung Cyber 2 Lt. 15, Jl. H.R. Rasuna Said, Jakarta Selatan','081298765432','$2y$10$Kkyb1X979om1lbGn0MFHnuyZb2BWWYScOHbFfOZAaK0cqnUbGVY2O','admin','2026-11-21 17:32:28'),(2,'Budi Santoso','budi@gmail.com','Jl. Tebet Timur Dalam Raya No. 42, Jakarta Selatan','081311223344','$2y$10$F2WYCiy5xydoLck6BlTUAOb2HQEGsu7hZq5IMWHEbxhnG0Bb5uUC2','user','2026-11-21 17:32:28'),(3,'Ahmad Nafi','ahmad.nafi@icloud.com','Terhubung via Akun Apple','081291797657','$2y$10$PzM3RwbhoLvMCC69jJvEbuHqXvKjoGfkcjY0mNv1kQER/X/OQfLOS','user','2026-11-23 16:38:28'),(4,'Dwi Dzaky','jekidzak15@gmail.com','Bandung','0895807009469','$2y$10$yAZ5OX/7/lV0RUBBvfTsN.EcUFno9Fe/DNwCXITFKD.fPMTi/7YQS','user','2026-11-23 16:50:50'),(5,'jek','ddzaky46@gmail.com','Bandung','0895807009469','$2y$10$dG9CxRZ8cdZ4zSq3Sc8/ye9qVjB.Cni4E9uozIP3j7s72RO6m4sd.','user','2026-11-23 17:06:44');
 /*!40000 ALTER TABLE `pengguna` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pesan_kontak`
+--
+
+DROP TABLE IF EXISTS `pesan_kontak`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pesan_kontak` (
+  `id_pesan` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `subjek` varchar(150) NOT NULL,
+  `pesan` text NOT NULL,
+  `status` enum('belum_dibaca','dibaca','dibalas') NOT NULL DEFAULT 'belum_dibaca',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_pesan`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pesan_kontak`
+--
+
+LOCK TABLES `pesan_kontak` WRITE;
+/*!40000 ALTER TABLE `pesan_kontak` DISABLE KEYS */;
+INSERT INTO `pesan_kontak` VALUES (1,'Nafi Promotor Media','nafi.promotor@gmail.com','Kemitraan Penjualan Tiket Promotor','Halo tim EVENTIX, kami dari promotor musik ingin mendiskusikan integrasi sistem tiket untuk konser tur 2027. Mohon informasi kerja sama dan penawaran lebih lanjut.','dibaca','2026-11-23 17:27:58'),(2,'adwdad','adwadawd@gmail.com','Pertanyaan Pemesanan / E-Ticket','adwadadwa','dibaca','2026-11-23 17:29:27'),(3,'tes','admin@eventix.id','Pertanyaan Pemesanan / E-Ticket','adwada','dibaca','2026-11-23 17:29:38'),(4,'cek','ddzaky46@gmail.com','Lainnya','ga bisa liat riwayat pesanan','belum_dibaca','2026-11-23 17:31:07');
+/*!40000 ALTER TABLE `pesan_kontak` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -183,7 +212,7 @@ CREATE TABLE `pesanan` (
   PRIMARY KEY (`id_pesanan`),
   KEY `fk_pesanan_pengguna` (`id_pengguna`),
   CONSTRAINT `fk_pesanan_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +221,7 @@ CREATE TABLE `pesanan` (
 
 LOCK TABLES `pesanan` WRITE;
 /*!40000 ALTER TABLE `pesanan` DISABLE KEYS */;
-INSERT INTO `pesanan` VALUES (1,1,'2026-11-22 00:48:09',125000.00,'ditolak','2026-11-21 17:48:09'),(2,1,'2026-11-22 00:48:28',125000.00,'lunas','2026-11-21 17:48:28'),(3,1,'2026-11-22 23:57:35',1650000.00,'lunas','2026-11-22 16:57:35'),(4,1,'2026-11-23 01:58:29',3800000.00,'lunas','2026-11-22 18:58:29'),(5,2,'2026-11-23 06:28:51',2400000.00,'lunas','2026-11-22 23:28:51'),(6,2,'2026-11-23 18:51:47',5075000.00,'lunas','2026-11-23 11:51:47'),(7,2,'2026-11-23 18:54:39',1075000000.00,'lunas','2026-11-23 11:54:39'),(8,2,'2026-11-23 18:56:06',9999999999.99,'lunas','2026-11-23 11:56:06');
+INSERT INTO `pesanan` VALUES (1,1,'2026-11-22 00:48:09',125000.00,'ditolak','2026-11-21 17:48:09'),(2,1,'2026-11-22 00:48:28',125000.00,'lunas','2026-11-21 17:48:28'),(3,1,'2026-11-22 23:57:35',1650000.00,'lunas','2026-11-22 16:57:35'),(4,1,'2026-11-23 01:58:29',3800000.00,'lunas','2026-11-22 18:58:29'),(5,2,'2026-11-23 06:28:51',2400000.00,'lunas','2026-11-22 23:28:51'),(6,2,'2026-11-23 18:51:47',5075000.00,'lunas','2026-11-23 11:51:47'),(7,2,'2026-11-23 18:54:39',1075000000.00,'lunas','2026-11-23 11:54:39'),(9,4,'2026-11-23 23:51:12',1100000.00,'lunas','2026-11-23 16:51:12'),(11,4,'2026-11-23 23:59:08',1600000.00,'menunggu','2026-11-23 16:59:08'),(12,1,'2026-11-24 00:13:32',1600000.00,'lunas','2026-11-23 17:13:32'),(13,1,'2026-11-24 00:14:07',3800000.00,'ditolak','2026-11-23 17:14:07'),(14,2,'2026-11-24 00:16:10',2900000.00,'ditolak','2026-11-23 17:16:10'),(15,2,'2026-11-24 00:17:12',2900000.00,'menunggu','2026-11-23 17:17:12'),(16,1,'2026-11-24 00:20:22',1600000.00,'menunggu','2026-11-23 17:20:22');
 /*!40000 ALTER TABLE `pesanan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +251,7 @@ CREATE TABLE `tiket` (
 
 LOCK TABLES `tiket` WRITE;
 /*!40000 ALTER TABLE `tiket` DISABLE KEYS */;
-INSERT INTO `tiket` VALUES (20,10,'PINK Soundcheck','Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif.',200,3800000.00),(21,10,'CAT 1 (Festival)','Area festival berdiri dekat panggung utama dengan queue number.',500,2900000.00),(22,10,'CAT 2 (Lower Tribune)','Kursi bernomor di tribun bawah dengan pandangan langsung ke panggung.',400,2200000.00),(23,10,'CAT 3 (Upper Tribune)','Kursi bernomor di tribun atas dengan layar LED pendamping.',600,1600000.00),(24,11,'VIP Seated','Barisan kursi depan panggung, souvenir seat cushion & photocard spesial.',250,2900000.00),(25,11,'CAT 1','Kursi bernomor area tengah hall dengan visibilitas optimal.',400,2400000.00),(26,11,'CAT 2','Kursi bernomor area sayap kanan dan kiri hall.',450,1800000.00),(27,11,'CAT 3','Kursi bernomor area belakang dengan akses penuh ke layar utama.',500,1100000.00),(28,12,'PINK Soundcheck','Akses soundcheck, area standing terdepan, dan exclusive merchandise lanyard.',200,3400000.00),(29,12,'BLUE Festival','Area festival berdiri di tengah lapangan dekat extended stage.',450,2500000.00),(30,12,'YELLOW Tribune','Kursi tribun bernomor menghadap langsung ke panggung utama.',400,1500000.00),(31,12,'GREEN Tribune','Kursi tribun sisi kanan dan kiri dengan harga paling terjangkau.',500,850000.00),(32,13,'VIP Soundcheck','Kursi terdepan dekat panggung utama, akses soundcheck, jalur masuk khusus, dan laminate eksklusif.',0,3800000.00),(33,13,'Platinum Seated','Kursi lapangan bernomor tepat di belakang area VIP dengan jarak pandang dekat.',0,3400000.00),(34,13,'CAT 1','Area tribun bawah sisi barat dan timur stadion dengan kursi bernomor.',0,2900000.00),(35,13,'CAT 4 (Upper)','Area tribun atas stadion dengan pandangan panorama panggung dan lautan lightstick.',0,1350000.00),(36,14,'VIP Meet & Greet','Early entry ke area festival, sesi foto grup 1:6, poster bertanda tangan, dan VIP lanyard.',149,2400000.00),(37,14,'CAT 1 (Standing)','Area berdiri lantai utama tepat di depan panggung dengan audio akustik jernih.',600,1250000.00),(38,14,'CAT 2 (Seated)','Kursi tribun tengah menghadap langsung ke panggung.',400,950000.00),(39,14,'CAT 3 (Seated)','Kursi tribun bagian atas dengan suasana konser yang nyaman.',450,650000.00),(40,15,'VIP Soundcheck','Akses soundcheck eksklusif, area standing terdekat panggung, dan VIP gift set.',250,3000000.00),(41,15,'CAT 1 (Standing)','Area berdiri di sekitar extended stage dengan nomor antrean masuk.',500,2750000.00),(42,15,'CAT 2 (Seated)','Kursi tribun bernomor di lantai 2 dengan sudut pandang lurus ke panggung.',400,2550000.00),(43,15,'CAT 4 (Upper Seated)','Kursi tribun lantai atas dengan visibilitas layar utama penuh.',550,1300000.00),(44,16,'DREAM A/B Soundcheck','Area standing paling depan, akses soundcheck, jalur prioritas, dan lanyard eksklusif.',300,3350000.00),(45,16,'DREAM C (Standing)','Area festival lapangan mengelilingi panggung tengah stadion.',600,2950000.00),(46,16,'CAT 2 (Lower Seated)','Kursi tribun bawah bernomor dengan kenyamanan penuh dan pandangan jelas.',500,2550000.00),(47,16,'CAT 6 (Upper Seated)','Kursi tribun atas bernomor dengan harga terjangkau.',700,1050000.00),(48,17,'VIP Meet & Greet','Early entry, sesi foto grup bersama DPR, akses Q&A singkat, dan exclusive merch pack.',150,3800000.00),(49,17,'Early Entry Festival','Area berdiri lantai utama dengan akses masuk lebih awal sebelum penonton reguler.',350,2150000.00),(50,17,'General Standing','Area berdiri reguler di lantai utama menghadap panggung.',500,1550000.00),(51,17,'Seated Tribune','Kursi tribun bernomor dengan tata suara jernih.',450,950000.00),(52,18,'PINK Soundcheck','Kursi lapangan terdepan, akses soundcheck session, dan souvenir lanyard eksklusif.',250,3600000.00),(53,18,'BLUE Seated','Kursi bernomor di area lapangan tepat di samping panggung utama.',400,3300000.00),(54,18,'GREEN Tribune','Kursi tribun lantai 1 menghadap panggung utama secara langsung.',500,2200000.00),(55,18,'GRAY Tribune','Kursi tribun tingkat atas dengan visibilitas keseluruhan stadion.',650,1200000.00),(56,19,'VIP Soundcheck','Area standing terdekat panggung, sesi soundcheck, lanyard VIP, dan jalur antrean khusus.',200,3600000.00),(57,19,'CAT 1 (Standing)','Area festival berdiri tepat di sekitar panggung utama dan catwalk.',450,2900000.00),(58,19,'CAT 3 (Seated)','Kursi tribun bawah bernomor dengan sudut pandang optimal ke seluruh arena.',400,2200000.00),(59,19,'CAT 5 (Upper Seated)','Kursi tribun atas bernomor di dalam arena ber-AC penuh.',550,1200000.00),(60,20,'CAT 1 (Standing)','Area berdiri paling dekat panggung dengan nomor antrean masuk.',300,2900000.00),(61,20,'CAT 2 (Seated)','Kursi bernomor area depan tengah hall untuk menikmati kualitas vokal secara intim.',350,2700000.00),(62,20,'CAT 4 (Seated)','Kursi bernomor area sayap kanan dan kiri hall.',400,1900000.00),(63,20,'CAT 5 (Seated)','Kursi bernomor area belakang hall dengan dukungan layar LED besar.',450,1100000.00),(64,21,'VIP Soundcheck','Akses soundcheck, sesi send-off terbatas, area standing terdepan, dan photocard eksklusif.',200,3100000.00),(65,21,'CAT 1 (Standing)','Area berdiri dekat extended stage dengan nomor antrean.',400,2600000.00),(66,21,'CAT 2 (Seated)','Kursi bernomor area tribun tengah menghadap langsung ke panggung.',350,2200000.00),(67,21,'CAT 3 (Seated)','Kursi bernomor area belakang dengan pandangan jelas ke panggung dan layar utama.',450,1600000.00),(68,23,'CAT 3 - GENERAL SALE','',0,2150000.00),(69,23,'CAT 2 - GENERAL SALE','',0,2655000.00),(70,23,'CAT 1 - GENERAL SALE','',0,3205000.00),(71,23,'PLATINUM TRIBUNE - GENERAL SALE','',0,4140000.00),(72,23,'PLATINUM FLOOR D - GENERAL SALE','',0,4140000.00),(73,23,'PLATINUM FLOOR C - GENERAL SALE','',0,4140000.00),(74,23,'PLATINUM FLOOR B - GENERAL SALE','',0,4140000.00),(75,23,'PLATINUM FLOOR A - GENERAL SALE','',0,4140000.00),(76,23,'VIP PACKAGE D - GENERAL SALE','',0,5075000.00),(77,23,'VIP PACKAGE C - GENERAL SALE','',0,5075000.00),(78,23,'VIP PACKAGE B - GENERAL SALE','',0,5075000.00),(79,23,'VIP PACKAGE A - GENERAL SALE','',0,5075000.00);
+INSERT INTO `tiket` VALUES (20,10,'PINK Soundcheck','Standing area paling dekat panggung, akses soundcheck session, lanyard & photocard eksklusif.',200,3800000.00),(21,10,'CAT 1 (Festival)','Area festival berdiri dekat panggung utama dengan queue number.',500,2900000.00),(22,10,'CAT 2 (Lower Tribune)','Kursi bernomor di tribun bawah dengan pandangan langsung ke panggung.',400,2200000.00),(23,10,'CAT 3 (Upper Tribune)','Kursi bernomor di tribun atas dengan layar LED pendamping.',597,1600000.00),(24,11,'VIP Seated','Barisan kursi depan panggung, souvenir seat cushion & photocard spesial.',249,2900000.00),(25,11,'CAT 1','Kursi bernomor area tengah hall dengan visibilitas optimal.',400,2400000.00),(26,11,'CAT 2','Kursi bernomor area sayap kanan dan kiri hall.',450,1800000.00),(27,11,'CAT 3','Kursi bernomor area belakang dengan akses penuh ke layar utama.',499,1100000.00),(28,12,'PINK Soundcheck','Akses soundcheck, area standing terdepan, dan exclusive merchandise lanyard.',200,3400000.00),(29,12,'BLUE Festival','Area festival berdiri di tengah lapangan dekat extended stage.',450,2500000.00),(30,12,'YELLOW Tribune','Kursi tribun bernomor menghadap langsung ke panggung utama.',400,1500000.00),(31,12,'GREEN Tribune','Kursi tribun sisi kanan dan kiri dengan harga paling terjangkau.',500,850000.00),(32,13,'VIP Soundcheck','Kursi terdepan dekat panggung utama, akses soundcheck, jalur masuk khusus, dan laminate eksklusif.',0,3800000.00),(33,13,'Platinum Seated','Kursi lapangan bernomor tepat di belakang area VIP dengan jarak pandang dekat.',0,3400000.00),(34,13,'CAT 1','Area tribun bawah sisi barat dan timur stadion dengan kursi bernomor.',0,2900000.00),(35,13,'CAT 4 (Upper)','Area tribun atas stadion dengan pandangan panorama panggung dan lautan lightstick.',0,1350000.00),(36,14,'VIP Meet & Greet','Early entry ke area festival, sesi foto grup 1:6, poster bertanda tangan, dan VIP lanyard.',149,2400000.00),(37,14,'CAT 1 (Standing)','Area berdiri lantai utama tepat di depan panggung dengan audio akustik jernih.',600,1250000.00),(38,14,'CAT 2 (Seated)','Kursi tribun tengah menghadap langsung ke panggung.',400,950000.00),(39,14,'CAT 3 (Seated)','Kursi tribun bagian atas dengan suasana konser yang nyaman.',450,650000.00),(40,15,'VIP Soundcheck','Akses soundcheck eksklusif, area standing terdekat panggung, dan VIP gift set.',250,3000000.00),(41,15,'CAT 1 (Standing)','Area berdiri di sekitar extended stage dengan nomor antrean masuk.',500,2750000.00),(42,15,'CAT 2 (Seated)','Kursi tribun bernomor di lantai 2 dengan sudut pandang lurus ke panggung.',400,2550000.00),(43,15,'CAT 4 (Upper Seated)','Kursi tribun lantai atas dengan visibilitas layar utama penuh.',550,1300000.00),(44,16,'DREAM A/B Soundcheck','Area standing paling depan, akses soundcheck, jalur prioritas, dan lanyard eksklusif.',300,3350000.00),(45,16,'DREAM C (Standing)','Area festival lapangan mengelilingi panggung tengah stadion.',600,2950000.00),(46,16,'CAT 2 (Lower Seated)','Kursi tribun bawah bernomor dengan kenyamanan penuh dan pandangan jelas.',500,2550000.00),(47,16,'CAT 6 (Upper Seated)','Kursi tribun atas bernomor dengan harga terjangkau.',700,1050000.00),(48,17,'VIP Meet & Greet','Early entry, sesi foto grup bersama DPR, akses Q&A singkat, dan exclusive merch pack.',150,3800000.00),(49,17,'Early Entry Festival','Area berdiri lantai utama dengan akses masuk lebih awal sebelum penonton reguler.',350,2150000.00),(50,17,'General Standing','Area berdiri reguler di lantai utama menghadap panggung.',500,1550000.00),(51,17,'Seated Tribune','Kursi tribun bernomor dengan tata suara jernih.',450,950000.00),(52,18,'PINK Soundcheck','Kursi lapangan terdepan, akses soundcheck session, dan souvenir lanyard eksklusif.',250,3600000.00),(53,18,'BLUE Seated','Kursi bernomor di area lapangan tepat di samping panggung utama.',400,3300000.00),(54,18,'GREEN Tribune','Kursi tribun lantai 1 menghadap panggung utama secara langsung.',500,2200000.00),(55,18,'GRAY Tribune','Kursi tribun tingkat atas dengan visibilitas keseluruhan stadion.',650,1200000.00),(56,19,'VIP Soundcheck','Area standing terdekat panggung, sesi soundcheck, lanyard VIP, dan jalur antrean khusus.',200,3600000.00),(57,19,'CAT 1 (Standing)','Area festival berdiri tepat di sekitar panggung utama dan catwalk.',450,2900000.00),(58,19,'CAT 3 (Seated)','Kursi tribun bawah bernomor dengan sudut pandang optimal ke seluruh arena.',400,2200000.00),(59,19,'CAT 5 (Upper Seated)','Kursi tribun atas bernomor di dalam arena ber-AC penuh.',550,1200000.00),(60,20,'CAT 1 (Standing)','Area berdiri paling dekat panggung dengan nomor antrean masuk.',300,2900000.00),(61,20,'CAT 2 (Seated)','Kursi bernomor area depan tengah hall untuk menikmati kualitas vokal secara intim.',350,2700000.00),(62,20,'CAT 4 (Seated)','Kursi bernomor area sayap kanan dan kiri hall.',400,1900000.00),(63,20,'CAT 5 (Seated)','Kursi bernomor area belakang hall dengan dukungan layar LED besar.',450,1100000.00),(64,21,'VIP Soundcheck','Akses soundcheck, sesi send-off terbatas, area standing terdepan, dan photocard eksklusif.',200,3100000.00),(65,21,'CAT 1 (Standing)','Area berdiri dekat extended stage dengan nomor antrean.',400,2600000.00),(66,21,'CAT 2 (Seated)','Kursi bernomor area tribun tengah menghadap langsung ke panggung.',350,2200000.00),(67,21,'CAT 3 (Seated)','Kursi bernomor area belakang dengan pandangan jelas ke panggung dan layar utama.',450,1600000.00),(68,23,'CAT 3 - GENERAL SALE','',0,2150000.00),(69,23,'CAT 2 - GENERAL SALE','',400,2655000.00),(70,23,'CAT 1 - GENERAL SALE','',400,3205000.00),(71,23,'PLATINUM TRIBUNE - GENERAL SALE','',300,4140000.00),(72,23,'PLATINUM FLOOR D - GENERAL SALE','',300,4140000.00),(73,23,'PLATINUM FLOOR C - GENERAL SALE','',300,4140000.00),(74,23,'PLATINUM FLOOR B - GENERAL SALE','',300,4140000.00),(75,23,'PLATINUM FLOOR A - GENERAL SALE','',300,4140000.00),(76,23,'VIP PACKAGE D - GENERAL SALE','',99,5075000.00),(77,23,'VIP PACKAGE C - GENERAL SALE','',100,5075000.00),(78,23,'VIP PACKAGE B - GENERAL SALE','',100,5075000.00),(79,23,'VIP PACKAGE A - GENERAL SALE','',100,5075000.00);
 /*!40000 ALTER TABLE `tiket` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -235,4 +264,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-23 23:43:24
+-- Dump completed on 2026-11-24  0:32:22
