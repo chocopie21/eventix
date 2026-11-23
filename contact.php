@@ -8,8 +8,40 @@ require_once __DIR__ . '/config/app.php';
 $sentSuccess = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (csrf_verify()) {
-        $sentSuccess = true;
-        setFlash('success', 'Pesan Anda telah berhasil terkirim! Tim EVENTIX akan merespons melalui email/WhatsApp dalam 1x24 jam kerja.');
+        $nama = trim($_POST['nama'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $subjekRaw = trim($_POST['subjek'] ?? '');
+        $pesan = trim($_POST['pesan'] ?? '');
+
+        $subjekMap = [
+            'pertanyaan_tiket'    => 'Pertanyaan Pemesanan / E-Ticket',
+            'kemitraan_promotor'  => 'Kemitraan Penjualan Tiket Promotor',
+            'kendala_pembayaran'  => 'Kendala Transaksi Pembayaran',
+            'lainnya'             => 'Lainnya'
+        ];
+        $subjek = $subjekMap[$subjekRaw] ?? ($subjekRaw ?: 'Pertanyaan Umum');
+
+        if (empty($nama) || empty($email) || empty($pesan)) {
+            setFlash('error', 'Mohon lengkapi seluruh kolom formulir pesan.');
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            setFlash('error', 'Format alamat email tidak valid.');
+        } else {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO pesan_kontak (nama, email, subjek, pesan, status, created_at) 
+                                       VALUES (:nama, :email, :subjek, :pesan, 'belum_dibaca', NOW())");
+                $stmt->execute([
+                    ':nama'   => $nama,
+                    ':email'  => $email,
+                    ':subjek' => $subjek,
+                    ':pesan'  => $pesan
+                ]);
+                $sentSuccess = true;
+                setFlash('success', 'Pesan Anda telah berhasil dikirim dan tersimpan di sistem! Tim EVENTIX akan merespons melalui email/WhatsApp dalam 1x24 jam kerja.');
+            } catch (PDOException $e) {
+                error_log("[Contact Submit Error] " . $e->getMessage());
+                setFlash('error', 'Terjadi kesalahan saat menyimpan pesan. Silakan coba kembali.');
+            }
+        }
     } else {
         setFlash('error', 'Sesi keamanan kedaluwarsa. Silakan coba kembali.');
     }

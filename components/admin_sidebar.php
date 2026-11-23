@@ -90,6 +90,28 @@ $currentFile = basename($_SERVER['SCRIPT_NAME'] ?? '');
             <span>Verifikasi Pesanan</span>
         </a>
 
+        <!-- 4. Kotak Masuk Pesan & Kontak -->
+        <a href="<?= url('admin/messages.php') ?>" 
+           class="flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors <?= ($currentFile === 'messages.php') ? 'bg-slate-800 text-white font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-900' ?>">
+            <div class="flex items-center gap-3 min-w-0">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>Pesan Masuk</span>
+            </div>
+            <?php 
+            try {
+                $unreadStmt = $pdo->query("SELECT COUNT(*) FROM pesan_kontak WHERE status = 'belum_dibaca'");
+                $unreadCount = (int)$unreadStmt->fetchColumn();
+                if ($unreadCount > 0): ?>
+                    <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FF6082] text-white">
+                        <?= $unreadCount ?>
+                    </span>
+                <?php endif;
+            } catch (Exception $e) {}
+            ?>
+        </a>
+
         <div class="pt-6 px-3 pb-2 text-[11px] font-semibold text-slate-400">
             Situs publik
         </div>
