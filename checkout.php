@@ -289,123 +289,58 @@ $flashSuccess = getFlash('success');
             <!-- RIGHT COLUMN: Metode Pembayaran & Konfirmasi -->
             <div class="lg:col-span-6 space-y-6">
 
-                <!-- Rekening Bank Tujuan Transfer -->
-                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-4">
+                <!-- Pembayaran QRIS Resmi -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-2xs space-y-5">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                            Pilih Metode Pembayaran
-                        </h3>
-                        <span class="text-xs text-slate-500 font-medium">Instan & Terverifikasi</span>
-                    </div>
-
-                    <!-- Pilihan Akun Bank -->
-                    <div class="space-y-2.5 text-xs">
-                        
-                        <!-- Bank BCA -->
-                        <div class="bank-card p-3.5 rounded-xl border-2 border-[#FF6082] bg-[#fff1f4] cursor-pointer transition-all flex items-center justify-between"
-                             onclick="selectBank('BCA', '880123456789', 'PT EVENTIX INDONESIA', this)">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded-md bg-blue-700 text-white font-bold text-xs flex items-center justify-center">
-                                    BCA
-                                </div>
-                                <div>
-                                    <span class="font-bold text-slate-900 block">Bank Central Asia (BCA)</span>
-                                    <span class="font-mono text-slate-600 text-xs">8801 2345 6789</span>
-                                </div>
-                            </div>
-                            <span class="badge-clean bg-[#FF6082] text-white border-0 text-[10px]">Dipilih</span>
-                        </div>
-
-                        <!-- Bank Mandiri -->
-                        <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
-                             onclick="selectBank('Mandiri', '1370012345678', 'PT EVENTIX INDONESIA', this)">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded-md bg-sky-900 text-amber-400 font-bold text-[10px] flex items-center justify-center">
-                                    MANDIRI
-                                </div>
-                                <div>
-                                    <span class="font-bold text-slate-900 block">Bank Mandiri</span>
-                                    <span class="font-mono text-slate-600 text-xs">137 00 1234567 8</span>
-                                </div>
-                            </div>
-                            <span class="text-[10px] text-slate-400">Pilih</span>
-                        </div>
-
-                        <!-- Bank BNI -->
-                        <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
-                             onclick="selectBank('BNI', '0987654321', 'PT EVENTIX INDONESIA', this)">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded-md bg-orange-600 text-white font-bold text-xs flex items-center justify-center">
-                                    BNI
-                                </div>
-                                <div>
-                                    <span class="font-bold text-slate-900 block">Bank BNI</span>
-                                    <span class="font-mono text-slate-600 text-xs">0987 6543 21</span>
-                                </div>
-                            </div>
-                            <span class="text-[10px] text-slate-400">Pilih</span>
-                        </div>
-
-                        <!-- QRIS -->
-                        <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
-                             onclick="selectBank('QRIS', 'ID1025389679826', 'NAFI, DIGITAL & KREATIF (QRIS Standar Nasional)', this)">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-7 rounded-md bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
-                                    QRIS
-                                </div>
-                                <div>
-                                    <span class="font-bold text-slate-900 block">QRIS All E-Wallet</span>
-                                    <span class="text-[11px] text-slate-500">GoPay, OVO, Dana, ShopeePay, BCA, Mandiri</span>
-                                </div>
-                            </div>
-                            <span class="text-[10px] text-slate-400">Pilih</span>
-                        </div>
-
-                    </div>
-
-                    <!-- Kotak Salin Rekening Interaktif (Transfer Bank) -->
-                    <div id="bank-details-box" class="p-4 rounded-xl bg-slate-100/90 border border-slate-200 flex items-center justify-between gap-3 text-xs">
                         <div>
-                            <span class="text-[10px] font-semibold text-slate-500 block" id="selected-bank-label">Nomor Rekening BCA</span>
-                            <span id="selected-bank-acc" class="font-mono font-bold text-sm text-slate-950">880123456789</span>
-                            <span id="selected-bank-holder" class="block text-[11px] text-slate-500">a.n. PT EVENTIX INDONESIA</span>
+                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                                Metode Pembayaran QRIS
+                            </h3>
+                            <span class="text-xs text-slate-500 font-medium">Scan & Bayar Otomatis Terverifikasi</span>
                         </div>
-                        <button type="button" 
-                                onclick="copyAccountNumber()" 
-                                id="btn-copy-acc"
-                                class="px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs shadow-2xs transition-all flex items-center gap-1 shrink-0 cursor-pointer">
-                            <span id="copy-text">Salin</span>
-                        </button>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>QRIS Aktif</span>
+                        </span>
                     </div>
 
-                    <!-- Kotak QRIS Interaktif (Tampil saat QRIS Dipilih) -->
-                    <div id="qris-details-box" class="hidden p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">QRIS Standar Pembayaran Nasional</span>
-                                <h4 class="text-xs font-bold text-slate-900">Scan QR Code untuk Pembayaran Langsung</h4>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                Instan
-                            </span>
+                    <!-- Kotak QRIS Interaktif -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200/90 text-center space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-[11px] font-semibold shadow-xs">
+                            <svg class="w-3.5 h-3.5 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                            </svg>
+                            <span>QRIS Standar Pembayaran Nasional</span>
                         </div>
-                        
-                        <div class="flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-50 rounded-xl border border-slate-200/80">
-                            <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200/90 max-w-[280px] w-full">
-                                <img src="<?= asset('images/qris_payment.png') ?>" alt="QRIS Gopay Merchant - NAFI DIGITAL & KREATIF" class="w-full h-auto rounded-lg object-contain shadow-2xs">
+
+                        <!-- Gambar Poster QRIS Resmi -->
+                        <div class="flex justify-center">
+                            <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200/90 max-w-[290px] w-full">
+                                <img src="<?= asset('images/qris_payment.png') ?>" 
+                                     alt="QRIS Gopay Merchant - NAFI DIGITAL & KREATIF" 
+                                     class="w-full h-auto rounded-xl object-contain shadow-2xs">
                             </div>
-                            <div class="text-center mt-3 space-y-1">
-                                <p class="text-xs font-bold text-slate-900">NAFI, DIGITAL & KREATIF</p>
-                                <p class="text-[11px] font-mono text-slate-500">NMID: ID1025389679826</p>
-                                <p class="text-[10px] text-slate-400 leading-relaxed max-w-xs mx-auto">
-                                    Buka aplikasi GoPay, OVO, Dana, ShopeePay, BCA Mobile, Livin' Mandiri, BRImo, atau e-wallet apa saja lalu scan kode QR di atas.
-                                </p>
-                            </div>
+                        </div>
+
+                        <!-- Info Merchant & Panduan Pembayaran -->
+                        <div class="space-y-1.5 pt-1">
+                            <h4 class="text-sm font-bold text-slate-900 tracking-tight">NAFI, DIGITAL & KREATIF</h4>
+                            <p class="text-xs font-mono text-slate-500 font-semibold">NMID: ID1025389679826</p>
+                            <p class="text-[11px] text-slate-500 leading-relaxed max-w-sm mx-auto">
+                                Buka aplikasi e-wallet atau mobile banking favorit Anda (<strong>GoPay, OVO, DANA, ShopeePay, BCA Mobile, Livin' Mandiri, BRImo, LinkAja</strong>), lalu arahkan kamera ke kode QR di atas.
+                            </p>
                         </div>
                     </div>
 
-                    <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                        Total yang harus dibayar: <strong><?= formatRupiah($order['harga']) ?></strong>
+                    <!-- Total yang Harus Dibayar -->
+                    <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-amber-700 block">Total yang Harus Dibayar</span>
+                            <span class="text-base font-extrabold text-amber-950"><?= formatRupiah($order['harga']) ?></span>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-lg bg-amber-100/80 text-amber-900 font-semibold text-[11px] border border-amber-200/60">
+                            Bebas Biaya Admin
+                        </span>
                     </div>
                 </div>
 
@@ -417,7 +352,7 @@ $flashSuccess = getFlash('success');
                         
                         <?= csrf_field() ?>
                         <input type="hidden" name="id_pesanan" value="<?= $idPesanan ?>">
-                        <input type="hidden" name="metode" id="input-metode" value="Transfer Bank BCA">
+                        <input type="hidden" name="metode" id="input-metode" value="QRIS All E-Wallet">
 
                         <div>
                             <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">
@@ -432,17 +367,17 @@ $flashSuccess = getFlash('success');
                                 <span>E-Ticket QR Langsung Aktif</span>
                             </div>
                             <p class="text-[11px] text-slate-500 leading-relaxed">
-                                Setelah Anda menekan tombol konfirmasi, tiket akan langsung diterbitkan secara digital dan dapat segera digunakan di pintu masuk konser.
+                                Setelah Anda menekan tombol konfirmasi di bawah, tiket resmi akan langsung diterbitkan secara digital dan dapat segera digunakan di pintu masuk konser.
                             </p>
                         </div>
 
                         <!-- Tombol Konfirmasi Bayar -->
                         <button type="submit" 
-                                class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
+                                class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm cursor-pointer">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
-                            <span>Saya Sudah Bayar - Konfirmasi Sekarang</span>
+                            <span>Saya Sudah Scan & Bayar via QRIS</span>
                         </button>
                     </form>
                 <?php else: ?>
@@ -476,54 +411,6 @@ $flashSuccess = getFlash('success');
 
     <!-- Interactive Scripts -->
     <script>
-        let currentAccountNo = '880123456789';
-
-        function selectBank(name, accNo, holder, element) {
-            currentAccountNo = accNo;
-            const bankBox = document.getElementById('bank-details-box');
-            const qrisBox = document.getElementById('qris-details-box');
-
-            if (name === 'QRIS') {
-                document.getElementById('input-metode').value = 'QRIS All E-Wallet';
-                if (bankBox) bankBox.classList.add('hidden');
-                if (qrisBox) qrisBox.classList.remove('hidden');
-            } else {
-                document.getElementById('input-metode').value = 'Transfer Bank ' + name;
-                document.getElementById('selected-bank-label').textContent = 'Nomor Rekening ' + name;
-                document.getElementById('selected-bank-acc').textContent = accNo;
-                document.getElementById('selected-bank-holder').textContent = holder;
-                if (bankBox) bankBox.classList.remove('hidden');
-                if (qrisBox) qrisBox.classList.add('hidden');
-            }
-
-            // Reset border active state
-            document.querySelectorAll('.bank-card').forEach(card => {
-                card.className = 'bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between';
-                const badge = card.querySelector('span:last-child');
-                if (badge) {
-                    badge.className = 'text-[10px] text-slate-400';
-                    badge.textContent = 'Pilih';
-                }
-            });
-
-            element.className = 'bank-card p-3.5 rounded-xl border-2 border-[#FF6082] bg-[#fff1f4] cursor-pointer transition-all flex items-center justify-between';
-            const activeBadge = element.querySelector('span:last-child');
-            if (activeBadge) {
-                activeBadge.className = 'badge-clean bg-[#FF6082] text-white border-0 text-[10px]';
-                activeBadge.textContent = 'Dipilih';
-            }
-        }
-
-        function copyAccountNumber() {
-            navigator.clipboard.writeText(currentAccountNo).then(() => {
-                const copyText = document.getElementById('copy-text');
-                copyText.textContent = 'Disalin';
-                setTimeout(() => {
-                    copyText.textContent = 'Salin';
-                }, 2000);
-            });
-        }
-
         // Countdown Timer Logic (15 Menit = 900 Detik)
         (function() {
             const timerElem = document.getElementById('countdown-timer');
