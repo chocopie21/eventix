@@ -128,10 +128,15 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
             <div class="flex items-center md:hidden">
                 <button type="button" 
                         id="mobile-menu-btn"
-                        class="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" 
-                        aria-label="Toggle menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none transition-colors cursor-pointer" 
+                        aria-label="Toggle menu"
+                        aria-expanded="false"
+                        aria-controls="mobile-menu">
+                    <svg id="mobile-menu-icon-open" class="w-6 h-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="mobile-menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -140,7 +145,7 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
     </div>
 
     <!-- Mobile Drawer Menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200/80 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-3">
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200/80 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 font-sf">
         <?php if ($isLoggedIn): ?>
             <div class="p-3 bg-slate-50 rounded-xl flex items-center gap-3 border border-slate-200/80">
                 <div class="w-8 h-8 rounded-lg bg-[#0F172A] text-white font-bold flex items-center justify-center text-xs">
@@ -153,24 +158,80 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
             </div>
         <?php endif; ?>
 
-        <nav class="space-y-1 text-sm font-medium">
-            <a href="<?= url('index.php') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Beranda</a>
-            <a href="<?= url('index.php#katalog') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Katalog Konser</a>
-            <a href="<?= url('about.php') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Tentang Kami</a>
-            <a href="<?= url('faq.php') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Pusat Bantuan</a>
-            <a href="<?= url('contact.php') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Kontak</a>
+        <nav class="space-y-1 text-xs">
+            <a href="<?= url('index.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'index.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Beranda</a>
+            <a href="<?= url('index.php#katalog') ?>" class="block px-3 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-slate-50">Katalog Konser</a>
+            <a href="<?= url('about.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'about.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Tentang Kami</a>
+            <a href="<?= url('faq.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'faq.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Pusat Bantuan</a>
+            <a href="<?= url('contact.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'contact.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Kontak</a>
             <?php if ($isLoggedIn): ?>
-                <a href="<?= url('my_orders.php') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Tiket Saya</a>
+                <a href="<?= url('my_orders.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 <?= $currentScript === 'my_orders.php' ? 'text-slate-950 bg-slate-100' : '' ?>">Tiket Saya</a>
                 <?php if ($isAdminUser): ?>
-                    <a href="<?= url('admin/index.php') ?>" class="block px-3 py-2 rounded-lg text-slate-800 hover:bg-slate-100">Panel Admin</a>
+                    <a href="<?= url('admin/index.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">Panel Admin</a>
                 <?php endif; ?>
-                <a href="<?= url('actions/auth_logout.php') ?>" class="block px-3 py-2 rounded-lg text-rose-600 hover:bg-rose-50 font-semibold">Keluar</a>
+                <div class="border-t border-slate-100 my-1"></div>
+                <a href="<?= url('actions/auth_logout.php') ?>" class="block px-3 py-2.5 rounded-xl text-rose-600 hover:bg-rose-50 font-semibold">Keluar</a>
             <?php else: ?>
-                <div class="pt-2 flex flex-col gap-2">
-                    <a href="<?= url('login.php') ?>" class="w-full py-2.5 text-center text-xs font-semibold text-slate-800 bg-slate-100 rounded-xl">Masuk</a>
-                    <a href="<?= url('register.php') ?>" class="w-full py-2.5 text-center text-xs font-semibold text-white bg-[#FF6082] rounded-xl shadow-xs">Daftar Akun</a>
+                <div class="pt-3 flex flex-col gap-2">
+                    <a href="<?= url('login.php') ?>" class="w-full py-2.5 text-center text-xs font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors">Masuk</a>
+                    <a href="<?= url('register.php') ?>" class="w-full py-2.5 text-center text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#E0486D] rounded-xl shadow-xs transition-colors">Daftar Akun</a>
                 </div>
             <?php endif; ?>
         </nav>
     </div>
 </header>
+
+<!-- Mobile Navigation Drawer Controller -->
+<script>
+    (function() {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('mobile-menu-icon-open');
+        const iconClose = document.getElementById('mobile-menu-icon-close');
+
+        if (!btn || !menu) return;
+
+        function toggleMenu(forceState) {
+            const isCurrentlyHidden = menu.classList.contains('hidden');
+            const shouldOpen = (typeof forceState === 'boolean') ? forceState : isCurrentlyHidden;
+
+            if (shouldOpen) {
+                menu.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+                if (iconOpen) iconOpen.classList.add('hidden');
+                if (iconClose) iconClose.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+                if (iconOpen) iconOpen.classList.remove('hidden');
+                if (iconClose) iconClose.classList.add('hidden');
+            }
+        }
+
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+            if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
+                toggleMenu(false);
+            }
+        });
+
+        // Close when clicking any nav link inside mobile drawer
+        menu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                toggleMenu(false);
+            });
+        });
+
+        // Reset state on desktop viewport resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                toggleMenu(false);
+            }
+        });
+    })();
+</script>
