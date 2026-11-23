@@ -326,13 +326,26 @@ $flashInfo = getFlash('info');
 
                                 <div>
                                     <?php if ($status === 'menunggu' || $status === 'menunggu_verifikasi'): ?>
-                                        <a href="<?= url('checkout.php?id_pesanan=' . $idPesanan) ?>" 
-                                           class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
-                                            <span>Bayar Sekarang</span>
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                            </svg>
-                                        </a>
+                                        <div class="flex items-center gap-2">
+                                            <a href="<?= url('checkout.php?id_pesanan=' . $idPesanan) ?>" 
+                                               class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-[#FF6082] hover:bg-[#e54b6d] transition-all shadow-xs hover:shadow-sm">
+                                                <span>Bayar</span>
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                </svg>
+                                            </a>
+                                            <form action="<?= url('actions/order_cancel.php') ?>" 
+                                                  method="POST" 
+                                                  onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pesanan #EVX-<?= $idPesanan ?>? Kuota tiket akan dikembalikan ke sistem.');" 
+                                                  class="inline">
+                                                <?= csrf_field() ?>
+                                                <input type="hidden" name="id_pesanan" value="<?= $idPesanan ?>">
+                                                <button type="submit" 
+                                                        class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors">
+                                                    Batalkan
+                                                </button>
+                                            </form>
+                                        </div>
                                     <?php elseif ($status === 'lunas'): ?>
                                         <button type="button" 
                                                 onclick="openTicketModal('<?= $idPesanan ?>', '<?= htmlspecialchars($order['nama_event'] ?? '', ENT_QUOTES, 'UTF-8') ?>', '<?= htmlspecialchars($user['nama'], ENT_QUOTES, 'UTF-8') ?>', '<?= !empty($order['tanggal_event']) ? formatTanggalIndo($order['tanggal_event']) : '-' ?>', '<?= htmlspecialchars($order['venue'] ?? '', ENT_QUOTES, 'UTF-8') ?>')"

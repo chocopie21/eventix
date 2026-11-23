@@ -271,12 +271,12 @@ $flashInfo = getFlash('info');
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
                                 <th class="py-3 px-3 w-[12%]">ID & tanggal</th>
-                                <th class="py-3 px-3 w-[18%]">Pembeli</th>
+                                <th class="py-3 px-3 w-[16%]">Pembeli</th>
                                 <th class="py-3 px-3 w-[22%]">Konser & tiket</th>
-                                <th class="py-3 px-3 w-[14%]">Total</th>
+                                <th class="py-3 px-3 w-[13%]">Total</th>
                                 <th class="py-3 px-3 w-[11%]">Bukti transfer</th>
                                 <th class="py-3 px-3 w-[10%]">Status</th>
-                                <th class="py-3 px-3 w-[13%] text-right">Aksi verifikasi</th>
+                                <th class="py-3 px-3 w-[16%] text-right">Aksi & Kelola</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
@@ -374,11 +374,11 @@ $flashInfo = getFlash('info');
                                             <?php endif; ?>
                                         </td>
 
-                                        <!-- Aksi Verifikasi: ACC / Tolak -->
+                                        <!-- Aksi & Kelola: ACC / Tolak / Batalkan / Hapus -->
                                         <td class="py-3 px-3 text-right whitespace-nowrap">
-                                            <?php if ($st === 'menunggu_verifikasi' || $st === 'menunggu'): ?>
-                                                <div class="inline-flex items-center justify-end gap-1.5">
-                                                    
+                                            <div class="inline-flex items-center justify-end gap-1.5">
+                                                
+                                                <?php if ($st === 'menunggu_verifikasi' || $st === 'menunggu'): ?>
                                                     <!-- Tombol ACC / Konfirmasi Lunas -->
                                                     <form action="<?= url('actions/admin_payment_verify.php') ?>" 
                                                           method="POST" 
@@ -388,7 +388,7 @@ $flashInfo = getFlash('info');
                                                         <input type="hidden" name="id_pesanan" value="<?= $idO ?>">
                                                         <input type="hidden" name="action" value="acc">
                                                         <button type="submit" 
-                                                                class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-colors shadow-xs"
+                                                                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-colors shadow-2xs"
                                                                 title="Konfirmasi Pembayaran Lunas">
                                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
@@ -400,13 +400,13 @@ $flashInfo = getFlash('info');
                                                     <!-- Tombol Tolak & Kembalikan Kuota -->
                                                     <form action="<?= url('actions/admin_payment_verify.php') ?>" 
                                                           method="POST" 
-                                                          onsubmit="return confirm('Tolak pembayaran pesanan #EVX-<?= $idO ?>? Kuota tiket akan otomatis dikembalikan ke sistem.');"
+                                                          onsubmit="return confirm('Tolak pesanan #EVX-<?= $idO ?>? Kuota tiket akan otomatis dikembalikan ke sistem.');"
                                                           class="inline">
                                                         <?= csrf_field() ?>
                                                         <input type="hidden" name="id_pesanan" value="<?= $idO ?>">
                                                         <input type="hidden" name="action" value="tolak">
                                                         <button type="submit" 
-                                                                class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white hover:bg-rose-50 text-rose-700 border border-rose-300 font-semibold text-xs transition-colors"
+                                                                class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-white hover:bg-rose-50 text-rose-700 border border-rose-300 font-semibold text-xs transition-colors"
                                                                 title="Tolak Pesanan & Kembalikan Kuota">
                                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -415,12 +415,43 @@ $flashInfo = getFlash('info');
                                                         </button>
                                                     </form>
 
-                                                </div>
-                                            <?php elseif ($st === 'lunas'): ?>
-                                                <span class="text-xs text-emerald-600 font-medium">Selesai</span>
-                                            <?php else: ?>
-                                                <span class="text-xs text-slate-400 font-medium">Batal</span>
-                                            <?php endif; ?>
+                                                <?php elseif ($st === 'lunas'): ?>
+                                                    <!-- Tombol Batalkan Pesanan Lunas & Kembalikan Kuota -->
+                                                    <form action="<?= url('actions/admin_payment_verify.php') ?>" 
+                                                          method="POST" 
+                                                          onsubmit="return confirm('Batalkan pesanan lunas #EVX-<?= $idO ?>? Tiket e-ticket akan dinonaktifkan dan kuota tiket akan dikembalikan ke sistem.');"
+                                                          class="inline">
+                                                        <?= csrf_field() ?>
+                                                        <input type="hidden" name="id_pesanan" value="<?= $idO ?>">
+                                                        <input type="hidden" name="action" value="tolak">
+                                                        <button type="submit" 
+                                                                class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-semibold text-xs transition-colors"
+                                                                title="Batalkan Pesanan & Kembalikan Kuota">
+                                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                            <span>Batalkan</span>
+                                                        </button>
+                                                    </form>
+                                                <?php endif; ?>
+
+                                                <!-- Tombol Hapus Permanen (Untuk Semua Status) -->
+                                                <form action="<?= url('actions/admin_order_delete.php') ?>" 
+                                                      method="POST" 
+                                                      onsubmit="return confirm('Hapus permanen transaksi #EVX-<?= $idO ?>? Jika belum dibatalkan, kuota tiket akan otomatis dikembalikan ke sistem.');"
+                                                      class="inline">
+                                                    <?= csrf_field() ?>
+                                                    <input type="hidden" name="id_pesanan" value="<?= $idO ?>">
+                                                    <button type="submit" 
+                                                            class="p-1.5 rounded-lg border border-slate-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 transition-colors" 
+                                                            title="Hapus Data Pesanan & Kembalikan Kuota">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+
+                                            </div>
                                         </td>
 
                                     </tr>

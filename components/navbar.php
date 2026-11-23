@@ -160,7 +160,7 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
 
         <nav class="space-y-1 text-xs">
             <a href="<?= url('index.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'index.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Beranda</a>
-            <a href="<?= url('index.php#katalog') ?>" class="block px-3 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-slate-50">Katalog Konser</a>
+            <a href="<?= url('index.php#katalog') ?>" class="block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">Katalog Konser</a>
             <a href="<?= url('about.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'about.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Tentang Kami</a>
             <a href="<?= url('faq.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'faq.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Pusat Bantuan</a>
             <a href="<?= url('contact.php') ?>" class="block px-3 py-2.5 rounded-xl font-semibold <?= $currentScript === 'contact.php' ? 'text-slate-950 bg-slate-100' : 'text-slate-700 hover:bg-slate-50' ?>">Kontak</a>

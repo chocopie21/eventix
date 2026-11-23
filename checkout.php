@@ -348,14 +348,14 @@ $flashSuccess = getFlash('success');
 
                         <!-- QRIS -->
                         <div class="bank-card p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all flex items-center justify-between"
-                             onclick="selectBank('QRIS', 'ID1020030040506', 'QRIS EVENTIX (Gopay/OVO/Dana/ShopeePay)', this)">
+                             onclick="selectBank('QRIS', 'ID1025389679826', 'NAFI, DIGITAL & KREATIF (QRIS Standar Nasional)', this)">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-7 rounded-md bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center">
                                     QRIS
                                 </div>
                                 <div>
                                     <span class="font-bold text-slate-900 block">QRIS All E-Wallet</span>
-                                    <span class="text-[11px] text-slate-500">Gopay, OVO, Dana, LinkAja, ShopeePay</span>
+                                    <span class="text-[11px] text-slate-500">GoPay, OVO, Dana, ShopeePay, BCA, Mandiri</span>
                                 </div>
                             </div>
                             <span class="text-[10px] text-slate-400">Pilih</span>
@@ -363,8 +363,8 @@ $flashSuccess = getFlash('success');
 
                     </div>
 
-                    <!-- Kotak Salin Rekening Interaktif -->
-                    <div class="p-4 rounded-xl bg-slate-100/90 border border-slate-200 flex items-center justify-between gap-3 text-xs">
+                    <!-- Kotak Salin Rekening Interaktif (Transfer Bank) -->
+                    <div id="bank-details-box" class="p-4 rounded-xl bg-slate-100/90 border border-slate-200 flex items-center justify-between gap-3 text-xs">
                         <div>
                             <span class="text-[10px] font-semibold text-slate-500 block" id="selected-bank-label">Nomor Rekening BCA</span>
                             <span id="selected-bank-acc" class="font-mono font-bold text-sm text-slate-950">880123456789</span>
@@ -373,9 +373,35 @@ $flashSuccess = getFlash('success');
                         <button type="button" 
                                 onclick="copyAccountNumber()" 
                                 id="btn-copy-acc"
-                                class="px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs shadow-2xs transition-all flex items-center gap-1 shrink-0">
+                                class="px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs shadow-2xs transition-all flex items-center gap-1 shrink-0 cursor-pointer">
                             <span id="copy-text">Salin</span>
                         </button>
+                    </div>
+
+                    <!-- Kotak QRIS Interaktif (Tampil saat QRIS Dipilih) -->
+                    <div id="qris-details-box" class="hidden p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">QRIS Standar Pembayaran Nasional</span>
+                                <h4 class="text-xs font-bold text-slate-900">Scan QR Code untuk Pembayaran Langsung</h4>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Instan
+                            </span>
+                        </div>
+                        
+                        <div class="flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-50 rounded-xl border border-slate-200/80">
+                            <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200/90 max-w-[280px] w-full">
+                                <img src="<?= asset('images/qris_payment.png') ?>" alt="QRIS Gopay Merchant - NAFI DIGITAL & KREATIF" class="w-full h-auto rounded-lg object-contain shadow-2xs">
+                            </div>
+                            <div class="text-center mt-3 space-y-1">
+                                <p class="text-xs font-bold text-slate-900">NAFI, DIGITAL & KREATIF</p>
+                                <p class="text-[11px] font-mono text-slate-500">NMID: ID1025389679826</p>
+                                <p class="text-[10px] text-slate-400 leading-relaxed max-w-xs mx-auto">
+                                    Buka aplikasi GoPay, OVO, Dana, ShopeePay, BCA Mobile, Livin' Mandiri, BRImo, atau e-wallet apa saja lalu scan kode QR di atas.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
@@ -454,10 +480,21 @@ $flashSuccess = getFlash('success');
 
         function selectBank(name, accNo, holder, element) {
             currentAccountNo = accNo;
-            document.getElementById('input-metode').value = 'Transfer Bank ' + name;
-            document.getElementById('selected-bank-label').textContent = 'Nomor Rekening ' + name;
-            document.getElementById('selected-bank-acc').textContent = accNo;
-            document.getElementById('selected-bank-holder').textContent = holder;
+            const bankBox = document.getElementById('bank-details-box');
+            const qrisBox = document.getElementById('qris-details-box');
+
+            if (name === 'QRIS') {
+                document.getElementById('input-metode').value = 'QRIS All E-Wallet';
+                if (bankBox) bankBox.classList.add('hidden');
+                if (qrisBox) qrisBox.classList.remove('hidden');
+            } else {
+                document.getElementById('input-metode').value = 'Transfer Bank ' + name;
+                document.getElementById('selected-bank-label').textContent = 'Nomor Rekening ' + name;
+                document.getElementById('selected-bank-acc').textContent = accNo;
+                document.getElementById('selected-bank-holder').textContent = holder;
+                if (bankBox) bankBox.classList.remove('hidden');
+                if (qrisBox) qrisBox.classList.add('hidden');
+            }
 
             // Reset border active state
             document.querySelectorAll('.bank-card').forEach(card => {

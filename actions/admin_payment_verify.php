@@ -91,6 +91,7 @@ try {
         $stmtUpPay->execute([':id' => $idPesanan]);
 
         // 3. Kembalikan kuota tiket (Hanya jika pesanan belum pernah lunas/dikembalikan)
+        $restoredCount = 0;
         if ($currentStatus !== 'ditolak') {
             $stmtItems = $pdo->prepare("SELECT id_tiket, jumlah FROM detail_pesanan WHERE id_pesanan = :id");
             $stmtItems->execute([':id' => $idPesanan]);
@@ -100,15 +101,17 @@ try {
                                           SET kuota_tersedia = kuota_tersedia + :jumlah 
                                           WHERE id_tiket = :id_tiket");
             foreach ($items as $item) {
+                $qty = (int)$item['jumlah'];
                 $stmtRestore->execute([
-                    ':jumlah'   => (int)$item['jumlah'],
+                    ':jumlah'   => $qty,
                     ':id_tiket' => (int)$item['id_tiket']
                 ]);
+                $restoredCount += $qty;
             }
         }
 
         $pdo->commit();
-        setFlash('info', "Pesanan #EVX-{$idPesanan} telah DITOLAK dan kuota tiket telah dikembalikan otomatis ke sistem ketersediaan.");
+        setFlash('info', "Pesanan #EVX-{$idPesanan} telah DIBATALKAN/DITOLAK dan {$restoredCount} kuota tiket telah dikembalikan otomatis ke sistem ketersediaan.");
     }
 
     redirect('admin/orders.php');
